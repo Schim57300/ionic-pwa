@@ -1,0 +1,23 @@
+ion-content{
+    --background: none;
+    --valign: middle;
+}
+
+.ingredient-modal {
+    background: rgba(0,0,0,0.5);
+    padding: 55% 10%;
+    --border-radius: 8px
+}
+
+
+.list-ingredient {
+    background: none;
+    --background: none;
+    opacity:1;
+    color: white;
+}
+
+
+.modal-content {
+
+}

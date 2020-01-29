@@ -1,0 +1,40 @@
+ion-content{
+    --background: none;
+    --valign: middle;
+}
+
+.dishes-modal {
+    background: rgba(0,0,0,0.5);
+    padding: 30% 10%;
+    --border-radius: 8px
+}
+
+.list-dish {
+    background: none;
+    --background: none;
+    opacity:1;
+    color: white;
+}
+
+
+.title {
+    align-self: center;
+    margin-left: 13px;
+    font-size: 21px;
+}
+
+.flex-container {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: baseline;
+    align-content: stretch;
+    margin: 10px;
+}
+
+.flex-child {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: baseline;
+    align-content: stretch;
+    #flex: 1 2 auto;
+}

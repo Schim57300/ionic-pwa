@@ -1,0 +1,8 @@
+{
+  "appId": "lu.kaminski.app",
+  "appName": "MyMenu",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "cordova": {}
+}
