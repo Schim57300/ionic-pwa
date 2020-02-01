@@ -21,7 +21,7 @@ export function dishesReducer(state: InitialState = init, action: any): InitialS
     switch (action.type) {
         case ADD_DISH:
             console.log("dishes.Add a dish");
-            //let newHero = characters_json.find(c=>c.id===action.id);
+            state.dishList.push(action.data)
             return state;
         case REMOVE_DISH:
             let dishes = {} //state.filter(item => item.id !== action.id);

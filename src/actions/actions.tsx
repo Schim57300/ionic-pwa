@@ -1,4 +1,5 @@
 import {Ingredient} from "../Models/Ingredient";
+import {Dish} from "../Models/Dish";
 
 export const ADD_DISH = 'ADD_DISH';
 export const REMOVE_DISH = 'REMOVE_DISH';
@@ -8,10 +9,10 @@ export const UPDATE_INGREDIENT = 'UPDATE_INGREDIENT';
 export const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT';
 
 
-export function addDish(id: number) {
+export function addDish(element: Dish) {
     const action = {
         type: ADD_DISH,
-        data: id
+        data: element
     }
 
     return action;

@@ -31,8 +31,9 @@ export function ingredientsReducer(state: InitialState = init, action: any): Ini
             return {ingredientList: newList, dishList: state.dishList};
         case REMOVE_INGREDIENT:
             console.log("ingredients.Remove an ing");
-            let ingredients = state.ingredientList.splice(action.data, 1);
-            return {ingredientList: ingredients, dishList: state.dishList};
+            let elementToRemove = state.ingredientList.findIndex(element => element.id === action.data.id);
+            state.ingredientList.splice(elementToRemove, 1);
+            return {ingredientList: state.ingredientList, dishList: state.dishList};
         default:
             return state;
     }

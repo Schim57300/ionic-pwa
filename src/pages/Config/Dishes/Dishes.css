@@ -6,8 +6,9 @@ ion-content{
 .dishes-modal {
     background: rgba(0,0,0,0.5);
     padding: 30% 10%;
-    --border-radius: 8px
+    --border-radius: 8px;
 }
+
 
 .list-dish {
     background: none;
@@ -37,4 +38,13 @@ ion-content{
     align-items: baseline;
     align-content: stretch;
     #flex: 1 2 auto;
+}
+
+.div-input {
+    height: 25px;
+}
+
+.list-checkable-ingredient {
+    overflow: scroll;
+
 }
