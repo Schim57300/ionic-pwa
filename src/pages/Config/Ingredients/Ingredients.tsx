@@ -38,6 +38,8 @@ type ReduxType = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispa
 
 
 class IngredientsPage extends React.Component<ReduxType> {
+    ERROR: string = "danger";
+    INFO: string = "success"
 
     state = {
         currentIngredient: new Ingredient(),
@@ -50,22 +52,19 @@ class IngredientsPage extends React.Component<ReduxType> {
         toastType: ""
     }
 
-    displayError = (reason: string) => {
+    displayToast = (type: string, reason: string) => {
         this.setState({
             displayToast: true,
             toastMessage: reason,
-            toastType: "danger"
+            toastType: type
         })
     }
 
-    resetState = (displayToast: boolean, reason: string = "") => {
+    resetState = () => {
         this.setState({
             currentIngredient: new Ingredient(),
             deleteMode: false,
-            displayModal: false,
-            displayToast: displayToast,
-            toastMessage: reason,
-            toastType: "success"
+            displayModal: false
         })
     }
 
@@ -75,7 +74,7 @@ class IngredientsPage extends React.Component<ReduxType> {
 
     handleAddIngredient = (newLabel: string) => {
         if (newLabel.trim() === "") {
-            this.displayError("Name can not be empty")
+            this.displayToast(this.ERROR, "Name can not be empty")
         } else {
             let elementFound: boolean = this.props.ingredientList.some(elt => elt.name.trim() === newLabel);
             if (elementFound) {
@@ -88,7 +87,8 @@ class IngredientsPage extends React.Component<ReduxType> {
                 let newElement = new Ingredient(newLabel,
                     this.props.ingredientList.length + 1)
                 this.props.addIngredient(newElement);
-                this.resetState(true, "Element has been created");
+                this.displayToast(this.INFO, "Element has been created")
+                this.resetState();
             }
         }
     }
@@ -97,16 +97,18 @@ class IngredientsPage extends React.Component<ReduxType> {
         let newElement = new Ingredient(newLabel,
             this.state.currentIngredient.id)
         this.props.updateIngredient(newElement);
-        this.resetState(true, "Your change has been applied")
+        this.displayToast(this.INFO, "Your change has been applied")
+        this.resetState()
     }
 
     handleDeleteIngredient = () => {
         let listLinkDish = this.checkIngredientIsNotUsed()
         if (listLinkDish.length > 0) {
-            this.displayError("Used in " + listLinkDish.toString());
+            this.displayToast(this.ERROR, "Used in " + listLinkDish.toString());
         } else {
             this.props.removeIngredient(this.state.currentIngredient);
-            this.resetState(true, "Element has been removed")
+            this.displayToast(this.INFO, "Element has been removed")
+            this.resetState()
         }
     }
 
@@ -169,7 +171,7 @@ class IngredientsPage extends React.Component<ReduxType> {
             <IonModal cssClass="ingredient-modal"
                       isOpen={this.state.displayModal}
                       onDidDismiss={() => {
-                          this.resetState(false);
+                          this.resetState();
                       }}>
                 <div className="flex-container">
                     <img src={icon} height="80px"/>

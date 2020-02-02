@@ -38,6 +38,8 @@ type ReduxType = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispa
 // - Boutons à ordonner
 
 class DishesPage extends React.Component<ReduxType> {
+    ERROR: string = "danger";
+    INFO: string = "success"
 
 
     state = {
@@ -52,23 +54,21 @@ class DishesPage extends React.Component<ReduxType> {
         toastType: ""
     }
 
-    resetState = (displayToast: boolean, reason: string = "") => {
+    resetState = () => {
         this.setState({
             currentDish: new Dish(),
             deleteMode: false,
             displayModal: false,
-            displayToast: displayToast,
             editMode: false,
-            toastMessage: reason,
-            toastType: "success"
         })
     }
 
-    displayError = (reason: string) => {
+
+    displayToast = (type: string, reason: string) => {
         this.setState({
             displayToast: true,
             toastMessage: reason,
-            toastType: "danger"
+            toastType: type
         })
     }
 
@@ -88,7 +88,7 @@ class DishesPage extends React.Component<ReduxType> {
 
     handleAddDish(dishName: string) {
         if (dishName.trim() === "") {
-            this.displayError("Name can not be empty")
+            this.displayToast(this.ERROR, "Name can not be empty")
         } else {
             let elementFound: boolean = this.props.dishList.some(elt => elt.name.trim() === dishName);
             if (elementFound) {
@@ -100,7 +100,8 @@ class DishesPage extends React.Component<ReduxType> {
             } else {
                 let newDish = new Dish(dishName, this.props.dishList.length + 1, this.state.currentDish.recipe);
                 this.props.addDish(newDish);
-                this.resetState(true, "Element has been created");
+                this.displayToast(this.INFO, "Element has been created");
+                this.resetState();
             }
         }
     }
@@ -110,7 +111,8 @@ class DishesPage extends React.Component<ReduxType> {
             this.state.currentDish.id,
             this.state.currentDish.recipe)
         this.props.updateDish(newElement);
-        this.resetState(true, "Your change has been applied")
+        this.displayToast(this.INFO, "Your change has been applied")
+        this.resetState()
     }
 
     renderDishes = () => {
@@ -207,7 +209,7 @@ class DishesPage extends React.Component<ReduxType> {
         }
         return (
             <IonModal cssClass="dishes-modal" isOpen={this.state.displayModal}
-                      onDidDismiss={() => this.resetState(false)}>
+                      onDidDismiss={() => this.resetState()}>
                 <div className="flex-container">
                     <img src={icon} height="40px"/>
                     <div className="title">{modalTitle}</div>
