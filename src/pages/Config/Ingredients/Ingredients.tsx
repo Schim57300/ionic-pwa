@@ -6,20 +6,23 @@ import {Dispatch} from 'redux';
 //Ionic
 import {
     IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonBackButton, IonButton, IonModal, IonItem,
-    IonTextarea, IonList, IonLabel, IonToast, IonSearchbar
+    IonTextarea, IonList, IonLabel, IonToast, IonSearchbar, IonIcon
 } from '@ionic/react';
 //Style
 import './Ingredients.css';
 
 import * as actions from "../../../actions/actions";
 import {addIngredient, removeIngredient, updateIngredient} from "../../../actions/actions";
-import {IRootState} from "../../../reducers/index";
+import {IRootState} from "../../../reducers";
 import {ActionType} from "typesafe-actions";
 import {Ingredient} from "../../../Models/Ingredient";
+import {closeCircleOutline, save, trash} from "ionicons/icons";
+import {Dish} from "../../../Models/Dish";
 
-const mapStateToProps = ({ingredients}: IRootState) => {
+const mapStateToProps = ({ingredients, dishes}: IRootState) => {
     const {ingredientList} = ingredients;
-    return {ingredientList};
+    const {dishList} = dishes;
+    return {ingredientList, dishList};
 }
 
 
@@ -47,14 +50,22 @@ class IngredientsPage extends React.Component<ReduxType> {
         toastType: ""
     }
 
+    displayError = (reason: string) => {
+        this.setState({
+            displayToast: true,
+            toastMessage: reason,
+            toastType: "danger"
+        })
+    }
+
     resetState = (displayToast: boolean, reason: string = "") => {
         this.setState({
             currentIngredient: new Ingredient(),
-            deleteMode:false,
+            deleteMode: false,
             displayModal: false,
             displayToast: displayToast,
             toastMessage: reason,
-            toastType: "primary"
+            toastType: "success"
         })
     }
 
@@ -62,32 +73,52 @@ class IngredientsPage extends React.Component<ReduxType> {
         this.setState({filter: str});
     }
 
-    addNewIngredient = (newLabel: string) => {
-        let elementFound: boolean = this.props.ingredientList.some(elt => elt.name.trim() === newLabel);
-        if (elementFound) {
-            this.setState({
-                displayToast: true,
-                toastMessage: "The element does already exist",
-                toastType: "danger"
-            })
+    handleAddIngredient = (newLabel: string) => {
+        if (newLabel.trim() === "") {
+            this.displayError("Name can not be empty")
         } else {
-            let newElement = new Ingredient(newLabel,
-                this.props.ingredientList.length + 1)
-            this.props.addIngredient(newElement);
-            this.resetState(true, "Element has been created");
+            let elementFound: boolean = this.props.ingredientList.some(elt => elt.name.trim() === newLabel);
+            if (elementFound) {
+                this.setState({
+                    displayToast: true,
+                    toastMessage: "The element does already exist",
+                    toastType: "danger"
+                })
+            } else {
+                let newElement = new Ingredient(newLabel,
+                    this.props.ingredientList.length + 1)
+                this.props.addIngredient(newElement);
+                this.resetState(true, "Element has been created");
+            }
         }
     }
 
-    updateIngredient = (newLabel: string) => {
+    handleUpdateIngredient = (newLabel: string) => {
         let newElement = new Ingredient(newLabel,
             this.state.currentIngredient.id)
         this.props.updateIngredient(newElement);
         this.resetState(true, "Your change has been applied")
     }
 
-    deleteIngredient = () => {
-        this.props.removeIngredient(this.state.currentIngredient);
-        this.resetState(true, "Element has been removed")
+    handleDeleteIngredient = () => {
+        let listLinkDish = this.checkIngredientIsNotUsed()
+        if (listLinkDish.length > 0) {
+            this.displayError("Used in " + listLinkDish.toString());
+        } else {
+            this.props.removeIngredient(this.state.currentIngredient);
+            this.resetState(true, "Element has been removed")
+        }
+    }
+
+    checkIngredientIsNotUsed = (): Dish[] => {
+        let linkedDish: Dish[] = [];
+        this.props.dishList.forEach(dish => {
+            let b = dish.recipe.some(ing => ing.id === this.state.currentIngredient.id);
+            if (b) {
+                linkedDish.push(dish)
+            }
+        })
+        return linkedDish;
     }
 
     renderIngredients = () => {
@@ -97,16 +128,16 @@ class IngredientsPage extends React.Component<ReduxType> {
             return (
                 <IonList className="list-ingredient">
                     {this.props.ingredientList
-                        .filter(elt => elt.name.toLowerCase().indexOf(this.state.filter.toString().toLowerCase())>=0)
-                        .sort((a,b) => a.name.localeCompare( b.name))
+                        .filter(elt => elt.name.toLowerCase().indexOf(this.state.filter.toString().toLowerCase()) >= 0)
+                        .sort((a, b) => a.name.localeCompare(b.name))
                         .map(item => {
-                        return (
-                            <IonItem onClick={() => this.setState({displayModal: true, currentIngredient: item})}
-                                     key={item.id} className="list-ingredient">
-                                <IonLabel className="list-ingredient">{item.name}</IonLabel>
-                            </IonItem>
-                        )
-                    })}
+                            return (
+                                <IonItem onClick={() => this.setState({displayModal: true, currentIngredient: item})}
+                                         key={item.id} className="list-ingredient">
+                                    <IonLabel className="list-ingredient">{item.name}</IonLabel>
+                                </IonItem>
+                            )
+                        })}
 
                 </IonList>
             )
@@ -118,26 +149,28 @@ class IngredientsPage extends React.Component<ReduxType> {
         let textValue = this.state.currentIngredient.name.trim();
         let icon = "/assets/icon/app/ic_ing_ajout.png";
         let modalTitle = "Add an ingredient";
-        let buttonLabel = "Add";
+        let buttonLabel = save;
         let displayDeleteButton = false;
-        let clickAction = () => this.addNewIngredient(textValue)
+        let clickAction = () => this.handleAddIngredient(textValue)
         if (this.state.deleteMode) {
             icon = "/assets/icon/app/ic_ing_suppr.png";
             modalTitle = "Remove ingredient";
-            buttonLabel = "Confirm";
+            buttonLabel = trash;
             displayDeleteButton = false;
-            clickAction = () => this.deleteIngredient()
+            clickAction = () => this.handleDeleteIngredient()
         } else if (textValue.length > 0) {
             icon = "/assets/icon/app/ic_ing_modif.png";
             modalTitle = "Update ingredient";
-            buttonLabel = "Update";
+            buttonLabel = save;
             displayDeleteButton = true;
-            clickAction = () => this.updateIngredient(textValue)
+            clickAction = () => this.handleUpdateIngredient(textValue)
         }
         return (
             <IonModal cssClass="ingredient-modal"
                       isOpen={this.state.displayModal}
-                      onDidDismiss={() => {this.resetState(false);}}>
+                      onDidDismiss={() => {
+                          this.resetState(false);
+                      }}>
                 <div className="flex-container">
                     <img src={icon} height="80px"/>
                     <div className="title">{modalTitle}</div>
@@ -152,19 +185,34 @@ class IngredientsPage extends React.Component<ReduxType> {
                     </IonTextarea>
                 </IonItem>
                 <div className="flex-container">
-                    <IonButton expand='block' color="light" onClick={clickAction}>{buttonLabel}</IonButton>
-                    <IonButton expand='block' color="light" onClick={() => this.setState({
-                        displayModal: false,
-                        deleteMode: false,
-                        currentIngredient: new Ingredient()
-                    })}>Cancel</IonButton>
+                    <IonButton slot="end"
+                               expand='block'
+                               color="light"
+                               onClick={clickAction}>
+                        <IonIcon icon={buttonLabel}/>
+                    </IonButton>
                     {
                         displayDeleteButton ?
-                            <IonButton expand='block' color="light" onClick={() => this.setState({
-                                deleteMode: true
-                            })}>Delete</IonButton>
+                            <IonButton slot="end"
+                                       expand='block'
+                                       color="light"
+                                       onClick={() => this.setState({
+                                           deleteMode: true
+                                       })}>
+                                <IonIcon icon={trash}/>
+                            </IonButton>
                             : []
                     }
+                    <IonButton slot="end"
+                               expand='block'
+                               color="light"
+                               onClick={() => this.setState({
+                                   displayModal: false,
+                                   deleteMode: false,
+                                   currentIngredient: new Dish()
+                               })}>
+                        <IonIcon icon={closeCircleOutline}/>
+                    </IonButton>
                 </div>
             </IonModal>
         )
@@ -186,7 +234,8 @@ class IngredientsPage extends React.Component<ReduxType> {
                 <IonContent>
                     <IonButton onClick={() => this.setState({displayModal: true, currentIngredient: new Ingredient()})}
                                expand='block' color="light">Add</IonButton>
-                    <IonSearchbar onIonChange={e => this.handleFilterChange((e.target as HTMLInputElement).value)} showCancelButton="focus"></IonSearchbar>
+                    <IonSearchbar onIonChange={e => this.handleFilterChange((e.target as HTMLInputElement).value)}
+                                  showCancelButton="focus"> </IonSearchbar>
                     {this.renderIngredients()}
                     {this.renderModal()}
                 </IonContent>
@@ -195,7 +244,7 @@ class IngredientsPage extends React.Component<ReduxType> {
                     onDidDismiss={() => this.setState({displayToast: false})}
                     message={this.state.toastMessage.toString()}
                     color={this.state.toastType.toString()}
-                    duration={2000}
+                    duration={20000}
                 />
             </IonPage>
         );

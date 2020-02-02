@@ -8,14 +8,13 @@ import {Dispatch} from 'redux';
 
 import './Dishes.css';
 
-import {addDish, removeDishById} from "../../../actions/actions";
+import {addDish, removeDishById, updateDish} from "../../../actions/actions";
 import * as actions from "../../../actions/actions";
-import {IRootState} from "../../../reducers/index";
+import {IRootState} from "../../../reducers";
 import {ActionType} from "typesafe-actions";
-import {Ingredient} from "../../../Models/Ingredient";
 import {Dish} from "../../../Models/Dish";
 
-import {save, closeCircleOutline, trash, checkmarkCircleOutline, create} from 'ionicons/icons';
+import {save, closeCircleOutline, trash, create} from 'ionicons/icons';
 
 const mapStateToProps = ({ingredients, dishes}: IRootState) => {
     const {ingredientList} = ingredients;
@@ -27,6 +26,7 @@ const mapStateToProps = ({ingredients, dishes}: IRootState) => {
 const mapDispatcherToProps = (dispatch: Dispatch<ActionType<typeof actions>>) => {
     return {
         addDish: (element: Dish) => dispatch(actions.addDish(element)),
+        updateDish: (element: Dish) => dispatch(actions.updateDish(element)),
         removeDishById: (item: number) => dispatch(actions.removeDishById(0))
     }
 }
@@ -54,18 +54,63 @@ class DishesPage extends React.Component<ReduxType> {
 
     resetState = (displayToast: boolean, reason: string = "") => {
         this.setState({
-            currentIngredient: new Ingredient(),
+            currentDish: new Dish(),
             deleteMode: false,
             displayModal: false,
             displayToast: displayToast,
             editMode: false,
             toastMessage: reason,
-            toastType: "primary"
+            toastType: "success"
+        })
+    }
+
+    displayError = (reason: string) => {
+        this.setState({
+            displayToast: true,
+            toastMessage: reason,
+            toastType: "danger"
         })
     }
 
     handleFilterChange = (str: string) => {
         this.setState({filter: str});
+    }
+
+    handleCheckBoxChange(event: any) {
+        let selectedIngredient = this.props.ingredientList.find(ing => ing.id.toString() === event.target.value)!;
+        if (event.target.checked) {
+            this.state.currentDish.recipe.push(selectedIngredient);
+        } else {
+            let elementToRemove = this.state.currentDish.recipe.findIndex(element => element === selectedIngredient);
+            this.state.currentDish.recipe.splice(elementToRemove, 1);
+        }
+    }
+
+    handleAddDish(dishName: string) {
+        if (dishName.trim() === "") {
+            this.displayError("Name can not be empty")
+        } else {
+            let elementFound: boolean = this.props.dishList.some(elt => elt.name.trim() === dishName);
+            if (elementFound) {
+                this.setState({
+                    displayToast: true,
+                    toastMessage: "The element does already exist",
+                    toastType: "danger"
+                })
+            } else {
+                let newDish = new Dish(dishName, this.props.dishList.length + 1, this.state.currentDish.recipe);
+                this.props.addDish(newDish);
+                this.resetState(true, "Element has been created");
+            }
+        }
+    }
+
+    handleUpdateDish(newDishName: string) {
+        let newElement = new Dish(newDishName,
+            this.state.currentDish.id,
+            this.state.currentDish.recipe)
+        this.props.updateDish(newElement);
+        this.resetState(true, "Your change has been applied")
     }
 
     renderDishes = () => {
@@ -88,31 +133,6 @@ class DishesPage extends React.Component<ReduxType> {
 
                 </IonList>
             )
-        }
-    }
-
-    handleCheckBoxChange(event: any) {
-        let selectedIngredient = this.props.ingredientList.find(ing => ing.id.toString() === event.target.value)!;
-        if (event.target.checked) {
-            this.state.currentDish.recipe.push(selectedIngredient);
-        } else {
-            let elementToRemove = this.state.currentDish.recipe.findIndex(element => element === selectedIngredient);
-            this.state.currentDish.recipe.splice(elementToRemove, 1);
-        }
-    }
-
-    handleAddDish(dishName: string) {
-        let elementFound: boolean = this.props.dishList.some(elt => elt.name.trim() === dishName);
-        if (elementFound) {
-            this.setState({
-                displayToast: true,
-                toastMessage: "The element does already exist",
-                toastType: "danger"
-            })
-        } else {
-            let newDish = new Dish(dishName, this.props.dishList.length + 1, this.state.currentDish.recipe);
-            this.props.addDish(newDish);
-            this.resetState(true, "Element has been created");
         }
     }
 
@@ -171,6 +191,7 @@ class DishesPage extends React.Component<ReduxType> {
             modalTitle = "Update a dish";
             buttonLabel = save;
             displayDeleteButton = false;
+            clickAction = () => this.handleUpdateDish(textValue)
         } else if (this.state.currentDish.id === 0) {
             icon = "/assets/icon/app/ic_plat_ajout.png";
             modalTitle = "Add a dish";
@@ -254,7 +275,7 @@ class DishesPage extends React.Component<ReduxType> {
                 <IonButton onClick={() => this.setState({displayModal: true})} expand='block'
                            color="light">Add</IonButton>
                 <IonSearchbar onIonChange={e => this.handleFilterChange((e.target as HTMLInputElement).value)}
-                              showCancelButton="focus"></IonSearchbar>
+                              showCancelButton="focus"> </IonSearchbar>
                 {this.renderDishes()}
                 {this.renderModal()}
             </IonContent>
@@ -269,4 +290,4 @@ class DishesPage extends React.Component<ReduxType> {
     }
 }
 
-export default connect(mapStateToProps, {addDish, removeDishById})(DishesPage);
+export default connect(mapStateToProps, {addDish, updateDish, removeDishById})(DishesPage);

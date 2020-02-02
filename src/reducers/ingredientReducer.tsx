@@ -21,16 +21,13 @@ export function ingredientsReducer(state: InitialState = init, action: any): Ini
     console.log("reducer.ingredient");
     switch(action.type) {
         case ADD_INGREDIENT:
-            console.log("ingredients.Add an ing");
             state.ingredientList.push(action.data)
             return state;
         case UPDATE_INGREDIENT:
-            console.log("ingredients.Update an ing");
             let foundElement = state.ingredientList.findIndex(element => element.id === action.data.id);
             let newList = Object.assign([], state.ingredientList, {[foundElement]: action.data});
             return {ingredientList: newList, dishList: state.dishList};
         case REMOVE_INGREDIENT:
-            console.log("ingredients.Remove an ing");
             let elementToRemove = state.ingredientList.findIndex(element => element.id === action.data.id);
             state.ingredientList.splice(elementToRemove, 1);
             return {ingredientList: state.ingredientList, dishList: state.dishList};

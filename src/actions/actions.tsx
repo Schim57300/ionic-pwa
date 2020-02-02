@@ -2,6 +2,7 @@ import {Ingredient} from "../Models/Ingredient";
 import {Dish} from "../Models/Dish";
 
 export const ADD_DISH = 'ADD_DISH';
+export const UPDATE_DISH = 'UPDATE_DISH';
 export const REMOVE_DISH = 'REMOVE_DISH';
 
 export const ADD_INGREDIENT = 'ADD_INGREDIENT';
@@ -26,6 +27,14 @@ export function removeDishById(id: number) {
     return action;
 }
 
+export function updateDish(element: Dish) {
+    const action = {
+        type: UPDATE_DISH,
+        data: element
+    }
+
+    return action;
+}
 /**
  * INGREDIENTS
  */
