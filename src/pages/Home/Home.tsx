@@ -10,8 +10,8 @@ const Home: React.FC = () => {
     return (
         <IonPage>
             <IonHeader>
-                <IonButton expand='block' color="light">Menu</IonButton>
-                <IonButton expand='block' color="light">Shop</IonButton>
+                <IonButton expand='block' routerLink="/menu" color="light">Menu</IonButton>
+                <IonButton disabled expand='block' color="light">Shopping list</IonButton>
                 <IonButton expand='block' routerLink="/config" color="light">Config</IonButton>
             </IonHeader>
             <IonContent>

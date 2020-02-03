@@ -5,15 +5,21 @@ import {Ingredient} from "../Models/Ingredient";
 
 const init: InitialState = {
     ingredientList: [],
-    dishList: [new Dish("Pâtes carbonara", 1,
+    menuList:[],
+    dishList: [
+        new Dish("Pâtes carbonara", 1,
         [new Ingredient("Lardons", 3),
-            //new Ingredient("Salade verte", 6),
             new Ingredient("Crème", 4),
             new Ingredient("Oeufs", 7),
-            //new Ingredient("Poivre", 11),
-            //new Ingredient("Basilic", 9),
-            // new Ingredient("Huile", 10),
-            new Ingredient("Pâtes", 8)])]
+            new Ingredient("Pâtes", 8)]),
+        new Dish("Poulet basquaise", 2,
+            [new Ingredient("Lardons", 3),
+                new Ingredient("Oeufs", 7),
+                new Ingredient("Pâtes", 8)]),
+        new Dish("Quiche lorraine", 3,
+            [new Ingredient("Lardons", 3),
+                new Ingredient("Pâtes", 8)])
+    ]
 };
 
 export function dishesReducer(state: InitialState = init, action: any): InitialState {
@@ -25,10 +31,10 @@ export function dishesReducer(state: InitialState = init, action: any): InitialS
         case UPDATE_DISH:
             let foundElement = state.dishList.findIndex(element => element.id === action.data.id);
             let newList = Object.assign([], state.dishList, {[foundElement]: action.data});
-            return {ingredientList: state.ingredientList, dishList: newList};
+            return {ingredientList: state.ingredientList, dishList: newList, menuList: state.menuList};
         case REMOVE_DISH:
-            let dishes = {} //state.filter(item => item.id !== action.id);
-            console.log("dishes.Remove a dish");
+            let elementToRemove = state.dishList.findIndex(element => element.id === action.data.id);
+            state.dishList.splice(elementToRemove, 1);
             return state;
         default:
             return state;

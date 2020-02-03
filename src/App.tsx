@@ -25,6 +25,7 @@ import './theme/variables.css';
 import ConfigPage from "./pages/Config/Config";
 import DishesPage from "./pages/Config/Dishes/Dishes";
 import IngredientsPage from "./pages/Config/Ingredients/Ingredients";
+import Menu from "./pages/Menu/Menu";
 
 class App extends Component {
 
@@ -38,6 +39,7 @@ class App extends Component {
                         <Route path="/config" component={ConfigPage} exact={true}/>
                         <Route path="/dishes" component={DishesPage} exact={true}/>
                         <Route path="/ingredients" component={IngredientsPage} exact={true}/>
+                        <Route path="/menu" component={Menu} exact={true}/>
                         <Route exact path="/" render={() => <Redirect to="/home"/>}/>
                     </IonRouterOutlet>
                 </IonReactRouter>

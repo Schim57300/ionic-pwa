@@ -15,7 +15,7 @@ const ConfigPage: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent>
-                <IonButton expand='block' color="light">Account (coming soon)</IonButton>
+                <IonButton disabled expand='block' color="light">Account (coming soon)</IonButton>
                 <IonButton expand='block' routerLink="/ingredients" color="light">Ingredients</IonButton>
                 <IonButton expand='block' routerLink="/dishes" color="light">Dishes</IonButton>
             </IonContent>

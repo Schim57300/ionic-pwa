@@ -19,6 +19,6 @@ export class Dish {
     }
 
 }
-Dish.prototype.toString = function dogToString() {
+Dish.prototype.toString = function dishToString() {
     return '' + this.name;
 }

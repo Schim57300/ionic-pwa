@@ -8,7 +8,7 @@ import {Dispatch} from 'redux';
 
 import './Dishes.css';
 
-import {addDish, removeDishById, updateDish} from "../../../actions/actions";
+import {addDish, removeDish, updateDish} from "../../../actions/actions";
 import * as actions from "../../../actions/actions";
 import {IRootState} from "../../../reducers";
 import {ActionType} from "typesafe-actions";
@@ -27,15 +27,11 @@ const mapDispatcherToProps = (dispatch: Dispatch<ActionType<typeof actions>>) =>
     return {
         addDish: (element: Dish) => dispatch(actions.addDish(element)),
         updateDish: (element: Dish) => dispatch(actions.updateDish(element)),
-        removeDishById: (item: number) => dispatch(actions.removeDishById(0))
+        removeDish: (element: Dish) => dispatch(actions.removeDish(element))
     }
 }
 
 type ReduxType = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatcherToProps>;
-
-//TODO:
-// - Div fix et scrollable
-// - Boutons à ordonner
 
 class DishesPage extends React.Component<ReduxType> {
     ERROR: string = "danger";
@@ -115,6 +111,18 @@ class DishesPage extends React.Component<ReduxType> {
         this.resetState()
     }
 
+    handleDeleteDish = () => {
+        //TODO EKA: Later: check  if dish is not used in menu
+        //let listLinkDish = this.checkIngredientIsNotUsed()
+        //if (listLinkDish.length > 0) {
+        //    this.displayToast(this.ERROR, "Used in " + listLinkDish.toString());
+        //} else {
+            this.props.removeDish(this.state.currentDish);
+            this.displayToast(this.INFO, "Element has been removed")
+            this.resetState()
+        //}
+    }
+
     renderDishes = () => {
         if (this.props.dishList.length == 0) {
             return (<IonLabel>Damn it, it seems you have nothing in your list</IonLabel>)
@@ -152,7 +160,7 @@ class DishesPage extends React.Component<ReduxType> {
                                     <IonCheckbox
                                         checked={this.state.currentDish.recipe.some(element => item.id === element.id)}
                                         onClick={(e) => this.handleCheckBoxChange(e)}
-                                        value={item.id.toString()} ion-/>
+                                        value={item.id.toString()}/>
                                 </IonItem>
                             )
                         })}
@@ -179,31 +187,34 @@ class DishesPage extends React.Component<ReduxType> {
         let textValue = this.state.currentDish.name.trim();
         let icon = "/assets/icon/app/ic_ing_ajout.png";
         let modalTitle = "Add an ingredient";
-        let buttonLabel = save;
+        let mainButtonLabel = save;
         let displayDeleteButton = false;
         let clickAction = () => console.log("click");
 
         if (this.state.deleteMode) {
             icon = "/assets/icon/app/ic_plat_suppr.png";
             modalTitle = "Remove a dish";
-            buttonLabel = trash;
+            mainButtonLabel = trash;
+            //Delete button won't be displayed. The "delete" action
+            //is handled by the main button
             displayDeleteButton = false;
+            clickAction = () => this.handleDeleteDish()
         } else if (this.state.editMode) {
             icon = "/assets/icon/app/ic_plat_modif.png";
             modalTitle = "Update a dish";
-            buttonLabel = save;
+            mainButtonLabel = save;
             displayDeleteButton = false;
             clickAction = () => this.handleUpdateDish(textValue)
         } else if (this.state.currentDish.id === 0) {
             icon = "/assets/icon/app/ic_plat_ajout.png";
             modalTitle = "Add a dish";
-            buttonLabel = save;
+            mainButtonLabel = save;
             displayDeleteButton = false;
             clickAction = () => this.handleAddDish(textValue)
         } else {
             icon = "/assets/icon/app/ic_plat.png";
             modalTitle = "Detail";
-            buttonLabel = create;
+            mainButtonLabel = create;
             displayDeleteButton = true;
             clickAction = () => this.setState({editMode: true})
         }
@@ -230,7 +241,7 @@ class DishesPage extends React.Component<ReduxType> {
                                expand='block'
                                color="light"
                                onClick={clickAction}>
-                        <IonIcon icon={buttonLabel}/>
+                        <IonIcon icon={mainButtonLabel}/>
                     </IonButton>
                     {
                         displayDeleteButton ?
@@ -292,4 +303,4 @@ class DishesPage extends React.Component<ReduxType> {
     }
 }
 
-export default connect(mapStateToProps, {addDish, updateDish, removeDishById})(DishesPage);
+export default connect(mapStateToProps, {addDish, updateDish, removeDish})(DishesPage);

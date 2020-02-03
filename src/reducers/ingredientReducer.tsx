@@ -15,7 +15,8 @@ const init: InitialState = {
         new Ingredient("Huile", 10),
         new Ingredient("Poivre", 11)
     ],
-    dishList: []
+    dishList: [],
+    menuList:[]
 };
 export function ingredientsReducer(state: InitialState = init, action: any): InitialState {
     console.log("reducer.ingredient");
@@ -26,11 +27,11 @@ export function ingredientsReducer(state: InitialState = init, action: any): Ini
         case UPDATE_INGREDIENT:
             let foundElement = state.ingredientList.findIndex(element => element.id === action.data.id);
             let newList = Object.assign([], state.ingredientList, {[foundElement]: action.data});
-            return {ingredientList: newList, dishList: state.dishList};
+            return {ingredientList: newList, dishList: state.dishList, menuList: state.menuList};
         case REMOVE_INGREDIENT:
             let elementToRemove = state.ingredientList.findIndex(element => element.id === action.data.id);
             state.ingredientList.splice(elementToRemove, 1);
-            return {ingredientList: state.ingredientList, dishList: state.dishList};
+            return state;
         default:
             return state;
     }

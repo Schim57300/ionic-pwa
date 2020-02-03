@@ -1,5 +1,6 @@
 import {Ingredient} from "../Models/Ingredient";
 import {Dish} from "../Models/Dish";
+import {Menu} from "../Models/Menu";
 
 export const ADD_DISH = 'ADD_DISH';
 export const UPDATE_DISH = 'UPDATE_DISH';
@@ -9,7 +10,14 @@ export const ADD_INGREDIENT = 'ADD_INGREDIENT';
 export const UPDATE_INGREDIENT = 'UPDATE_INGREDIENT';
 export const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT';
 
+export const ADD_MENU = 'ADD_MENU';
+export const UPDATE_MENU = 'UPDATE_MENU';
+export const REMOVE_MENU = 'REMOVE_MENU';
 
+
+/**
+ * DISHES
+ */
 export function addDish(element: Dish) {
     const action = {
         type: ADD_DISH,
@@ -19,10 +27,10 @@ export function addDish(element: Dish) {
     return action;
 }
 
-export function removeDishById(id: number) {
+export function removeDish(element: Dish) {
     const action = {
         type: REMOVE_DISH,
-        data: id
+        data: element
     }
     return action;
 }
@@ -35,6 +43,7 @@ export function updateDish(element: Dish) {
 
     return action;
 }
+
 /**
  * INGREDIENTS
  */
@@ -58,6 +67,17 @@ export function removeIngredient(element: Ingredient) {
 export function updateIngredient(element: Ingredient) {
     const action = {
         type: UPDATE_INGREDIENT,
+        data: element
+    }
+    return action;
+}
+
+/**
+ * MENU
+ */
+export function updateMenu(element: Menu) {
+    const action = {
+        type: UPDATE_MENU,
         data: element
     }
     return action;

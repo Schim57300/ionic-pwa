@@ -151,19 +151,21 @@ class IngredientsPage extends React.Component<ReduxType> {
         let textValue = this.state.currentIngredient.name.trim();
         let icon = "/assets/icon/app/ic_ing_ajout.png";
         let modalTitle = "Add an ingredient";
-        let buttonLabel = save;
+        let mainButtonLabel = save;
         let displayDeleteButton = false;
         let clickAction = () => this.handleAddIngredient(textValue)
         if (this.state.deleteMode) {
             icon = "/assets/icon/app/ic_ing_suppr.png";
             modalTitle = "Remove ingredient";
-            buttonLabel = trash;
+            mainButtonLabel = trash;
+            //Delete button won't be displayed. The "delete" action
+            //is handled by the main button
             displayDeleteButton = false;
             clickAction = () => this.handleDeleteIngredient()
         } else if (textValue.length > 0) {
             icon = "/assets/icon/app/ic_ing_modif.png";
             modalTitle = "Update ingredient";
-            buttonLabel = save;
+            mainButtonLabel = save;
             displayDeleteButton = true;
             clickAction = () => this.handleUpdateIngredient(textValue)
         }
@@ -174,7 +176,7 @@ class IngredientsPage extends React.Component<ReduxType> {
                           this.resetState();
                       }}>
                 <div className="flex-container">
-                    <img src={icon} height="80px"/>
+                    <img src={icon} height="40px"/>
                     <div className="title">{modalTitle}</div>
                 </div>
                 <IonItem className="modal-content">
@@ -191,7 +193,7 @@ class IngredientsPage extends React.Component<ReduxType> {
                                expand='block'
                                color="light"
                                onClick={clickAction}>
-                        <IonIcon icon={buttonLabel}/>
+                        <IonIcon icon={mainButtonLabel}/>
                     </IonButton>
                     {
                         displayDeleteButton ?
