@@ -30,7 +30,6 @@ import Menu from "./pages/Menu/Menu";
 class App extends Component {
 
     render() {
-
         return (
             <IonApp>
                 <IonReactRouter>

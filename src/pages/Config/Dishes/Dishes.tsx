@@ -16,6 +16,8 @@ import {Dish} from "../../../Models/Dish";
 
 import {save, closeCircleOutline, trash, create} from 'ionicons/icons';
 
+import {DICTIONARY} from '../../../services/storageService'
+
 const mapStateToProps = ({ingredients, dishes}: IRootState) => {
     const {ingredientList} = ingredients;
     const {dishList} = dishes;
@@ -84,19 +86,19 @@ class DishesPage extends React.Component<ReduxType> {
 
     handleAddDish(dishName: string) {
         if (dishName.trim() === "") {
-            this.displayToast(this.ERROR, "Name can not be empty")
+            this.displayToast(this.ERROR, DICTIONARY.ERROR_MESSAGE.MANDATORY_VALUE)
         } else {
             let elementFound: boolean = this.props.dishList.some(elt => elt.name.trim() === dishName);
             if (elementFound) {
                 this.setState({
                     displayToast: true,
-                    toastMessage: "The element does already exist",
+                    toastMessage: DICTIONARY.ERROR_MESSAGE.VALUE_ALREADY_EXIST,
                     toastType: "danger"
                 })
             } else {
                 let newDish = new Dish(dishName, this.props.dishList.length + 1, this.state.currentDish.recipe);
                 this.props.addDish(newDish);
-                this.displayToast(this.INFO, "Element has been created");
+                this.displayToast(this.INFO, DICTIONARY.INFO_MESSAGE.ELEMENT_CREATED);
                 this.resetState();
             }
         }
@@ -107,7 +109,7 @@ class DishesPage extends React.Component<ReduxType> {
             this.state.currentDish.id,
             this.state.currentDish.recipe)
         this.props.updateDish(newElement);
-        this.displayToast(this.INFO, "Your change has been applied")
+        this.displayToast(this.INFO, DICTIONARY.INFO_MESSAGE.CHANGE_APPLIED)
         this.resetState()
     }
 
@@ -118,7 +120,7 @@ class DishesPage extends React.Component<ReduxType> {
         //    this.displayToast(this.ERROR, "Used in " + listLinkDish.toString());
         //} else {
             this.props.removeDish(this.state.currentDish);
-            this.displayToast(this.INFO, "Element has been removed")
+            this.displayToast(this.INFO, DICTIONARY.INFO_MESSAGE.ELEMENT_DELETED)
             this.resetState()
         //}
     }
@@ -186,14 +188,14 @@ class DishesPage extends React.Component<ReduxType> {
     renderModal() {
         let textValue = this.state.currentDish.name.trim();
         let icon = "/assets/icon/app/ic_ing_ajout.png";
-        let modalTitle = "Add an ingredient";
+        let modalTitle = DICTIONARY.dish_page.MODAL_ADD;
         let mainButtonLabel = save;
         let displayDeleteButton = false;
         let clickAction = () => console.log("click");
 
         if (this.state.deleteMode) {
             icon = "/assets/icon/app/ic_plat_suppr.png";
-            modalTitle = "Remove a dish";
+            modalTitle = DICTIONARY.dish_page.MODAL_DELETE;
             mainButtonLabel = trash;
             //Delete button won't be displayed. The "delete" action
             //is handled by the main button
@@ -201,19 +203,19 @@ class DishesPage extends React.Component<ReduxType> {
             clickAction = () => this.handleDeleteDish()
         } else if (this.state.editMode) {
             icon = "/assets/icon/app/ic_plat_modif.png";
-            modalTitle = "Update a dish";
+            modalTitle = DICTIONARY.dish_page.MODAL_UPDATE;
             mainButtonLabel = save;
             displayDeleteButton = false;
             clickAction = () => this.handleUpdateDish(textValue)
         } else if (this.state.currentDish.id === 0) {
             icon = "/assets/icon/app/ic_plat_ajout.png";
-            modalTitle = "Add a dish";
+            modalTitle = DICTIONARY.dish_page.MODAL_ADD;
             mainButtonLabel = save;
             displayDeleteButton = false;
             clickAction = () => this.handleAddDish(textValue)
         } else {
             icon = "/assets/icon/app/ic_plat.png";
-            modalTitle = "Detail";
+            modalTitle = DICTIONARY.dish_page.MODAL_DETAIL;
             mainButtonLabel = create;
             displayDeleteButton = true;
             clickAction = () => this.setState({editMode: true})
@@ -225,7 +227,7 @@ class DishesPage extends React.Component<ReduxType> {
                     <img src={icon} height="40px"/>
                     <div className="title">{modalTitle}</div>
                 </div>
-                <IonInput placeholder="Dish name"
+                <IonInput placeholder={DICTIONARY.dish_page.NAME_PLACEHOLDER}
                           readonly={!this.state.editMode && this.state.currentDish.id !== 0}
                           disabled={!this.state.editMode && this.state.currentDish.id !== 0}
                           value={textValue}
@@ -280,14 +282,15 @@ class DishesPage extends React.Component<ReduxType> {
                     <IonButtons slot="start">
                         <IonBackButton defaultHref="/config"/>
                     </IonButtons>
-                    <IonTitle>Dishes</IonTitle>
+                    <IonTitle>{DICTIONARY.dish_page.PAGE_TITLE}</IonTitle>
                 </IonToolbar>
             </IonHeader>
 
             <IonContent>
                 <IonButton onClick={() => this.setState({displayModal: true})} expand='block'
-                           color="light">Add</IonButton>
+                           color="light">{DICTIONARY.dish_page.ADD_BUTTON_LABEL}</IonButton>
                 <IonSearchbar onIonChange={e => this.handleFilterChange((e.target as HTMLInputElement).value)}
+                              placeholder={DICTIONARY.dish_page.FILTER_PLACEHOLDER}
                               showCancelButton="focus"> </IonSearchbar>
                 {this.renderDishes()}
                 {this.renderModal()}

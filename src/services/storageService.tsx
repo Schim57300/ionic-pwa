@@ -2,9 +2,16 @@ import React from 'react';
 
 import {Plugins} from '@capacitor/core';
 
+import dico_json from '../data/dictionary.json'
+
 const {Storage} = Plugins;
 
+
+export const DICTIONARY = dico_json.fr;
+
 class StorageService {
+
+
 
     // JSON "set" example
     async setObject() {

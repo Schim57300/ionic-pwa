@@ -1,0 +1,104 @@
+{
+  "fr": {
+    "home_page": {
+      "MENU_BUTTON_LABEL": "Menu",
+      "SHOPPING_LIST_BUTTON_LABEL": "Liste de course",
+      "CONFIG_BUTTON_LABEL": "Configuration"
+    },
+    "config_page": {
+      "PAGE_TITLE": "Configuration",
+      "ACCOUNT_BUTTON_LABEL": "COMPTE UTILISATEUR (A VENIR)",
+      "DISH_BUTTON_LABEL": "GESTION DES PLATS",
+      "INGREDIENT_BUTTON_LABEL": "GESTION DES INGREDIENTS"
+    },
+    "ingredient_page": {
+      "PAGE_TITLE": "Ingrédients",
+      "ADD_BUTTON_LABEL": "AJOUTER",
+      "FILTER_PLACEHOLDER": "Chercher",
+      "NAME_PLACEHOLDER": "Nom de l'ingrédient",
+      "MODAL_ADD": "Ajouter un ingrédient",
+      "MODAL_UPDATE": "Modifier un ingrédient",
+      "MODAL_DELETE": "Supprimer un ingrédient"
+    },
+    "dish_page": {
+      "PAGE_TITLE": "Plats",
+      "ADD_BUTTON_LABEL": "AJOUTER",
+      "FILTER_PLACEHOLDER": "Chercher",
+      "NAME_PLACEHOLDER": "Nom du plat",
+      "MODAL_DETAIL": "Composition du plat",
+      "MODAL_ADD": "Ajouter un plat",
+      "MODAL_UPDATE": "Modifier un plat",
+      "MODAL_DELETE": "Supprimer un plat"
+    },
+    "menu_page": {
+      "PAGE_TITLE": "Menus",
+      "MODAL_CHOOSE": "Composez votre menu",
+      "LIST_LUNCH": "Déjeuner",
+      "LIST_DINNER": "Diner",
+      "EMPTY_LIST": "Aucun plat"
+    },
+    "ERROR_MESSAGE" : {
+      "MANDATORY_VALUE": "La valeur est obligatoire",
+      "VALUE_ALREADY_EXIST": "La valeur existe déjà"
+    },
+    "INFO_MESSAGE" : {
+      "ELEMENT_CREATED": "L'élément a été créé",
+      "CHANGE_APPLIED": "Les changements ont été pris en compte",
+      "ELEMENT_DELETED": "L'élément a été supprimé"
+    },
+    "INGREDIENT": "Ingredient",
+    "DISH": "Dish",
+    "MENU": "Menu"
+  },
+  "en": {
+    "home_page": {
+      "MENU_BUTTON_LABEL": "Menu",
+      "SHOPPING_LIST_BUTTON_LABEL": "Shopping list",
+      "CONFIG_BUTTON_LABEL": "Configuration"
+    },
+    "config_page": {
+      "PAGE_TITLE": "Configuration",
+      "ACCOUNT_BUTTON_LABEL": "USER ACCOUNT (COMING SOON)",
+      "DISH_BUTTON_LABEL": "DISHES",
+      "INGREDIENT_BUTTON_LABEL": "INGREDIENTS"
+    },
+    "ingredient_page": {
+      "PAGE_TITLE": "Ingredients",
+      "ADD_BUTTON_LABEL": "ADD",
+      "FILTER_PLACEHOLDER": "Search",
+      "NAME_PLACEHOLDER": "Ingredient name",
+      "MODAL_ADD": "Add an ingredient",
+      "MODAL_UPDATE": "Edit an ingredient",
+      "MODAL_DELETE": "Delete an ingredient"
+    },
+    "dish_page": {
+      "PAGE_TITLE": "Dishes",
+      "ADD_BUTTON_LABEL": "ADD",
+      "FILTER_PLACEHOLDER": "Search",
+      "NAME_PLACEHOLDER": "Dish namet",
+      "MODAL_DETAIL": "Dish detail",
+      "MODAL_ADD": "Add a disht",
+      "MODAL_UPDATE": "Edit a dish",
+      "MODAL_DELETE": "Delete a dish"
+    },
+    "menu_page": {
+      "PAGE_TITLE": "Menus",
+      "MODAL_CHOOSE": "Compose your menu",
+      "LIST_LUNCH": "Lunch",
+      "LIST_DINNER": "Dinner",
+      "EMPTY_LIST": "Aucun plat"
+    },
+    "ERROR_MESSAGE" : {
+      "MANDATORY_VALUE": "The value is mandatory",
+      "VALUE_ALREADY_EXIST": "The value does already exist"
+    },
+    "INFO_MESSAGE" : {
+      "ELEMENT_CREATED": "Element has been created",
+      "CHANGE_APPLIED": "Your change has been applied",
+      "ELEMENT_DELETED": "Element has been removed"
+    },
+    "INGREDIENT": "Ingredient",
+    "DISH": "Dish",
+    "MENU": "Menu"
+  }
+}

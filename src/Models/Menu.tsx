@@ -2,12 +2,12 @@ import {Dish} from "./Dish";
 
 
 export const MONDAY: string = "monday";
-export const TUESDAY: string = "tuesday";
-export const WEDNESDAY: string = "wednesday";
-export const THURSDAY: string = "thursday";
-export const FRIDAY: string = "friday";
-export const SATURDAY: string = "saturday";
-export const SUNDAY: string = "sunday";
+export const TUESDAY: string = "monday";
+export const WEDNESDAY: string = "monday";
+export const THURSDAY: string = "monday";
+export const FRIDAY: string = "monday";
+export const SATURDAY: string = "monday";
+export const SUNDAY: string = "monday";
 
 export class Menu {
 

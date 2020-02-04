@@ -14,6 +14,7 @@ import {IRootState} from "../../reducers";
 import {ActionType} from "typesafe-actions";
 import {Menu} from "../../Models/Menu";
 import {closeCircleOutline, save} from "ionicons/icons";
+import {Dish} from "../../Models/Dish";
 
 
 const mapStateToProps = ({menus, dishes}: IRootState) => {
@@ -39,6 +40,7 @@ class MenusPage extends React.Component<ReduxType> {
     DINNER: string = "dinner";
 
     state = {
+        currentMeal: [] as Dish[],
         currentMenu: new Menu(),
         currentMenuDetail: "",
         displayModal: false,
@@ -51,6 +53,7 @@ class MenusPage extends React.Component<ReduxType> {
 
     resetState = () => {
         this.setState({
+            currentMeal: [],
             currentMenu: new Menu(),
             currentMenuDetail: "",
             displayModal: false
@@ -66,27 +69,73 @@ class MenusPage extends React.Component<ReduxType> {
         })
     }
 
+    getSelectedMeal = (): Dish[] => {
+        if (this.state.currentMenuDetail === this.LUNCH) {
+            return this.state.currentMenu.lunchMeal;
+        } else {
+            return this.state.currentMenu.dinnerMeal;
+        }
+    }
+
     handleFilterChange = (str: string) => {
         this.setState({filter: str});
     }
 
     handleCheckBoxChange(event: any) {
-        let selectedDish = this.props.dishList.find(dish => dish.id.toString() === event.target.value)!;
-        if (event.target.checked) {
-            if (this.state.currentMenuDetail === this.LUNCH) {
-                this.state.currentMenu.lunchMeal.push(selectedDish);
-            } else {
-                this.state.currentMenu.dinnerMeal.push(selectedDish);
-            }
-        } else {
-            if (this.state.currentMenuDetail === this.LUNCH) {
-                let elementToRemove = this.state.currentMenu.lunchMeal.findIndex(element => element === selectedDish);
-                this.state.currentMenu.lunchMeal.splice(elementToRemove, 1);
-            } else {
-                let elementToRemove = this.state.currentMenu.dinnerMeal.findIndex(element => element === selectedDish);
-                this.state.currentMenu.dinnerMeal.splice(elementToRemove, 1);
-            }
+        let selectedDish = this.props.dishList.find(dish => dish.id.toString() === event.target.value);
+        if (!event.target.checked) {
+            let elementToRemove = this.state.currentMeal.findIndex(element => element === selectedDish);
+            this.state.currentMeal.splice(elementToRemove, 1);
+        } else if (selectedDish !== undefined) {
+            this.state.currentMeal.push(selectedDish);
         }
+    }
+
+    displayLunchMenu = (item: Menu) => {
+        return (
+            <IonItem
+                onClick={() => this.setState({
+                    displayModal: true,
+                    currentMenu: Object.assign({}, item),
+                    currentMenuDetail: this.LUNCH,
+                    currentMeal: item.lunchMeal
+                })}
+                lines="none"
+                className="list-menu">
+                <IonLabel>
+                    <h4>Lunch</h4>
+                    {item.lunchMeal.length <= 0 ? <IonLabel>Nothing</IonLabel> :
+                        item.lunchMeal.map(dish => {
+                            return (
+                                <IonLabel>{dish.name}</IonLabel>
+                            )
+                        })}
+                </IonLabel>
+            </IonItem>
+        )
+    }
+
+    displayDinnerMenu = (item: Menu) => {
+        return (
+            <IonItem
+                onClick={() => this.setState({
+                    displayModal: true,
+                    currentMenu: Object.assign({}, item),
+                    currentMenuDetail: this.DINNER,
+                    currentMeal: item.dinnerMeal
+                })}
+                className="list-menu">
+                <IonLabel className="list-menu">
+                    <h4>Dinner</h4>
+                    {item.dinnerMeal.length <= 0 ? <IonLabel>Nothing</IonLabel> :
+                        item.dinnerMeal.map(dish => {
+                            return (
+                                <IonLabel>{dish.name}</IonLabel>
+                            )
+                        })}
+                </IonLabel>
+            </IonItem>
+        )
     }
 
     renderMenu = () => {
@@ -105,44 +154,11 @@ class MenusPage extends React.Component<ReduxType> {
                                         </IonText>
                                     </IonLabel>
                                 </IonItem>
-                                <IonItem
-                                    onClick={() => this.setState({
-                                        displayModal: true,
-                                        currentMenu: Object.assign({},item),
-                                        currentMenuDetail: this.LUNCH})}
-                                    lines="none"
-                                    className="list-menu">
-                                    <IonLabel>
-                                        <p>Lunch</p>
-                                        {item.lunchMeal.length <= 0 ? <IonLabel>Nothing</IonLabel>:
-                                            item.lunchMeal.map(dish => {
-                                            return (
-                                                <IonLabel>{dish.name}</IonLabel>
-                                            )
-                                        })}
-                                    </IonLabel>
-                                </IonItem>
-                                <IonItem
-                                    onClick={() => this.setState({
-                                        displayModal: true,
-                                        currentMenu: Object.assign({},item),
-                                        currentMenuDetail: this.DINNER
-                                    })}
-                                    className="list-menu">
-                                    <IonLabel className="list-menu">
-                                        <p>Dinner</p>
-                                        {item.dinnerMeal.length <= 0 ? <IonLabel>Nothing</IonLabel>:
-                                            item.dinnerMeal.map(dish => {
-                                            return (
-                                                <IonLabel>{dish.name}</IonLabel>
-                                            )
-                                        })}
-                                    </IonLabel>
-                                </IonItem>
+                                {this.displayLunchMenu(item)}
+                                {this.displayDinnerMenu(item)}
                             </div>
                         )
                     })}
-
             </div>
         )
 
@@ -150,8 +166,6 @@ class MenusPage extends React.Component<ReduxType> {
 
     renderModal = () => {
         let icon = "/assets/icon/app/ic_plat.png";
-        let modalTitle = "Choose your meal";
-        let mainButtonLabel = save;
         let clickAction = () => console.log("Click");
 
         return (
@@ -162,7 +176,7 @@ class MenusPage extends React.Component<ReduxType> {
                       }}>
                 <div className="flex-container">
                     <img src={icon} height="40px"/>
-                    <div className="title">{modalTitle}</div>
+                    <div className="title">{"Choose your meal"}</div>
                 </div>
                 <IonList className="list-checkable-ingredient">
                     {this.props.dishList
@@ -173,11 +187,7 @@ class MenusPage extends React.Component<ReduxType> {
                                     <IonLabel>{item.name}</IonLabel>
                                     <IonCheckbox
                                         checked={
-                                            (this.state.currentMenuDetail === this.LUNCH
-                                            && this.state.currentMenu.lunchMeal.some(element => item.id === element.id))
-                                            ||
-                                            (this.state.currentMenuDetail === this.DINNER
-                                                && this.state.currentMenu.dinnerMeal.some(element => item.id === element.id))
+                                            this.getSelectedMeal().some(element => item.id === element.id)
                                         }
                                         onClick={(e) => this.handleCheckBoxChange(e)}
                                         value={item.id.toString()}/>
@@ -190,16 +200,12 @@ class MenusPage extends React.Component<ReduxType> {
                                expand='block'
                                color="light"
                                onClick={clickAction}>
-                        <IonIcon icon={mainButtonLabel}/>
+                        <IonIcon icon={save}/>
                     </IonButton>
                     <IonButton slot="end"
                                expand='block'
                                color="light"
-                               onClick={() => this.setState({
-                                   displayModal: false,
-                                   deleteMode: false,
-                                   currentMenu: new Menu()
-                               })}>
+                               onClick={() => this.resetState()}>
                         <IonIcon icon={closeCircleOutline}/>
                     </IonButton>
                 </div>
@@ -218,7 +224,6 @@ class MenusPage extends React.Component<ReduxType> {
                     <IonTitle>Menus</IonTitle>
                 </IonToolbar>
             </IonHeader>
-
             <IonContent>
                 {this.renderMenu()}
                 {this.renderModal()}
