@@ -19,6 +19,8 @@ import {Ingredient} from "../../../Models/Ingredient";
 import {closeCircleOutline, save, trash} from "ionicons/icons";
 import {Dish} from "../../../Models/Dish";
 
+import DICTIONARY from '../../../services/storageService';
+
 const mapStateToProps = ({ingredients, dishes}: IRootState) => {
     const {ingredientList} = ingredients;
     const {dishList} = dishes;
@@ -74,20 +76,20 @@ class IngredientsPage extends React.Component<ReduxType> {
 
     handleAddIngredient = (newLabel: string) => {
         if (newLabel.trim() === "") {
-            this.displayToast(this.ERROR, "Name can not be empty")
+            this.displayToast(this.ERROR, DICTIONARY.db.ERROR_MESSAGE.MANDATORY_VALUE)
         } else {
             let elementFound: boolean = this.props.ingredientList.some(elt => elt.name.trim() === newLabel);
             if (elementFound) {
                 this.setState({
                     displayToast: true,
-                    toastMessage: "The element does already exist",
+                    toastMessage: DICTIONARY.db.ERROR_MESSAGE.VALUE_ALREADY_EXIST,
                     toastType: "danger"
                 })
             } else {
                 let newElement = new Ingredient(newLabel,
                     this.props.ingredientList.length + 1)
                 this.props.addIngredient(newElement);
-                this.displayToast(this.INFO, "Element has been created")
+                this.displayToast(this.INFO, DICTIONARY.db.INFO_MESSAGE.ELEMENT_CREATED)
                 this.resetState();
             }
         }
@@ -97,17 +99,17 @@ class IngredientsPage extends React.Component<ReduxType> {
         let newElement = new Ingredient(newLabel,
             this.state.currentIngredient.id)
         this.props.updateIngredient(newElement);
-        this.displayToast(this.INFO, "Your change has been applied")
+        this.displayToast(this.INFO, DICTIONARY.db.INFO_MESSAGE.CHANGE_APPLIED)
         this.resetState()
     }
 
     handleDeleteIngredient = () => {
         let listLinkDish = this.checkIngredientIsNotUsed()
         if (listLinkDish.length > 0) {
-            this.displayToast(this.ERROR, "Used in " + listLinkDish.toString());
+            this.displayToast(this.ERROR, DICTIONARY.db.ERROR_MESSAGE.VALUE_ALREADY_USED + listLinkDish.toString());
         } else {
             this.props.removeIngredient(this.state.currentIngredient);
-            this.displayToast(this.INFO, "Element has been removed")
+            this.displayToast(this.INFO,DICTIONARY.db.INFO_MESSAGE.ELEMENT_DELETED)
             this.resetState()
         }
     }
@@ -150,13 +152,13 @@ class IngredientsPage extends React.Component<ReduxType> {
 
         let textValue = this.state.currentIngredient.name.trim();
         let icon = "/assets/icon/app/ic_ing_ajout.png";
-        let modalTitle = "Add an ingredient";
+        let modalTitle = DICTIONARY.db.ingredient_page.MODAL_ADD;
         let mainButtonLabel = save;
         let displayDeleteButton = false;
         let clickAction = () => this.handleAddIngredient(textValue)
         if (this.state.deleteMode) {
             icon = "/assets/icon/app/ic_ing_suppr.png";
-            modalTitle = "Remove ingredient";
+            modalTitle = DICTIONARY.db.ingredient_page.MODAL_DELETE;
             mainButtonLabel = trash;
             //Delete button won't be displayed. The "delete" action
             //is handled by the main button
@@ -164,7 +166,7 @@ class IngredientsPage extends React.Component<ReduxType> {
             clickAction = () => this.handleDeleteIngredient()
         } else if (textValue.length > 0) {
             icon = "/assets/icon/app/ic_ing_modif.png";
-            modalTitle = "Update ingredient";
+            modalTitle = DICTIONARY.db.ingredient_page.MODAL_UPDATE;
             mainButtonLabel = save;
             displayDeleteButton = true;
             clickAction = () => this.handleUpdateIngredient(textValue)
@@ -180,10 +182,11 @@ class IngredientsPage extends React.Component<ReduxType> {
                     <div className="title">{modalTitle}</div>
                 </div>
                 <IonItem className="modal-content">
-                    <IonTextarea placeholder="Ingredient name"
+                    <IonTextarea placeholder={DICTIONARY.db.ingredient_page.NAME_PLACEHOLDER}
                                  readonly={this.state.deleteMode}
                                  disabled={this.state.deleteMode}
                                  value={textValue}
+
                                  onIonChange={e => textValue = (e.target as HTMLInputElement).value}>
 
                     </IonTextarea>
@@ -231,14 +234,15 @@ class IngredientsPage extends React.Component<ReduxType> {
                         <IonButtons slot="start">
                             <IonBackButton defaultHref="/config"/>
                         </IonButtons>
-                        <IonTitle>Ingredients</IonTitle>
+                        <IonTitle>{DICTIONARY.db.ingredient_page.PAGE_TITLE}</IonTitle>
                     </IonToolbar>
                 </IonHeader>
 
                 <IonContent>
                     <IonButton onClick={() => this.setState({displayModal: true, currentIngredient: new Ingredient()})}
-                               expand='block' color="light">Add</IonButton>
+                               expand='block' color="light">{DICTIONARY.db.ingredient_page.ADD_BUTTON_LABEL}</IonButton>
                     <IonSearchbar onIonChange={e => this.handleFilterChange((e.target as HTMLInputElement).value)}
+                                  placeholder={DICTIONARY.db.ingredient_page.FILTER_PLACEHOLDER}
                                   showCancelButton="focus"> </IonSearchbar>
                     {this.renderIngredients()}
                     {this.renderModal()}

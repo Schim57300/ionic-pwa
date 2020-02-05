@@ -1,18 +1,19 @@
 import {ADD_MENU, REMOVE_MENU, UPDATE_MENU} from "../actions/actions";
 import {InitialState} from "./index";
 import {Menu, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY} from "../Models/Menu";
+import DICTIONARY from '../services/storageService';
 
 const init: InitialState = {
     ingredientList: [],
     dishList: [],
     menuList:[
-        new Menu("Monday", 1, MONDAY, []),
-        new Menu("Tuesday", 2, TUESDAY, []),
-        new Menu("Wednesday", 3, WEDNESDAY, []),
-        new Menu("Thursday", 4, THURSDAY, []),
-        new Menu("Friday", 5, FRIDAY, []),
-        new Menu("Saturday", 6, SATURDAY, []),
-        new Menu("Sunday", 7, SUNDAY, [])
+        new Menu(DICTIONARY.db.MONDAY, 1, MONDAY, []),
+        new Menu(DICTIONARY.db.TUESDAY, 2, TUESDAY, []),
+        new Menu(DICTIONARY.db.WEDNESDAY, 3, WEDNESDAY, []),
+        new Menu(DICTIONARY.db.THURSDAY, 4, THURSDAY, []),
+        new Menu(DICTIONARY.db.FRIDAY, 5, FRIDAY, []),
+        new Menu(DICTIONARY.db.SATURDAY, 6, SATURDAY, []),
+        new Menu(DICTIONARY.db.SUNDAY, 7, SUNDAY, [])
     ]
 };
 

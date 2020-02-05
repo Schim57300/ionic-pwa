@@ -16,6 +16,7 @@ import {Menu} from "../../Models/Menu";
 import {closeCircleOutline, save} from "ionicons/icons";
 import {Dish} from "../../Models/Dish";
 
+import DICTIONARY from '../../services/storageService'
 
 const mapStateToProps = ({menus, dishes}: IRootState) => {
     const {menuList} = menus;
@@ -103,8 +104,8 @@ class MenusPage extends React.Component<ReduxType> {
                 lines="none"
                 className="list-menu">
                 <IonLabel>
-                    <h4>Lunch</h4>
-                    {item.lunchMeal.length <= 0 ? <IonLabel>Nothing</IonLabel> :
+                    <h4>{DICTIONARY.db.menu_page.LIST_LUNCH}</h4>
+                    {item.lunchMeal.length <= 0 ? <IonLabel>{DICTIONARY.db.menu_page.EMPTY_LIST}</IonLabel> :
                         item.lunchMeal.map(dish => {
                             return (
                                 <IonLabel>{dish.name}</IonLabel>
@@ -126,8 +127,8 @@ class MenusPage extends React.Component<ReduxType> {
                 })}
                 className="list-menu">
                 <IonLabel className="list-menu">
-                    <h4>Dinner</h4>
-                    {item.dinnerMeal.length <= 0 ? <IonLabel>Nothing</IonLabel> :
+                    <h4>{DICTIONARY.db.menu_page.LIST_DINNER}</h4>
+                    {item.dinnerMeal.length <= 0 ? <IonLabel>{DICTIONARY.db.menu_page.EMPTY_LIST}</IonLabel> :
                         item.dinnerMeal.map(dish => {
                             return (
                                 <IonLabel>{dish.name}</IonLabel>
@@ -166,7 +167,7 @@ class MenusPage extends React.Component<ReduxType> {
 
     renderModal = () => {
         let icon = "/assets/icon/app/ic_plat.png";
-        let clickAction = () => console.log("Click");
+        let clickAction = () => this.resetState();
 
         return (
             <IonModal cssClass="menu-modal"
@@ -176,7 +177,7 @@ class MenusPage extends React.Component<ReduxType> {
                       }}>
                 <div className="flex-container">
                     <img src={icon} height="40px"/>
-                    <div className="title">{"Choose your meal"}</div>
+                    <div className="title">{DICTIONARY.db.menu_page.MODAL_CHOOSE}</div>
                 </div>
                 <IonList className="list-checkable-ingredient">
                     {this.props.dishList
@@ -221,7 +222,7 @@ class MenusPage extends React.Component<ReduxType> {
                     <IonButtons slot="start">
                         <IonBackButton defaultHref="/home"/>
                     </IonButtons>
-                    <IonTitle>Menus</IonTitle>
+                    <IonTitle>{DICTIONARY.db.menu_page.PAGE_TITLE}</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent>

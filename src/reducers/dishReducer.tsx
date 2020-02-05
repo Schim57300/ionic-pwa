@@ -13,12 +13,16 @@ const init: InitialState = {
             new Ingredient("Oeufs", 7),
             new Ingredient("Pâtes", 8)]),
         new Dish("Poulet basquaise", 2,
+            [new Ingredient("Poulet", 11),
+                new Ingredient("Riz", 16),
+                new Ingredient("Légumes divers", 18)]),
+        new Dish("Risotto légume", 3,
+            [new Ingredient("Riz (risotto)", 15),
+                new Ingredient("Légumes divers", 18)]),
+        new Dish("Quiche lorraine", 4,
             [new Ingredient("Lardons", 3),
-                new Ingredient("Oeufs", 7),
-                new Ingredient("Pâtes", 8)]),
-        new Dish("Quiche lorraine", 3,
-            [new Ingredient("Lardons", 3),
-                new Ingredient("Pâtes", 8)])
+                new Ingredient("Pâte à tarte", 13),
+                new Ingredient("Jambon", 19)])
     ]
 };
 

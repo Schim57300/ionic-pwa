@@ -13,7 +13,15 @@ const init: InitialState = {
         new Ingredient("Pâtes", 8),
         new Ingredient("Basilic", 9),
         new Ingredient("Huile", 10),
-        new Ingredient("Poivre", 11)
+        new Ingredient("Poulet", 11),
+        new Ingredient("Boeuf", 12),
+        new Ingredient("Pâte à tarte", 13),
+        new Ingredient("Courgettes", 14),
+        new Ingredient("Riz (risotto)", 15),
+        new Ingredient("Riz", 16),
+        new Ingredient("Cordons bleus", 17),
+        new Ingredient("Légumes divers", 18),
+        new Ingredient("Jambon", 19)
     ],
     dishList: [],
     menuList:[]

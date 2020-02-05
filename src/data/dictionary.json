@@ -1,9 +1,10 @@
 {
   "fr": {
     "home_page": {
-      "MENU_BUTTON_LABEL": "Menu",
-      "SHOPPING_LIST_BUTTON_LABEL": "Liste de course",
-      "CONFIG_BUTTON_LABEL": "Configuration"
+      "MENU_BUTTON_LABEL": "Composer vos menus",
+      "SHOPPING_LIST_BUTTON_LABEL": "Consulter la liste de course",
+      "CONFIG_BUTTON_LABEL": "Configuration",
+      "DESCRIPTION": "Composez votre liste de menu de la semaine et générez automatiquement votre liste de course</br></br><b>1.</b> Dans la partie <b>CONFIGURATION</b>, ajoutez les ingrédients (pâtes, poissons, riz, légumes…) nécessaires à la composition de vos plats.</br></br><b>2.</b> Créez vos plats avec les ingrédients existants.</br></br><b>3.</b> Lorsque la liste de plats est bien garnie, composez vos menus.</br></br>La liste de course se remplira automatiquement"
     },
     "config_page": {
       "PAGE_TITLE": "Configuration",
@@ -39,22 +40,31 @@
     },
     "ERROR_MESSAGE" : {
       "MANDATORY_VALUE": "La valeur est obligatoire",
-      "VALUE_ALREADY_EXIST": "La valeur existe déjà"
+      "VALUE_ALREADY_EXIST": "La valeur existe déjà",
+      "VALUE_ALREADY_USED": "Utilisé avec "
     },
     "INFO_MESSAGE" : {
       "ELEMENT_CREATED": "L'élément a été créé",
       "CHANGE_APPLIED": "Les changements ont été pris en compte",
       "ELEMENT_DELETED": "L'élément a été supprimé"
     },
-    "INGREDIENT": "Ingredient",
-    "DISH": "Dish",
-    "MENU": "Menu"
+    "WARNING_MESSAGE": {
+      "DEMO_VERSION" : "DEMO: Vos données ne seront pas sauvegardées!"
+    },
+    "MONDAY": "Lundi",
+    "TUESDAY": "Mardi",
+    "WEDNESDAY": "Mercredi",
+    "THURSDAY": "Jeudi",
+    "FRIDAY": "Vendredi",
+    "SATURDAY": "Samedi",
+    "SUNDAY": "Dimanche"
   },
   "en": {
     "home_page": {
-      "MENU_BUTTON_LABEL": "Menu",
-      "SHOPPING_LIST_BUTTON_LABEL": "Shopping list",
-      "CONFIG_BUTTON_LABEL": "Configuration"
+      "MENU_BUTTON_LABEL": "Compose your menus",
+      "SHOPPING_LIST_BUTTON_LABEL": "Check your shopping list",
+      "CONFIG_BUTTON_LABEL": "Configuration",
+      "DESCRIPTION": "Compose your weekly menu list and automatically generate your shopping list</br></br><b>1.</b> In the <b>CONFIGURATION</b> part, add ingredients (pasta, fish, rice, vegetables…) necessary for the composition of your dishes.</br></br><b>2.</b> Create your dishes using the existing ingredients.</br></br><b>3.</b> When the list of dishes is enough, compose your menus.</br></br>The shopping list will be filled automatically"
     },
     "config_page": {
       "PAGE_TITLE": "Configuration",
@@ -86,19 +96,27 @@
       "MODAL_CHOOSE": "Compose your menu",
       "LIST_LUNCH": "Lunch",
       "LIST_DINNER": "Dinner",
-      "EMPTY_LIST": "Aucun plat"
+      "EMPTY_LIST": "No dish"
     },
     "ERROR_MESSAGE" : {
       "MANDATORY_VALUE": "The value is mandatory",
-      "VALUE_ALREADY_EXIST": "The value does already exist"
+      "VALUE_ALREADY_EXIST": "The value does already exist",
+      "VALUE_ALREADY_USED": "Use with"
     },
     "INFO_MESSAGE" : {
       "ELEMENT_CREATED": "Element has been created",
       "CHANGE_APPLIED": "Your change has been applied",
       "ELEMENT_DELETED": "Element has been removed"
     },
-    "INGREDIENT": "Ingredient",
-    "DISH": "Dish",
-    "MENU": "Menu"
+    "WARNING_MESSAGE": {
+      "DEMO_VERSION" : "DEMO: what you will add won't be saved!"
+    },
+    "MONDAY": "Monday",
+    "TUESDAY": "Tuesday",
+    "WEDNESDAY": "Wednesday",
+    "THURSDAY": "Thursday",
+    "FRIDAY": "Friday",
+    "SATURDAY": "Saturday",
+    "SUNDAY": "Sunday"
   }
 }

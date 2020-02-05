@@ -2,6 +2,7 @@ import {IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonBac
 import React from 'react';
 
 import './Config.css';
+import DICTIONARY from '../../services/storageService';
 
 const ConfigPage: React.FC = () => {
     return (
@@ -11,13 +12,13 @@ const ConfigPage: React.FC = () => {
                     <IonButtons slot="start">
                         <IonBackButton defaultHref="/home" />
                     </IonButtons>
-                    <IonTitle>Configuration</IonTitle>
+                    <IonTitle>{DICTIONARY.db.config_page.PAGE_TITLE}</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent>
-                <IonButton disabled expand='block' color="light">Account (coming soon)</IonButton>
-                <IonButton expand='block' routerLink="/ingredients" color="light">Ingredients</IonButton>
-                <IonButton expand='block' routerLink="/dishes" color="light">Dishes</IonButton>
+                <IonButton disabled expand='block' color="light">{DICTIONARY.db.config_page.ACCOUNT_BUTTON_LABEL}</IonButton>
+                <IonButton expand='block' routerLink="/ingredients" color="light">{DICTIONARY.db.config_page.INGREDIENT_BUTTON_LABEL}</IonButton>
+                <IonButton expand='block' routerLink="/dishes" color="light">{DICTIONARY.db.config_page.DISH_BUTTON_LABEL}</IonButton>
             </IonContent>
         </IonPage>
     );
