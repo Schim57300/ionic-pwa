@@ -45,6 +45,7 @@ class ShoppingListPage extends React.Component<ReduxType> {
 
     composeShoppingList = () : Ingredient[] => {
         let shoppingList: Ingredient[] =[]
+        /*
         this.props.menuList.forEach(menu => {
             menu.lunchMeal.forEach(recipe => {
                 recipe.recipe.forEach(elt => shoppingList.push(elt));
@@ -53,8 +54,24 @@ class ShoppingListPage extends React.Component<ReduxType> {
                 recipe.recipe.forEach(elt => shoppingList.push(elt));
             })
         })
-
-
+        */
+        //Quick fix until data is correctly stored in memory
+        this.props.menuList.forEach(menu => {
+            menu.lunchMeal.forEach(recipe => {
+                recipe.recipe.forEach(elt => {
+                    if (!shoppingList.some(item => item.id === elt.id)) {
+                        shoppingList.push(elt)
+                    }
+                });
+            })
+            menu.dinnerMeal.forEach(recipe => {
+                recipe.recipe.forEach(elt => {
+                    if (!shoppingList.some(item => item.id === elt.id)) {
+                        shoppingList.push(elt)
+                    }
+                });
+            })
+        })
 
 
         let newSet = new Set(shoppingList)
