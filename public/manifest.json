@@ -1,6 +1,6 @@
 {
-  "short_name": "Ionic App",
-  "name": "My Ionic App",
+  "short_name": "Menu App",
+  "name": "My Menu App",
   "icons": [
     {
       "src": "assets/icon/favicon.png",

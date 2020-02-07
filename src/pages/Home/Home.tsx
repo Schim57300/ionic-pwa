@@ -31,13 +31,12 @@ class Home extends Component {
 
 
     render() {
-        console.log("render", this.state.displayToast);
         return (
             <IonPage>
                 <IonHeader>
                     <IonButton expand='block' routerLink="/menu"
                                color="light">{DICTIONARY.db.home_page.MENU_BUTTON_LABEL}</IonButton>
-                    <IonButton disabled expand='block'
+                    <IonButton expand='block' routerLink="/list"
                                color="light">{DICTIONARY.db.home_page.SHOPPING_LIST_BUTTON_LABEL}</IonButton>
                     <IonButton expand='block' routerLink="/config"
                                color="light">{DICTIONARY.db.home_page.CONFIG_BUTTON_LABEL}</IonButton>
@@ -55,7 +54,7 @@ class Home extends Component {
                     </div>
                     <br/>
                     <br/>
-                    <IonItem className="no-background">
+                    <IonItem className="no-background" lines="none">
                         <div dangerouslySetInnerHTML={{__html: DICTIONARY.db.home_page.DESCRIPTION}}/>
                     </IonItem>
                     <IonToast

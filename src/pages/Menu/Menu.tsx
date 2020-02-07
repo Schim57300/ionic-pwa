@@ -95,6 +95,7 @@ class MenusPage extends React.Component<ReduxType> {
     displayLunchMenu = (item: Menu) => {
         return (
             <IonItem
+                key={"lunch" + item.id}
                 onClick={() => this.setState({
                     displayModal: true,
                     currentMenu: Object.assign({}, item),
@@ -108,7 +109,7 @@ class MenusPage extends React.Component<ReduxType> {
                     {item.lunchMeal.length <= 0 ? <IonLabel>{DICTIONARY.db.menu_page.EMPTY_LIST}</IonLabel> :
                         item.lunchMeal.map(dish => {
                             return (
-                                <IonLabel>{dish.name}</IonLabel>
+                                <IonLabel key={"lunch" + item.id + dish.id}>{dish.name}</IonLabel>
                             )
                         })}
                 </IonLabel>
@@ -119,6 +120,7 @@ class MenusPage extends React.Component<ReduxType> {
     displayDinnerMenu = (item: Menu) => {
         return (
             <IonItem
+                key={"dinner" + item.id}
                 onClick={() => this.setState({
                     displayModal: true,
                     currentMenu: Object.assign({}, item),
@@ -131,7 +133,7 @@ class MenusPage extends React.Component<ReduxType> {
                     {item.dinnerMeal.length <= 0 ? <IonLabel>{DICTIONARY.db.menu_page.EMPTY_LIST}</IonLabel> :
                         item.dinnerMeal.map(dish => {
                             return (
-                                <IonLabel>{dish.name}</IonLabel>
+                                <IonLabel key={"dinner" + item.id + dish.id}>{dish.name}</IonLabel>
                             )
                         })}
                 </IonLabel>
@@ -148,7 +150,7 @@ class MenusPage extends React.Component<ReduxType> {
                             <div key={item.id}>
                                 <IonItem
                                     lines="none"
-                                    color={item.color}>
+                                    color="light">
                                     <IonLabel>
                                         <IonText>
                                             <h1>{item.name}</h1>

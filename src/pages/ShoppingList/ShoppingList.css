@@ -3,14 +3,7 @@ ion-content{
     --valign: middle;
 }
 
-.ingredient-modal {
-    background: rgba(0,0,0,0.5);
-    padding: 55% 10%;
-    --border-radius: 8px
-}
-
-
-.list-ingredient {
+.shopping-list-item {
     background: none;
     --background: none;
     opacity:1;

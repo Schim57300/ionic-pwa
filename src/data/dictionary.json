@@ -4,12 +4,15 @@
       "MENU_BUTTON_LABEL": "Composer vos menus",
       "SHOPPING_LIST_BUTTON_LABEL": "Consulter la liste de course",
       "CONFIG_BUTTON_LABEL": "Configuration",
-      "DESCRIPTION": "Composez votre liste de menu de la semaine et générez automatiquement votre liste de course</br></br><b>1.</b> Dans la partie <b>CONFIGURATION</b>, ajoutez les ingrédients (pâtes, poissons, riz, légumes…) nécessaires à la composition de vos plats.</br></br><b>2.</b> Créez vos plats avec les ingrédients existants.</br></br><b>3.</b> Lorsque la liste de plats est bien garnie, composez vos menus.</br></br>La liste de course se remplira automatiquement"
+      "DESCRIPTION": "Composez votre liste de menu de la semaine et générez automatiquement votre liste de course</br></br><b>1.</b> Dans la partie <b>CONFIGURATION</b>:</br> -  Ajoutez les ingrédients (pâtes, poissons, riz, légumes…) nécessaires à la composition de vos plats.</br></b> - Créez vos recettes.</br></br><b>2.</b> Lorsque la liste de recettes est bien garnie, <b>COMPOSER VOS MENUS</b>.</br></br>La liste de course se remplira automatiquement"
+    },
+    "shoppinglist_page": {
+      "PAGE_TITLE": "Liste de course"
     },
     "config_page": {
       "PAGE_TITLE": "Configuration",
       "ACCOUNT_BUTTON_LABEL": "COMPTE UTILISATEUR (A VENIR)",
-      "DISH_BUTTON_LABEL": "GESTION DES PLATS",
+      "DISH_BUTTON_LABEL": "GESTION DES RECETTES",
       "INGREDIENT_BUTTON_LABEL": "GESTION DES INGREDIENTS"
     },
     "ingredient_page": {
@@ -22,21 +25,21 @@
       "MODAL_DELETE": "Supprimer un ingrédient"
     },
     "dish_page": {
-      "PAGE_TITLE": "Plats",
+      "PAGE_TITLE": "Recettes",
       "ADD_BUTTON_LABEL": "AJOUTER",
       "FILTER_PLACEHOLDER": "Chercher",
-      "NAME_PLACEHOLDER": "Nom du plat",
-      "MODAL_DETAIL": "Composition du plat",
-      "MODAL_ADD": "Ajouter un plat",
-      "MODAL_UPDATE": "Modifier un plat",
-      "MODAL_DELETE": "Supprimer un plat"
+      "NAME_PLACEHOLDER": "Nom de la recette",
+      "MODAL_DETAIL": "Composition de la recette",
+      "MODAL_ADD": "Ajouter une recette",
+      "MODAL_UPDATE": "Modifier une recette",
+      "MODAL_DELETE": "Supprimer une recette"
     },
     "menu_page": {
       "PAGE_TITLE": "Menus",
       "MODAL_CHOOSE": "Composez votre menu",
       "LIST_LUNCH": "Déjeuner",
       "LIST_DINNER": "Diner",
-      "EMPTY_LIST": "Aucun plat"
+      "EMPTY_LIST": "Rien de prévu pour le moment"
     },
     "ERROR_MESSAGE" : {
       "MANDATORY_VALUE": "La valeur est obligatoire",
@@ -63,11 +66,14 @@
     "home_page": {
       "MENU_BUTTON_LABEL": "Compose your menus",
       "SHOPPING_LIST_BUTTON_LABEL": "Check your shopping list",
-      "CONFIG_BUTTON_LABEL": "Configuration",
-      "DESCRIPTION": "Compose your weekly menu list and automatically generate your shopping list</br></br><b>1.</b> In the <b>CONFIGURATION</b> part, add ingredients (pasta, fish, rice, vegetables…) necessary for the composition of your dishes.</br></br><b>2.</b> Create your dishes using the existing ingredients.</br></br><b>3.</b> When the list of dishes is enough, compose your menus.</br></br>The shopping list will be filled automatically"
+      "CONFIG_BUTTON_LABEL": "Settings",
+      "DESCRIPTION": "Compose your weekly menu list and automatically generate your shopping list</br></br><b>1.</b> In the <b>SETTINGS</b> part:<br/> - Add ingredients (pasta, fish, rice, vegetables…) necessary for the composition of your recipies.</br> - Create your recipies.</br></br><b>2.</b> When you got enough elements in your list of recipies, <b>COMPOSE YOUR MENUS</b>.</br></br>Your shopping list will be automatically generated."
+    },
+    "shoppinglist_page": {
+      "PAGE_TITLE": "Shopping list"
     },
     "config_page": {
-      "PAGE_TITLE": "Configuration",
+      "PAGE_TITLE": "Settings",
       "ACCOUNT_BUTTON_LABEL": "USER ACCOUNT (COMING SOON)",
       "DISH_BUTTON_LABEL": "DISHES",
       "INGREDIENT_BUTTON_LABEL": "INGREDIENTS"
@@ -82,21 +88,21 @@
       "MODAL_DELETE": "Delete an ingredient"
     },
     "dish_page": {
-      "PAGE_TITLE": "Dishes",
+      "PAGE_TITLE": "Recipies",
       "ADD_BUTTON_LABEL": "ADD",
       "FILTER_PLACEHOLDER": "Search",
-      "NAME_PLACEHOLDER": "Dish namet",
-      "MODAL_DETAIL": "Dish detail",
-      "MODAL_ADD": "Add a disht",
-      "MODAL_UPDATE": "Edit a dish",
-      "MODAL_DELETE": "Delete a dish"
+      "NAME_PLACEHOLDER": "Recipe name",
+      "MODAL_DETAIL": "Recipe detail",
+      "MODAL_ADD": "Add a recipe",
+      "MODAL_UPDATE": "Edit a recipe",
+      "MODAL_DELETE": "Delete a recipe"
     },
     "menu_page": {
       "PAGE_TITLE": "Menus",
       "MODAL_CHOOSE": "Compose your menu",
       "LIST_LUNCH": "Lunch",
       "LIST_DINNER": "Dinner",
-      "EMPTY_LIST": "No dish"
+      "EMPTY_LIST": "Nothing planed yet"
     },
     "ERROR_MESSAGE" : {
       "MANDATORY_VALUE": "The value is mandatory",

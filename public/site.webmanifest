@@ -1,6 +1,6 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "DEMO-MyMenuApp",
+    "short_name": "MenuApp",
     "icons": [
         {
             "src": "/android-chrome-48x48.png",
@@ -10,5 +10,6 @@
     ],
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
-    "display": "standalone"
+    "orientation": "portrait",
+    "display": "fullscreen"
 }
