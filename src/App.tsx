@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonRouterOutlet } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
+import React, {Component} from 'react';
+import {Redirect, Route} from 'react-router-dom';
+import {IonApp, IonRouterOutlet} from '@ionic/react';
+import {IonReactRouter} from '@ionic/react-router';
 import Home from './pages/Home/Home';
 
 /* Core CSS required for Ionic components to work properly */
@@ -28,7 +28,56 @@ import IngredientsPage from "./pages/Config/Ingredients/Ingredients";
 import Menu from "./pages/Menu/Menu";
 import ShoppingList from "./pages/ShoppingList/ShoppingList";
 
-class App extends Component {
+import {getDishes, getIngredients} from "./services/storageService";
+import {Dish} from "./Models/Dish";
+import {IRootState} from "./reducers";
+import {ActionType} from "typesafe-actions";
+import * as actions from "./actions/actions";
+import {connect} from "react-redux";
+import {Dispatch} from 'redux';
+import {prepareDishList, prepareIngredientList} from "./actions/actions";
+import {Ingredient} from "./Models/Ingredient";
+
+
+const mapStateToProps = ({ingredients, dishes, menus}: IRootState) => {
+    const {ingredientList} = ingredients;
+    const {dishList} = dishes;
+    const {menuList} = menus;
+    return {ingredientList, dishList, menuList};
+}
+
+
+const mapDispatcherToProps = (dispatch: Dispatch<ActionType<typeof actions>>) => {
+    return {
+        prepareIngredientList: (element: Ingredient[]) => dispatch(actions.prepareIngredientList(element)),
+        prepareDishList: (element: Dish[]) => dispatch(actions.prepareDishList(element))
+
+    }
+}
+
+type ReduxType = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatcherToProps>;
+
+class App extends React.Component<ReduxType> {
+
+    componentDidMount() {
+        getIngredients().then(value => {
+                console.log("getIngredients==", value);
+                if (value === null) {
+                    value = [];
+                }
+                this.props.prepareIngredientList(value)
+            }
+        )
+        getDishes().then(value => {
+                console.log("getDishes==", value);
+                if (value === null) {
+                    value = [];
+                }
+                this.props.prepareDishList(value)
+            }
+        )
+    }
+
 
     render() {
         return (
@@ -50,4 +99,5 @@ class App extends Component {
 
 
 }
-export default App;
+
+export default connect(mapStateToProps, {prepareIngredientList, prepareDishList})(App);

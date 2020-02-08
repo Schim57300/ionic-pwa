@@ -120,14 +120,14 @@ class DishesPage extends React.Component<ReduxType> {
         //    this.displayToast(this.ERROR, "Used in " + listLinkDish.toString());
         //} else {
             this.props.removeDish(this.state.currentDish);
-            this.displayToast(this.INFO, DICTIONARY.db.INFO_MESSAGE.ELEMENT_DELETED)
-            this.resetState()
+            this.displayToast(this.INFO, DICTIONARY.db.INFO_MESSAGE.ELEMENT_DELETED);
+            this.resetState();
         //}
     }
 
     renderDishes = () => {
         if (this.props.dishList.length == 0) {
-            return (<IonLabel>Damn it, it seems you have nothing in your list</IonLabel>)
+            return (<IonLabel>{DICTIONARY.db.INFO_MESSAGE.NO_ELEMENT}</IonLabel>)
         } else {
             return (
                 <IonList className="list-dish">

@@ -3,57 +3,45 @@ import React from 'react';
 import {Plugins} from '@capacitor/core';
 
 import dico_json from '../data/dictionary.json'
+import {Ingredient} from "../Models/Ingredient";
+import {Dish} from "../Models/Dish";
 
 const {Storage} = Plugins;
+
+export async function setIngredients(value: Ingredient[]): Promise<void> {
+    await Storage.set({
+        key: "ingredientList",
+        value: JSON.stringify(value)
+    });
+}
+
+export async function getIngredients(): Promise<Ingredient[]> {
+    let newVar = await Storage.get({ key: "ingredientList" }) as any;
+    return JSON.parse(newVar.value);
+}
+
+export async function setDishes(value: Dish[]): Promise<void> {
+    await Storage.set({
+        key: "dishList",
+        value: JSON.stringify(value)
+    });
+}
+
+export async function getDishes(): Promise<Dish[]> {
+    let newVar = await Storage.get({ key: "dishList" }) as any;
+    return JSON.parse(newVar.value);
+}
+
+
+export async function remove(key: string): Promise<void> {
+    await Storage.remove({
+        key: key
+    });
+}
 
 class StorageService {
 
     static db = dico_json.fr;
-
-
-    // JSON "set" example
-    async setObject() {
-        await Storage.set({
-            key: 'user',
-            value: JSON.stringify({
-                id: 1,
-                name: 'Max'
-            })
-        });
-    }
-
-// JSON "get" example
-    async getObject() {
-        const ret = await Storage.get({key: 'user'});
-        //const user = JSON.parse(ret.value);
-
-    }
-
-    async setItem() {
-        await Storage.set({
-            key: 'name',
-            value: 'Max'
-        });
-    }
-
-    async getItem() {
-        const {value} = await Storage.get({key: 'name'});
-        console.log('Got item: ', value);
-    }
-
-    async removeItem() {
-        await Storage.remove({key: 'name'});
-    }
-
-    async keys() {
-        const {keys} = await Storage.keys();
-        console.log('Got keys: ', keys);
-    }
-
-    async clear() {
-        await Storage.clear();
-    }
-
 }
 export default StorageService;
 

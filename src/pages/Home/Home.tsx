@@ -65,9 +65,8 @@ class Home extends Component {
                     />
                 </IonContent>
                 <IonFooter>
-                    <IonCardSubtitle color='white'>menu v1.0</IonCardSubtitle>
+                    <IonCardSubtitle color='white'>menu v0.0.3-SNAPSHOT</IonCardSubtitle>
                 </IonFooter>
-
             </IonPage>);
     }
 }

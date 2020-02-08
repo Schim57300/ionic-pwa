@@ -127,7 +127,7 @@ class IngredientsPage extends React.Component<ReduxType> {
 
     renderIngredients = () => {
         if (this.props.ingredientList.length == 0) {
-            return (<IonLabel>Damn it, it seems you have nothing in your list</IonLabel>)
+            return (<IonLabel>{DICTIONARY.db.INFO_MESSAGE.NO_ELEMENT}</IonLabel>)
         } else {
             return (
                 <IonList className="list-ingredient">

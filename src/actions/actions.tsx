@@ -2,6 +2,11 @@ import {Ingredient} from "../Models/Ingredient";
 import {Dish} from "../Models/Dish";
 import {Menu} from "../Models/Menu";
 
+
+export const INIT_INGREDIENT = 'INIT_INGREDIENT';
+export const INIT_DISH = 'INIT_DISH';
+export const INIT_MENU = 'INIT_MENU';
+
 export const ADD_DISH = 'ADD_DISH';
 export const UPDATE_DISH = 'UPDATE_DISH';
 export const REMOVE_DISH = 'REMOVE_DISH';
@@ -14,6 +19,28 @@ export const ADD_MENU = 'ADD_MENU';
 export const UPDATE_MENU = 'UPDATE_MENU';
 export const REMOVE_MENU = 'REMOVE_MENU';
 
+
+
+/**
+ * APP INIT
+ */
+export function prepareIngredientList(element: Ingredient[]) {
+    const action = {
+        type: INIT_INGREDIENT,
+        data: element
+    }
+
+    return action;
+}
+
+export function prepareDishList(element: Dish[]) {
+    const action = {
+        type: INIT_DISH,
+        data: element
+    }
+
+    return action;
+}
 
 /**
  * DISHES
