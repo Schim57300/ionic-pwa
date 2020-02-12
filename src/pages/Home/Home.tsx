@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
 import {
-    IonButton,
-    IonCardSubtitle, IonContent, IonFooter, IonHeader, IonImg, IonItem, IonPage, IonText, IonToast
+    IonButton, IonButtons,
+    IonCardSubtitle, IonContent, IonFooter, IonHeader, IonIcon, IonImg, IonItem, IonPage, IonText, IonTitle, IonToast,
+    IonToolbar
 } from '@ionic/react';
 
 import DICTIONARY from '../../services/storageService'
 import './Home.css';
 
 import dico_json from '../../data/dictionary.json'
+import {menu} from "ionicons/icons";
+import NavBar from "../../Components/NavBar";
 
 class Home extends Component {
 
@@ -16,8 +19,7 @@ class Home extends Component {
 
     // Used to force refresh on click
     state = {
-        test: true,
-        displayToast: true
+        test: true
     };
 
     handleChangeLangage = (lang: String) => {
@@ -26,7 +28,7 @@ class Home extends Component {
         } else {
             DICTIONARY.db = dico_json.en;
         }
-        this.setState({test: !this.state.test, displayToast: true});
+        this.setState({test: !this.state.test});
     }
 
 
@@ -34,12 +36,7 @@ class Home extends Component {
         return (
             <IonPage>
                 <IonHeader>
-                    <IonButton expand='block' routerLink="/menu"
-                               color="light">{DICTIONARY.db.home_page.MENU_BUTTON_LABEL}</IonButton>
-                    <IonButton expand='block' routerLink="/list"
-                               color="light">{DICTIONARY.db.home_page.SHOPPING_LIST_BUTTON_LABEL}</IonButton>
-                    <IonButton expand='block' routerLink="/config"
-                               color="light">{DICTIONARY.db.home_page.CONFIG_BUTTON_LABEL}</IonButton>
+                    <NavBar title={DICTIONARY.db.home_page.PAGE_TITLE} />
                 </IonHeader>
                 <IonContent>
                     <br/>
@@ -57,15 +54,17 @@ class Home extends Component {
                     <IonItem className="no-background" lines="none">
                         <div dangerouslySetInnerHTML={{__html: DICTIONARY.db.home_page.DESCRIPTION}}/>
                     </IonItem>
-                    <IonToast
-                        isOpen={this.state.displayToast}
-                        showCloseButton
-                        message={DICTIONARY.db.WARNING_MESSAGE.DEMO_VERSION}
-                        color={"warning"}
-                    />
                 </IonContent>
                 <IonFooter>
-                    <IonCardSubtitle color='white'>menu v0.0.3-SNAPSHOT</IonCardSubtitle>
+                    <IonButton routerLink="/menu"
+                               size="large"
+                               className="home-button"
+                               color="light">{DICTIONARY.db.home_page.MENU_BUTTON_LABEL}</IonButton>
+                    <IonButton routerLink="/list"
+                               size="large"
+                               className="home-button"
+                               color="light">{DICTIONARY.db.home_page.SHOPPING_LIST_BUTTON_LABEL}</IonButton>
+                    <IonCardSubtitle color='white'>menu v0.0.6-SNAPSHOT</IonCardSubtitle>
                 </IonFooter>
             </IonPage>);
     }

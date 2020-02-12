@@ -3,17 +3,13 @@ import React from 'react';
 
 import './Config.css';
 import DICTIONARY from '../../services/storageService';
+import NavBar from "../../Components/NavBar";
 
 const ConfigPage: React.FC = () => {
     return (
         <IonPage>
             <IonHeader>
-                <IonToolbar>
-                    <IonButtons slot="start">
-                        <IonBackButton defaultHref="/home" />
-                    </IonButtons>
-                    <IonTitle>{DICTIONARY.db.config_page.PAGE_TITLE}</IonTitle>
-                </IonToolbar>
+                <NavBar title={DICTIONARY.db.config_page.PAGE_TITLE} />
             </IonHeader>
             <IonContent>
                 <IonButton disabled expand='block' color="light">{DICTIONARY.db.config_page.ACCOUNT_BUTTON_LABEL}</IonButton>

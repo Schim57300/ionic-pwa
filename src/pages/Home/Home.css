@@ -12,3 +12,12 @@ ion-content{
     opacity:1;
     color: white;
 }
+
+.home-button {
+    width: 155px;
+    height: 75px;
+    font-size: 14px;
+    white-space: normal;
+    word-wrap: break-word;
+    margin: 20px;
+}

@@ -13,7 +13,7 @@ export function dishesReducer(state: InitialState = init, action: any): InitialS
     switch (action.type) {
         case INIT_DISH:
             console.log("action.data",action.data);
-            return {ingredientList: state.dishList, dishList: action.data, menuList: state.menuList};
+            return {ingredientList: state.ingredientList, dishList: action.data, menuList: state.menuList};
         case ADD_DISH:
             state.dishList.push(action.data)
             setDishes(state.dishList);

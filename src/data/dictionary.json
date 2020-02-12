@@ -1,6 +1,7 @@
 {
   "fr": {
     "home_page": {
+      "PAGE_TITLE": "Menu App",
       "MENU_BUTTON_LABEL": "Composer vos menus",
       "SHOPPING_LIST_BUTTON_LABEL": "Consulter la liste de course",
       "CONFIG_BUTTON_LABEL": "Configuration",
@@ -11,9 +12,10 @@
     },
     "config_page": {
       "PAGE_TITLE": "Configuration",
-      "ACCOUNT_BUTTON_LABEL": "COMPTE UTILISATEUR (A VENIR)",
-      "DISH_BUTTON_LABEL": "GESTION DES RECETTES",
-      "INGREDIENT_BUTTON_LABEL": "GESTION DES INGREDIENTS"
+      "HOME_PAGE_BUTTON_LABEL": "Page principale",
+      "ACCOUNT_BUTTON_LABEL": "Mon compte (bientôt)",
+      "DISH_BUTTON_LABEL": "Recettes",
+      "INGREDIENT_BUTTON_LABEL": "Ingrédients"
     },
     "ingredient_page": {
       "PAGE_TITLE": "Ingrédients",
@@ -65,6 +67,7 @@
   },
   "en": {
     "home_page": {
+      "PAGE_TITLE": "Menu App",
       "MENU_BUTTON_LABEL": "Compose your menus",
       "SHOPPING_LIST_BUTTON_LABEL": "Check your shopping list",
       "CONFIG_BUTTON_LABEL": "Settings",
@@ -75,9 +78,10 @@
     },
     "config_page": {
       "PAGE_TITLE": "Settings",
-      "ACCOUNT_BUTTON_LABEL": "USER ACCOUNT (COMING SOON)",
-      "DISH_BUTTON_LABEL": "DISHES",
-      "INGREDIENT_BUTTON_LABEL": "INGREDIENTS"
+      "HOME_PAGE_BUTTON_LABEL": "Home page",
+      "ACCOUNT_BUTTON_LABEL": "My account (coming soon)",
+      "DISH_BUTTON_LABEL": "Dishes",
+      "INGREDIENT_BUTTON_LABEL": "Ingredients"
     },
     "ingredient_page": {
       "PAGE_TITLE": "Ingredients",

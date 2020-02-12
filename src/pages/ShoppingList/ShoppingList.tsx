@@ -23,6 +23,7 @@ import {Menu} from "../../Models/Menu";
 
 import DICTIONARY from '../../services/storageService'
 import {Ingredient} from "../../Models/Ingredient";
+import NavBar from "../../Components/NavBar";
 
 const mapStateToProps = ({menus, dishes}: IRootState) => {
     const {menuList} = menus;
@@ -86,12 +87,7 @@ class ShoppingListPage extends React.Component<ReduxType> {
         let shoppingList = this.composeShoppingList();
         return <IonPage>
             <IonHeader>
-                <IonToolbar>
-                    <IonButtons slot="start">
-                        <IonBackButton defaultHref="/home"/>
-                    </IonButtons>
-                    <IonTitle>{DICTIONARY.db.shoppinglist_page.PAGE_TITLE}</IonTitle>
-                </IonToolbar>
+                <NavBar title={DICTIONARY.db.shoppinglist_page.PAGE_TITLE} />
             </IonHeader>
             <IonContent>
                 <IonList className="shopping-list-item">

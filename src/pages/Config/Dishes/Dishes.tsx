@@ -17,6 +17,7 @@ import {Dish} from "../../../Models/Dish";
 import {save, closeCircleOutline, trash, create} from 'ionicons/icons';
 
 import DICTIONARY from '../../../services/storageService';
+import NavBar from "../../../Components/NavBar";
 
 const mapStateToProps = ({ingredients, dishes}: IRootState) => {
     const {ingredientList} = ingredients;
@@ -221,7 +222,7 @@ class DishesPage extends React.Component<ReduxType> {
             clickAction = () => this.setState({editMode: true})
         }
         return (
-            <IonModal cssClass="dishes-modal" isOpen={this.state.displayModal}
+            <IonModal  isOpen={this.state.displayModal}
                       onDidDismiss={() => this.resetState()}>
                 <div className="flex-container">
                     <img src={icon} height="40px"/>
@@ -278,12 +279,7 @@ class DishesPage extends React.Component<ReduxType> {
 
         return <IonPage>
             <IonHeader>
-                <IonToolbar>
-                    <IonButtons slot="start">
-                        <IonBackButton defaultHref="/config"/>
-                    </IonButtons>
-                    <IonTitle>{DICTIONARY.db.dish_page.PAGE_TITLE}</IonTitle>
-                </IonToolbar>
+                <NavBar title={DICTIONARY.db.dish_page.PAGE_TITLE} />
             </IonHeader>
 
             <IonContent>

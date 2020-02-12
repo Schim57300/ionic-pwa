@@ -5,6 +5,7 @@ import {Plugins} from '@capacitor/core';
 import dico_json from '../data/dictionary.json'
 import {Ingredient} from "../Models/Ingredient";
 import {Dish} from "../Models/Dish";
+import {Menu} from "../Models/Menu";
 
 const {Storage} = Plugins;
 
@@ -32,6 +33,17 @@ export async function getDishes(): Promise<Dish[]> {
     return JSON.parse(newVar.value);
 }
 
+export async function setMenus(value: Menu[]): Promise<void> {
+    await Storage.set({
+        key: "menuList",
+        value: JSON.stringify(value)
+    });
+}
+
+export async function getMenus(): Promise<Menu[]> {
+    let newVar = await Storage.get({ key: "menuList" }) as any;
+    return JSON.parse(newVar.value);
+}
 
 export async function remove(key: string): Promise<void> {
     await Storage.remove({

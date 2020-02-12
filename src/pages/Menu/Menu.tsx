@@ -1,6 +1,16 @@
 import {
-    IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonBackButton, IonButton,
-    IonModal, IonItem, IonInput, IonList, IonLabel, IonSearchbar, IonCheckbox, IonToast, IonIcon, IonText, IonTextarea
+    IonButton,
+    IonCheckbox,
+    IonContent,
+    IonHeader,
+    IonIcon,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonModal,
+    IonPage,
+    IonText,
+    IonToast
 } from '@ionic/react';
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
@@ -8,8 +18,8 @@ import {Dispatch} from 'redux';
 
 import './Menu.css';
 
-import {updateMenu} from "../../actions/actions";
 import * as actions from "../../actions/actions";
+import {updateMenu} from "../../actions/actions";
 import {IRootState} from "../../reducers";
 import {ActionType} from "typesafe-actions";
 import {Menu} from "../../Models/Menu";
@@ -17,6 +27,7 @@ import {closeCircleOutline, save} from "ionicons/icons";
 import {Dish} from "../../Models/Dish";
 
 import DICTIONARY from '../../services/storageService'
+import NavBar from "../../Components/NavBar";
 
 const mapStateToProps = ({menus, dishes}: IRootState) => {
     const {menuList} = menus;
@@ -90,6 +101,18 @@ class MenusPage extends React.Component<ReduxType> {
         } else if (selectedDish !== undefined) {
             this.state.currentMeal.push(selectedDish);
         }
+    }
+
+    handleUpdatMenu = () => {
+        let newMenu = new Menu(this.state.currentMenu.name,
+            this.state.currentMenu.id,
+            this.state.currentMenu.color,
+            (this.state.currentMenuDetail === this.LUNCH ? this.state.currentMeal:this.state.currentMenu.lunchMeal),
+            (this.state.currentMenuDetail === this.DINNER ? this.state.currentMeal:this.state.currentMenu.dinnerMeal)
+        );
+        this.props.updateMenu(newMenu);
+        this.displayToast(this.INFO, DICTIONARY.db.INFO_MESSAGE.CHANGE_APPLIED)
+        this.resetState()
     }
 
     displayLunchMenu = (item: Menu) => {
@@ -169,10 +192,10 @@ class MenusPage extends React.Component<ReduxType> {
 
     renderModal = () => {
         let icon = "/assets/icon/app/ic_plat.png";
-        let clickAction = () => this.resetState();
+        let clickAction = () => this.handleUpdatMenu();
 
         return (
-            <IonModal cssClass="menu-modal"
+            <IonModal
                       isOpen={this.state.displayModal}
                       onDidDismiss={() => {
                           this.resetState();
@@ -220,12 +243,7 @@ class MenusPage extends React.Component<ReduxType> {
 
         return <IonPage>
             <IonHeader>
-                <IonToolbar>
-                    <IonButtons slot="start">
-                        <IonBackButton defaultHref="/home"/>
-                    </IonButtons>
-                    <IonTitle>{DICTIONARY.db.menu_page.PAGE_TITLE}</IonTitle>
-                </IonToolbar>
+                <NavBar title={DICTIONARY.db.menu_page.PAGE_TITLE} />
             </IonHeader>
             <IonContent>
                 {this.renderMenu()}

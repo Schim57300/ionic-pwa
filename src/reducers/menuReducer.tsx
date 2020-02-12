@@ -1,7 +1,7 @@
-import {ADD_MENU, REMOVE_MENU, UPDATE_MENU} from "../actions/actions";
+import {ADD_MENU, INIT_MENU, REMOVE_MENU, UPDATE_MENU} from "../actions/actions";
 import {InitialState} from "./index";
 import {Menu, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY} from "../Models/Menu";
-import DICTIONARY from '../services/storageService';
+import DICTIONARY, {setIngredients, setMenus} from '../services/storageService';
 
 const init: InitialState = {
     ingredientList: [],
@@ -20,11 +20,16 @@ const init: InitialState = {
 export function menuReducer(state: InitialState = init, action: any): InitialState {
     console.log("reducer.menus");
     switch (action.type) {
+        case INIT_MENU:
+            return {ingredientList: state.ingredientList, dishList: state.dishList, menuList: action.data};
         case ADD_MENU:
+            setMenus(state.menuList);
             return state;
         case UPDATE_MENU:
+            setMenus(state.menuList);
             return state;
         case REMOVE_MENU:
+            setMenus(state.menuList);
             return state;
         default:
             return state;

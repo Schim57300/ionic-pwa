@@ -1,0 +1,9 @@
+.navbar-modal {
+    background: rgba(0,0,0,0.5);
+    padding-right: 30%;
+    --border-radius: 8px;
+}
+
+.nav-element {
+    padding-left: 10px;
+}

@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import {Redirect, Route} from 'react-router-dom';
-import {IonApp, IonRouterOutlet} from '@ionic/react';
+import {
+    IonApp, IonButtons, IonRouterOutlet, IonTitle, IonToolbar, IonBackButton, IonButton,
+    IonIcon
+} from '@ionic/react';
 import {IonReactRouter} from '@ionic/react-router';
 import Home from './pages/Home/Home';
 
@@ -37,6 +40,9 @@ import {connect} from "react-redux";
 import {Dispatch} from 'redux';
 import {prepareDishList, prepareIngredientList} from "./actions/actions";
 import {Ingredient} from "./Models/Ingredient";
+import DICTIONARY from "./services/storageService";
+import {menu} from "ionicons/icons";
+import NavBar from "./Components/NavBar";
 
 
 const mapStateToProps = ({ingredients, dishes, menus}: IRootState) => {
@@ -81,6 +87,8 @@ class App extends React.Component<ReduxType> {
 
     render() {
         return (
+            //TODO: Create a navigation component
+            // Label in reducer?
             <IonApp>
                 <IonReactRouter>
                     <IonRouterOutlet>

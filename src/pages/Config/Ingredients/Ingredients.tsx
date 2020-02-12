@@ -20,6 +20,7 @@ import {closeCircleOutline, save, trash} from "ionicons/icons";
 import {Dish} from "../../../Models/Dish";
 
 import DICTIONARY from '../../../services/storageService';
+import NavBar from "../../../Components/NavBar";
 
 const mapStateToProps = ({ingredients, dishes}: IRootState) => {
     const {ingredientList} = ingredients;
@@ -172,15 +173,15 @@ class IngredientsPage extends React.Component<ReduxType> {
             clickAction = () => this.handleUpdateIngredient(textValue)
         }
         return (
-            <IonModal cssClass="ingredient-modal"
+            <IonModal
                       isOpen={this.state.displayModal}
                       onDidDismiss={() => {
                           this.resetState();
                       }}>
-                <div className="flex-container">
+                <IonItem className="flex-container">
                     <img src={icon} height="40px"/>
                     <div className="title">{modalTitle}</div>
-                </div>
+                </IonItem>
                 <IonItem className="modal-content">
                     <IonTextarea placeholder={DICTIONARY.db.ingredient_page.NAME_PLACEHOLDER}
                                  readonly={this.state.deleteMode}
@@ -191,7 +192,7 @@ class IngredientsPage extends React.Component<ReduxType> {
 
                     </IonTextarea>
                 </IonItem>
-                <div className="flex-container">
+                <IonItem className="flex-container">
                     <IonButton slot="end"
                                expand='block'
                                color="light"
@@ -220,7 +221,7 @@ class IngredientsPage extends React.Component<ReduxType> {
                                })}>
                         <IonIcon icon={closeCircleOutline}/>
                     </IonButton>
-                </div>
+                </IonItem>
             </IonModal>
         )
     }
@@ -230,15 +231,10 @@ class IngredientsPage extends React.Component<ReduxType> {
         return (
             <IonPage>
                 <IonHeader>
-                    <IonToolbar>
-                        <IonButtons slot="start">
-                            <IonBackButton defaultHref="/config"/>
-                        </IonButtons>
-                        <IonTitle>{DICTIONARY.db.ingredient_page.PAGE_TITLE}</IonTitle>
-                    </IonToolbar>
+                    <NavBar title={DICTIONARY.db.ingredient_page.PAGE_TITLE} />
                 </IonHeader>
 
-                <IonContent>
+                <IonContent forceOverscroll={false}>
                     <IonButton onClick={() => this.setState({displayModal: true, currentIngredient: new Ingredient()})}
                                expand='block' color="light">{DICTIONARY.db.ingredient_page.ADD_BUTTON_LABEL}</IonButton>
                     <IonSearchbar onIonChange={e => this.handleFilterChange((e.target as HTMLInputElement).value)}
@@ -252,7 +248,7 @@ class IngredientsPage extends React.Component<ReduxType> {
                     onDidDismiss={() => this.setState({displayToast: false})}
                     message={this.state.toastMessage.toString()}
                     color={this.state.toastType.toString()}
-                    duration={20000}
+                    duration={2000}
                 />
             </IonPage>
         );
