@@ -9,7 +9,15 @@ ion-content{
     --border-radius: 8px;
 }
 
+
+.flex-menu-container {
+    display: flex;
+    align-items: baseline;
+    align-content: stretch;
+}
+
 .list-menu {
+    width: 50vw;
     background: none;
     --background: none;
     opacity:1;
@@ -28,19 +36,6 @@ ion-content{
     flex-flow: row wrap;
     align-items: baseline;
     align-content: stretch;
-    margin: 10px;
-}
-
-.flex-child {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: baseline;
-    align-content: stretch;
-    #flex: 1 2 auto;
-}
-
-.div-input {
-    height: 25px;
 }
 
 :root {

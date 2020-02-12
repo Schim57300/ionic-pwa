@@ -107,8 +107,8 @@ class MenusPage extends React.Component<ReduxType> {
         let newMenu = new Menu(this.state.currentMenu.name,
             this.state.currentMenu.id,
             this.state.currentMenu.color,
-            (this.state.currentMenuDetail === this.LUNCH ? this.state.currentMeal:this.state.currentMenu.lunchMeal),
-            (this.state.currentMenuDetail === this.DINNER ? this.state.currentMeal:this.state.currentMenu.dinnerMeal)
+            (this.state.currentMenuDetail === this.LUNCH ? this.state.currentMeal : this.state.currentMenu.lunchMeal),
+            (this.state.currentMenuDetail === this.DINNER ? this.state.currentMeal : this.state.currentMenu.dinnerMeal)
         );
         this.props.updateMenu(newMenu);
         this.displayToast(this.INFO, DICTIONARY.db.INFO_MESSAGE.CHANGE_APPLIED)
@@ -126,10 +126,10 @@ class MenusPage extends React.Component<ReduxType> {
                     currentMeal: item.lunchMeal
                 })}
                 lines="none"
-                className="list-menu">
+                className="list-menu ion-text-center">
                 <IonLabel>
                     <h4>{DICTIONARY.db.menu_page.LIST_LUNCH}</h4>
-                    {item.lunchMeal.length <= 0 ? <IonLabel>{DICTIONARY.db.menu_page.EMPTY_LIST}</IonLabel> :
+                    {item.lunchMeal.length <= 0 ? <IonLabel> </IonLabel> :
                         item.lunchMeal.map(dish => {
                             return (
                                 <IonLabel key={"lunch" + item.id + dish.id}>{dish.name}</IonLabel>
@@ -150,10 +150,11 @@ class MenusPage extends React.Component<ReduxType> {
                     currentMenuDetail: this.DINNER,
                     currentMeal: item.dinnerMeal
                 })}
-                className="list-menu">
+                lines="none"
+                className="list-menu  ion-text-center">
                 <IonLabel className="list-menu">
                     <h4>{DICTIONARY.db.menu_page.LIST_DINNER}</h4>
-                    {item.dinnerMeal.length <= 0 ? <IonLabel>{DICTIONARY.db.menu_page.EMPTY_LIST}</IonLabel> :
+                    {item.dinnerMeal.length <= 0 ? <IonLabel> </IonLabel> :
                         item.dinnerMeal.map(dish => {
                             return (
                                 <IonLabel key={"dinner" + item.id + dish.id}>{dish.name}</IonLabel>
@@ -176,12 +177,14 @@ class MenusPage extends React.Component<ReduxType> {
                                     color="light">
                                     <IonLabel>
                                         <IonText>
-                                            <h1>{item.name}</h1>
+                                            <h3>{item.name}</h3>
                                         </IonText>
                                     </IonLabel>
                                 </IonItem>
-                                {this.displayLunchMenu(item)}
-                                {this.displayDinnerMenu(item)}
+                                <div className="flex-menu-container">
+                                    {this.displayLunchMenu(item)}
+                                    {this.displayDinnerMenu(item)}
+                                </div>
                             </div>
                         )
                     })}
@@ -196,10 +199,10 @@ class MenusPage extends React.Component<ReduxType> {
 
         return (
             <IonModal
-                      isOpen={this.state.displayModal}
-                      onDidDismiss={() => {
-                          this.resetState();
-                      }}>
+                isOpen={this.state.displayModal}
+                onDidDismiss={() => {
+                    this.resetState();
+                }}>
                 <div className="flex-container">
                     <img src={icon} height="40px"/>
                     <div className="title">{DICTIONARY.db.menu_page.MODAL_CHOOSE}</div>
@@ -243,7 +246,7 @@ class MenusPage extends React.Component<ReduxType> {
 
         return <IonPage>
             <IonHeader>
-                <NavBar title={DICTIONARY.db.menu_page.PAGE_TITLE} />
+                <NavBar title={DICTIONARY.db.menu_page.PAGE_TITLE}/>
             </IonHeader>
             <IonContent>
                 {this.renderMenu()}

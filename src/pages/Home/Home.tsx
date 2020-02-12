@@ -64,7 +64,7 @@ class Home extends Component {
                                size="large"
                                className="home-button"
                                color="light">{DICTIONARY.db.home_page.SHOPPING_LIST_BUTTON_LABEL}</IonButton>
-                    <IonCardSubtitle color='white'>menu v0.0.6-SNAPSHOT</IonCardSubtitle>
+                    <IonCardSubtitle color='white'>menu v0.0.8-SNAPSHOT</IonCardSubtitle>
                 </IonFooter>
             </IonPage>);
     }

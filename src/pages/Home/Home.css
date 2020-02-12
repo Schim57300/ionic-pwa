@@ -14,10 +14,10 @@ ion-content{
 }
 
 .home-button {
-    width: 155px;
+    width: 35vw;
     height: 75px;
     font-size: 14px;
     white-space: normal;
     word-wrap: break-word;
-    margin: 20px;
+    margin: 5vw;
 }

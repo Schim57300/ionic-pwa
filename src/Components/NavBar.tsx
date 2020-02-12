@@ -1,5 +1,5 @@
 import React from "react";
-import {home, menu, nutrition, person, restaurant} from "ionicons/icons";
+import {home, menu, nutrition, person, restaurant, book, cart, clipboard} from "ionicons/icons";
 import {IonButton, IonButtons, IonIcon, IonItem, IonLabel, IonList, IonModal, IonTitle, IonToolbar} from "@ionic/react";
 import DICTIONARY from "../services/storageService";
 
@@ -30,6 +30,20 @@ class NavBar extends React.Component<NavBarProps> {
                     >
                         <IonIcon icon={home}/>
                         <IonLabel className="nav-element">{DICTIONARY.db.config_page.HOME_PAGE_BUTTON_LABEL}</IonLabel>
+                    </IonItem>
+                    <IonItem
+                        onClick={() => this.setState({displayModal: false})}
+                        routerLink="/menu"
+                    >
+                        <IonIcon icon={book}/>
+                        <IonLabel className="nav-element">{DICTIONARY.db.home_page.MENU_BUTTON_LABEL}</IonLabel>
+                    </IonItem>
+                    <IonItem
+                        onClick={() => this.setState({displayModal: false})}
+                        routerLink="/list"
+                    >
+                        <IonIcon icon={cart}/>
+                        <IonLabel className="nav-element">{DICTIONARY.db.home_page.SHOPPING_LIST_BUTTON_LABEL}</IonLabel>
                     </IonItem>
                     <IonItem
                         onClick={() => this.setState({displayModal: false})}
