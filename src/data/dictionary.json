@@ -43,6 +43,10 @@
       "LIST_DINNER": "Diner",
       "EMPTY_LIST": "Rien de prévu pour le moment"
     },
+    "navbar": {
+      "EXPORT_DATA": "Exporter des données",
+      "IMPORT_DATA": "Importer des données"
+    },
     "ERROR_MESSAGE" : {
       "MANDATORY_VALUE": "La valeur est obligatoire",
       "VALUE_ALREADY_EXIST": "La valeur existe déjà",
@@ -109,6 +113,10 @@
       "LIST_LUNCH": "Lunch",
       "LIST_DINNER": "Dinner",
       "EMPTY_LIST": "Nothing planed yet"
+    },
+    "navbar": {
+      "EXPORT_DATA": "Export data",
+      "IMPORT_DATA": "Import data"
     },
     "ERROR_MESSAGE" : {
       "MANDATORY_VALUE": "The value is mandatory",

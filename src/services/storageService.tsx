@@ -51,13 +51,9 @@ export async function getMenus(): Promise<Menu[]> {
     return JSON.parse(newVar.value);
 }
 
-export async function remove(key: string): Promise<void> {
-    await Storage.remove({
-        key: key
-    });
-}
+export async function importData(callback: any): Promise<void> {
 
-declare var navigator: any;
+}
 
 export async function exportData(callback: any): Promise<void> {
 
@@ -89,10 +85,8 @@ export async function exportData(callback: any): Promise<void> {
 }
 
 class StorageService {
-
     static db = dico_json.fr;
 }
-
 export default StorageService;
 
 

@@ -1,9 +1,9 @@
 import React from "react";
-import {book, cart, home, menu, nutrition, person, restaurant} from "ionicons/icons";
+import {book, cart, home, menu, nutrition, person, restaurant, cloudUpload, cloudDownload} from "ionicons/icons";
 import {IonButton, IonButtons, IonIcon, IonItem, IonLabel, IonList, IonModal, IonTitle, IonToolbar} from "@ionic/react";
 import DICTIONARY from "../services/storageService";
 
-import {exportData} from "../services/storageService";
+import {exportData, importData} from "../services/storageService";
 
 import './NavBar.css';
 
@@ -67,8 +67,13 @@ class NavBar extends React.Component<NavBarProps> {
                         <IonLabel className="nav-element">{DICTIONARY.db.config_page.ACCOUNT_BUTTON_LABEL}</IonLabel>
                     </IonItem>
                     <IonItem onClick={() => exportData(this.props.displayToast)}>
-                        <IonIcon icon={person}/>
-                        <IonLabel className="nav-element">Export data</IonLabel>
+                        <IonIcon icon={cloudUpload}/>
+                        <IonLabel className="nav-element">{DICTIONARY.db.navbar.EXPORT_DATA}</IonLabel>
+                    </IonItem>
+                    <IonItem onClick={() => importData(this.props.displayToast)}>
+                        <IonIcon icon={cloudDownload}
+                        />
+                        <IonLabel className="nav-element">{DICTIONARY.db.navbar.IMPORT_DATA}</IonLabel>
                     </IonItem>
                 </IonList>
             </IonModal>

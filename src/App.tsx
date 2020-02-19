@@ -76,13 +76,13 @@ class App extends React.Component<ReduxType> {
         getMenus().then(value => {
                 if (value === null) {
                     value = [
-                        new Menu(DICTIONARY.db.MONDAY, 1, MONDAY, []),
-                        new Menu(DICTIONARY.db.TUESDAY, 2, TUESDAY, []),
-                        new Menu(DICTIONARY.db.WEDNESDAY, 3, WEDNESDAY, []),
-                        new Menu(DICTIONARY.db.THURSDAY, 4, THURSDAY, []),
-                        new Menu(DICTIONARY.db.FRIDAY, 5, FRIDAY, []),
-                        new Menu(DICTIONARY.db.SATURDAY, 6, SATURDAY, []),
-                        new Menu(DICTIONARY.db.SUNDAY, 7, SUNDAY, [])
+                        new Menu(DICTIONARY.db.MONDAY, 1, MONDAY),
+                        new Menu(DICTIONARY.db.TUESDAY, 2, TUESDAY),
+                        new Menu(DICTIONARY.db.WEDNESDAY, 3, WEDNESDAY),
+                        new Menu(DICTIONARY.db.THURSDAY, 4, THURSDAY),
+                        new Menu(DICTIONARY.db.FRIDAY, 5, FRIDAY),
+                        new Menu(DICTIONARY.db.SATURDAY, 6, SATURDAY),
+                        new Menu(DICTIONARY.db.SUNDAY, 7, SUNDAY)
                     ];
                 }
                 this.props.prepareMenuList(value)
@@ -93,8 +93,6 @@ class App extends React.Component<ReduxType> {
 
     render() {
         return (
-            //TODO: Create a navigation component
-            // Label in reducer?
             <IonApp>
                 <IonReactRouter>
                     <IonRouterOutlet>
