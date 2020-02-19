@@ -52,7 +52,8 @@
       "ELEMENT_CREATED": "L'élément a été créé",
       "CHANGE_APPLIED": "Les changements ont été pris en compte",
       "ELEMENT_DELETED": "L'élément a été supprimé",
-      "NO_ELEMENT": "Oups, votre liste est vide"
+      "NO_ELEMENT": "Oups, votre liste est vide",
+      "EXPORT_DONE": "L'export s'est déroulé correctement"
     },
     "WARNING_MESSAGE": {
       "DEMO_VERSION" : "DEMO: Vos menus ne seront pas sauvegardés!"
@@ -118,7 +119,8 @@
       "ELEMENT_CREATED": "Element has been created",
       "CHANGE_APPLIED": "Your change has been applied",
       "ELEMENT_DELETED": "Element has been removed",
-      "NO_ELEMENT": "Oops, it seems like your list is empty"
+      "NO_ELEMENT": "Oops, it seems like your list is empty",
+      "EXPORT_DONE": "Export successful"
     },
     "WARNING_MESSAGE": {
       "DEMO_VERSION" : "DEMO: Your menus won't be saved!"

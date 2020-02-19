@@ -1,6 +1,16 @@
 import {
-    IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonBackButton, IonButton,
-    IonModal, IonItem, IonInput, IonList, IonLabel, IonSearchbar, IonCheckbox, IonToast, IonIcon
+    IonButton,
+    IonCheckbox,
+    IonContent,
+    IonHeader,
+    IonIcon,
+    IonInput,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonModal,
+    IonPage,
+    IonSearchbar
 } from '@ionic/react';
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
@@ -8,20 +18,20 @@ import {Dispatch} from 'redux';
 
 import './Dishes.css';
 
-import {addDish, removeDish, updateDish} from "../../../actions/actions";
 import * as actions from "../../../actions/actions";
+import {addDish, displayToast, removeDish, updateDish} from "../../../actions/actions";
 import {IRootState} from "../../../reducers";
 import {ActionType} from "typesafe-actions";
 import {Dish} from "../../../Models/Dish";
 
-import {save, closeCircleOutline, trash, create} from 'ionicons/icons';
+import {closeCircleOutline, create, save, trash} from 'ionicons/icons';
 
-import DICTIONARY from '../../../services/storageService';
+import DICTIONARY, {ERROR, INFO} from '../../../services/storageService';
 import NavBar from "../../../Components/NavBar";
 
-const mapStateToProps = ({ingredients, dishes}: IRootState) => {
-    const {ingredientList} = ingredients;
-    const {dishList} = dishes;
+const mapStateToProps = ({ingredientReducer, dishReducer}: IRootState) => {
+    const {ingredientList} = ingredientReducer;
+    const {dishList} = dishReducer;
     return {ingredientList, dishList};
 }
 
@@ -30,27 +40,22 @@ const mapDispatcherToProps = (dispatch: Dispatch<ActionType<typeof actions>>) =>
     return {
         addDish: (element: Dish) => dispatch(actions.addDish(element)),
         updateDish: (element: Dish) => dispatch(actions.updateDish(element)),
-        removeDish: (element: Dish) => dispatch(actions.removeDish(element))
+        removeDish: (element: Dish) => dispatch(actions.removeDish(element)),
+        displayToast: (type: string, message: string) => dispatch(actions.displayToast(type, message))
     }
 }
 
 type ReduxType = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatcherToProps>;
 
 class DishesPage extends React.Component<ReduxType> {
-    ERROR: string = "danger";
-    INFO: string = "success"
-
 
     state = {
         currentDish: new Dish(),
         deleteMode: false,
         displayModal: false,
-        displayToast: false,
         editMode: false,
         filter: "",
-        label: "",
-        toastMessage: "",
-        toastType: ""
+        label: ""
     }
 
     resetState = () => {
@@ -59,15 +64,6 @@ class DishesPage extends React.Component<ReduxType> {
             deleteMode: false,
             displayModal: false,
             editMode: false,
-        })
-    }
-
-
-    displayToast = (type: string, reason: string) => {
-        this.setState({
-            displayToast: true,
-            toastMessage: reason,
-            toastType: type
         })
     }
 
@@ -87,19 +83,15 @@ class DishesPage extends React.Component<ReduxType> {
 
     handleAddDish(dishName: string) {
         if (dishName.trim() === "") {
-            this.displayToast(this.ERROR, DICTIONARY.db.ERROR_MESSAGE.MANDATORY_VALUE)
+            this.props.displayToast(ERROR, DICTIONARY.db.ERROR_MESSAGE.MANDATORY_VALUE)
         } else {
             let elementFound: boolean = this.props.dishList.some(elt => elt.name.trim() === dishName);
             if (elementFound) {
-                this.setState({
-                    displayToast: true,
-                    toastMessage: DICTIONARY.db.ERROR_MESSAGE.VALUE_ALREADY_EXIST,
-                    toastType: "danger"
-                })
+                this.props.displayToast(ERROR, DICTIONARY.db.ERROR_MESSAGE.VALUE_ALREADY_EXIST);
             } else {
                 let newDish = new Dish(dishName, this.props.dishList.length + 1, this.state.currentDish.recipe);
                 this.props.addDish(newDish);
-                this.displayToast(this.INFO, DICTIONARY.db.INFO_MESSAGE.ELEMENT_CREATED);
+                this.props.displayToast(INFO, DICTIONARY.db.INFO_MESSAGE.ELEMENT_CREATED);
                 this.resetState();
             }
         }
@@ -110,7 +102,7 @@ class DishesPage extends React.Component<ReduxType> {
             this.state.currentDish.id,
             this.state.currentDish.recipe)
         this.props.updateDish(newElement);
-        this.displayToast(this.INFO, DICTIONARY.db.INFO_MESSAGE.CHANGE_APPLIED)
+        this.props.displayToast(INFO, DICTIONARY.db.INFO_MESSAGE.CHANGE_APPLIED)
         this.resetState()
     }
 
@@ -118,10 +110,10 @@ class DishesPage extends React.Component<ReduxType> {
         //TODO EKA: Later: check  if dish is not used in menu
         //let listLinkDish = this.checkIngredientIsNotUsed()
         //if (listLinkDish.length > 0) {
-        //    this.displayToast(this.ERROR, "Used in " + listLinkDish.toString());
+        //    this.props.displayToast(ERROR, "Used in " + listLinkDish.toString());
         //} else {
             this.props.removeDish(this.state.currentDish);
-            this.displayToast(this.INFO, DICTIONARY.db.INFO_MESSAGE.ELEMENT_DELETED);
+            this.props.displayToast(INFO, DICTIONARY.db.INFO_MESSAGE.ELEMENT_DELETED);
             this.resetState();
         //}
     }
@@ -279,7 +271,8 @@ class DishesPage extends React.Component<ReduxType> {
 
         return <IonPage>
             <IonHeader>
-                <NavBar title={DICTIONARY.db.dish_page.PAGE_TITLE} />
+                <NavBar title={DICTIONARY.db.dish_page.PAGE_TITLE}
+                        displayToast={this.props.displayToast}/>
             </IonHeader>
 
             <IonContent>
@@ -291,15 +284,8 @@ class DishesPage extends React.Component<ReduxType> {
                 {this.renderDishes()}
                 {this.renderModal()}
             </IonContent>
-            <IonToast
-                isOpen={this.state.displayToast}
-                onDidDismiss={() => this.setState({displayToast: false})}
-                message={this.state.toastMessage.toString()}
-                color={this.state.toastType.toString()}
-                duration={2000}
-            />
         </IonPage>
     }
 }
 
-export default connect(mapStateToProps, {addDish, updateDish, removeDish})(DishesPage);
+export default connect(mapStateToProps, {addDish, updateDish, removeDish, displayToast})(DishesPage);

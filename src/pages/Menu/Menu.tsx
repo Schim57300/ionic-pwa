@@ -9,8 +9,7 @@ import {
     IonList,
     IonModal,
     IonPage,
-    IonText,
-    IonToast
+    IonText
 } from '@ionic/react';
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
@@ -19,48 +18,42 @@ import {Dispatch} from 'redux';
 import './Menu.css';
 
 import * as actions from "../../actions/actions";
-import {updateMenu} from "../../actions/actions";
+import {displayToast, updateMenu} from "../../actions/actions";
 import {IRootState} from "../../reducers";
 import {ActionType} from "typesafe-actions";
 import {Menu} from "../../Models/Menu";
 import {closeCircleOutline, save} from "ionicons/icons";
 import {Dish} from "../../Models/Dish";
 
-import DICTIONARY from '../../services/storageService'
+import DICTIONARY, {DINNER, INFO, LUNCH} from '../../services/storageService'
 import NavBar from "../../Components/NavBar";
 
-const mapStateToProps = ({menus, dishes}: IRootState) => {
-    const {menuList} = menus;
-    const {dishList} = dishes;
+const mapStateToProps = ({menuReducer, dishReducer}: IRootState) => {
+    const {menuList} = menuReducer;
+    const {dishList} = dishReducer;
     return {menuList, dishList};
 }
 
 
 const mapDispatcherToProps = (dispatch: Dispatch<ActionType<typeof actions>>) => {
     return {
-        updateMenu: (element: Menu) => dispatch(actions.updateMenu(element))
+        updateMenu: (element: Menu) => dispatch(actions.updateMenu(element)),
+        displayToast: (type: string, message: string) => dispatch(actions.displayToast(type, message))
     }
 }
 
 type ReduxType = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatcherToProps>;
 
 class MenusPage extends React.Component<ReduxType> {
-    ERROR: string = "danger";
-    INFO: string = "success";
 
-    LUNCH: string = "lunch";
-    DINNER: string = "dinner";
 
     state = {
         currentMeal: [] as Dish[],
         currentMenu: new Menu(),
         currentMenuDetail: "",
         displayModal: false,
-        displayToast: false,
         filter: "",
-        label: "",
-        toastMessage: "",
-        toastType: ""
+        label: ""
     }
 
     resetState = () => {
@@ -72,17 +65,8 @@ class MenusPage extends React.Component<ReduxType> {
         })
     }
 
-
-    displayToast = (type: string, reason: string) => {
-        this.setState({
-            displayToast: true,
-            toastMessage: reason,
-            toastType: type
-        })
-    }
-
     getSelectedMeal = (): Dish[] => {
-        if (this.state.currentMenuDetail === this.LUNCH) {
+        if (this.state.currentMenuDetail === LUNCH) {
             return this.state.currentMenu.lunchMeal;
         } else {
             return this.state.currentMenu.dinnerMeal;
@@ -107,11 +91,11 @@ class MenusPage extends React.Component<ReduxType> {
         let newMenu = new Menu(this.state.currentMenu.name,
             this.state.currentMenu.id,
             this.state.currentMenu.color,
-            (this.state.currentMenuDetail === this.LUNCH ? this.state.currentMeal : this.state.currentMenu.lunchMeal),
-            (this.state.currentMenuDetail === this.DINNER ? this.state.currentMeal : this.state.currentMenu.dinnerMeal)
+            (this.state.currentMenuDetail === LUNCH ? this.state.currentMeal : this.state.currentMenu.lunchMeal),
+            (this.state.currentMenuDetail === DINNER ? this.state.currentMeal : this.state.currentMenu.dinnerMeal)
         );
         this.props.updateMenu(newMenu);
-        this.displayToast(this.INFO, DICTIONARY.db.INFO_MESSAGE.CHANGE_APPLIED)
+        this.props.displayToast(INFO, DICTIONARY.db.INFO_MESSAGE.CHANGE_APPLIED)
         this.resetState()
     }
 
@@ -122,7 +106,7 @@ class MenusPage extends React.Component<ReduxType> {
                 onClick={() => this.setState({
                     displayModal: true,
                     currentMenu: Object.assign({}, item),
-                    currentMenuDetail: this.LUNCH,
+                    currentMenuDetail: LUNCH,
                     currentMeal: item.lunchMeal
                 })}
                 lines="none"
@@ -147,7 +131,7 @@ class MenusPage extends React.Component<ReduxType> {
                 onClick={() => this.setState({
                     displayModal: true,
                     currentMenu: Object.assign({}, item),
-                    currentMenuDetail: this.DINNER,
+                    currentMenuDetail: DINNER,
                     currentMeal: item.dinnerMeal
                 })}
                 lines="none"
@@ -246,21 +230,15 @@ class MenusPage extends React.Component<ReduxType> {
 
         return <IonPage>
             <IonHeader>
-                <NavBar title={DICTIONARY.db.menu_page.PAGE_TITLE}/>
+                <NavBar title={DICTIONARY.db.menu_page.PAGE_TITLE}
+                        displayToast={this.props.displayToast}/>
             </IonHeader>
             <IonContent>
                 {this.renderMenu()}
                 {this.renderModal()}
             </IonContent>
-            <IonToast
-                isOpen={this.state.displayToast}
-                onDidDismiss={() => this.setState({displayToast: false})}
-                message={this.state.toastMessage.toString()}
-                color={this.state.toastType.toString()}
-                duration={2000}
-            />
         </IonPage>
     }
 }
 
-export default connect(mapStateToProps, {updateMenu})(MenusPage);
+export default connect(mapStateToProps, {updateMenu, displayToast})(MenusPage);

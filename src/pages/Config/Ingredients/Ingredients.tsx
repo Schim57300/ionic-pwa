@@ -5,26 +5,35 @@ import {connect} from "react-redux";
 import {Dispatch} from 'redux';
 //Ionic
 import {
-    IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonBackButton, IonButton, IonModal, IonItem,
-    IonTextarea, IonList, IonLabel, IonToast, IonSearchbar, IonIcon
+    IonButton,
+    IonContent,
+    IonHeader,
+    IonIcon,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonModal,
+    IonPage,
+    IonSearchbar,
+    IonTextarea
 } from '@ionic/react';
 //Style
 import './Ingredients.css';
 
 import * as actions from "../../../actions/actions";
-import {addIngredient, removeIngredient, updateIngredient} from "../../../actions/actions";
+import {addIngredient, displayToast, removeIngredient, updateIngredient} from "../../../actions/actions";
 import {IRootState} from "../../../reducers";
 import {ActionType} from "typesafe-actions";
 import {Ingredient} from "../../../Models/Ingredient";
 import {closeCircleOutline, save, trash} from "ionicons/icons";
 import {Dish} from "../../../Models/Dish";
 
-import DICTIONARY from '../../../services/storageService';
+import DICTIONARY, {ERROR, INFO} from '../../../services/storageService';
 import NavBar from "../../../Components/NavBar";
 
-const mapStateToProps = ({ingredients, dishes}: IRootState) => {
-    const {ingredientList} = ingredients;
-    const {dishList} = dishes;
+const mapStateToProps = ({ingredientReducer, dishReducer}: IRootState) => {
+    const {ingredientList} = ingredientReducer;
+    const {dishList} = dishReducer;
     return {ingredientList, dishList};
 }
 
@@ -33,7 +42,8 @@ const mapDispatcherToProps = (dispatch: Dispatch<ActionType<typeof actions>>) =>
     return {
         removeIngredient: (item: Ingredient) => dispatch(actions.removeIngredient(item)),
         updateIngredient: (item: Ingredient) => dispatch(actions.updateIngredient(item)),
-        addIngredient: (item: Ingredient) => dispatch(actions.addIngredient(item))
+        addIngredient: (item: Ingredient) => dispatch(actions.addIngredient(item)),
+        displayToast: (type: string, message: string) => dispatch(actions.displayToast(type, message))
     }
 }
 
@@ -41,26 +51,13 @@ type ReduxType = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispa
 
 
 class IngredientsPage extends React.Component<ReduxType> {
-    ERROR: string = "danger";
-    INFO: string = "success"
 
     state = {
         currentIngredient: new Ingredient(),
         deleteMode: false,
         displayModal: false,
-        displayToast: false,
         filter: "",
-        label: "",
-        toastMessage: "",
-        toastType: ""
-    }
-
-    displayToast = (type: string, reason: string) => {
-        this.setState({
-            displayToast: true,
-            toastMessage: reason,
-            toastType: type
-        })
+        label: ""
     }
 
     resetState = () => {
@@ -77,20 +74,16 @@ class IngredientsPage extends React.Component<ReduxType> {
 
     handleAddIngredient = (newLabel: string) => {
         if (newLabel.trim() === "") {
-            this.displayToast(this.ERROR, DICTIONARY.db.ERROR_MESSAGE.MANDATORY_VALUE)
+            this.props.displayToast(ERROR, DICTIONARY.db.ERROR_MESSAGE.MANDATORY_VALUE)
         } else {
-            let elementFound: boolean = this.props.ingredientList.some(elt => elt.name.trim() === newLabel);
+            let elementFound: boolean = this.props.ingredientList.some(elt => String(elt.name.trim().toUpperCase() === newLabel.toUpperCase()));
             if (elementFound) {
-                this.setState({
-                    displayToast: true,
-                    toastMessage: DICTIONARY.db.ERROR_MESSAGE.VALUE_ALREADY_EXIST,
-                    toastType: "danger"
-                })
+                this.props.displayToast(ERROR, DICTIONARY.db.ERROR_MESSAGE.VALUE_ALREADY_EXIST);
             } else {
                 let newElement = new Ingredient(newLabel,
                     this.props.ingredientList.length + 1)
                 this.props.addIngredient(newElement);
-                this.displayToast(this.INFO, DICTIONARY.db.INFO_MESSAGE.ELEMENT_CREATED)
+                this.props.displayToast(INFO, DICTIONARY.db.INFO_MESSAGE.ELEMENT_CREATED)
                 this.resetState();
             }
         }
@@ -100,17 +93,17 @@ class IngredientsPage extends React.Component<ReduxType> {
         let newElement = new Ingredient(newLabel,
             this.state.currentIngredient.id)
         this.props.updateIngredient(newElement);
-        this.displayToast(this.INFO, DICTIONARY.db.INFO_MESSAGE.CHANGE_APPLIED)
+        this.props.displayToast(INFO, DICTIONARY.db.INFO_MESSAGE.CHANGE_APPLIED)
         this.resetState()
     }
 
     handleDeleteIngredient = () => {
         let listLinkDish = this.checkIngredientIsNotUsed()
         if (listLinkDish.length > 0) {
-            this.displayToast(this.ERROR, DICTIONARY.db.ERROR_MESSAGE.VALUE_ALREADY_USED + listLinkDish.toString());
+            this.props.displayToast(ERROR, DICTIONARY.db.ERROR_MESSAGE.VALUE_ALREADY_USED + listLinkDish.toString());
         } else {
             this.props.removeIngredient(this.state.currentIngredient);
-            this.displayToast(this.INFO,DICTIONARY.db.INFO_MESSAGE.ELEMENT_DELETED)
+            this.props.displayToast(INFO,DICTIONARY.db.INFO_MESSAGE.ELEMENT_DELETED)
             this.resetState()
         }
     }
@@ -231,7 +224,8 @@ class IngredientsPage extends React.Component<ReduxType> {
         return (
             <IonPage>
                 <IonHeader>
-                    <NavBar title={DICTIONARY.db.ingredient_page.PAGE_TITLE} />
+                    <NavBar title={DICTIONARY.db.ingredient_page.PAGE_TITLE}
+                    displayToast={this.props.displayToast}/>
                 </IonHeader>
 
                 <IonContent forceOverscroll={false}>
@@ -243,16 +237,12 @@ class IngredientsPage extends React.Component<ReduxType> {
                     {this.renderIngredients()}
                     {this.renderModal()}
                 </IonContent>
-                <IonToast
-                    isOpen={this.state.displayToast}
-                    onDidDismiss={() => this.setState({displayToast: false})}
-                    message={this.state.toastMessage.toString()}
-                    color={this.state.toastType.toString()}
-                    duration={2000}
-                />
             </IonPage>
         );
     }
 }
 
-export default connect(mapStateToProps, {removeIngredient, addIngredient, updateIngredient})(IngredientsPage);
+export default connect(mapStateToProps, {removeIngredient,
+    addIngredient,
+    updateIngredient,
+    displayToast})(IngredientsPage);

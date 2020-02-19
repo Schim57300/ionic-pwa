@@ -19,6 +19,9 @@ export const ADD_MENU = 'ADD_MENU';
 export const UPDATE_MENU = 'UPDATE_MENU';
 export const REMOVE_MENU = 'REMOVE_MENU';
 
+export const DISPLAY_TOAST = 'DISPLAY_TOAST';
+export const HIDE_TOAST = 'HIDE_TOAST';
+
 
 
 /**
@@ -36,6 +39,15 @@ export function prepareIngredientList(element: Ingredient[]) {
 export function prepareDishList(element: Dish[]) {
     const action = {
         type: INIT_DISH,
+        data: element
+    }
+
+    return action;
+}
+
+export function prepareMenuList(element: Menu[]) {
+    const action = {
+        type: INIT_MENU,
         data: element
     }
 
@@ -106,6 +118,24 @@ export function updateMenu(element: Menu) {
     const action = {
         type: UPDATE_MENU,
         data: element
+    }
+    return action;
+}
+/**
+ * TOAST
+ */
+export function displayToast(type: string, message: string) {
+    const action = {
+        type: DISPLAY_TOAST,
+        data: {message, type}
+    }
+    return action;
+}
+
+export function hideToast() {
+    const action = {
+        type: HIDE_TOAST,
+        data: {}
     }
     return action;
 }

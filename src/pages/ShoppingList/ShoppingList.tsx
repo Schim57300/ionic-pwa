@@ -1,15 +1,4 @@
-import {
-    IonBackButton,
-    IonButtons,
-    IonContent,
-    IonHeader,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonPage,
-    IonTitle,
-    IonToolbar
-} from '@ionic/react';
+import {IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage} from '@ionic/react';
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
@@ -17,23 +6,23 @@ import {Dispatch} from 'redux';
 import './ShoppingList.css';
 
 import * as actions from "../../actions/actions";
+import {displayToast} from "../../actions/actions";
 import {IRootState} from "../../reducers";
 import {ActionType} from "typesafe-actions";
-import {Menu} from "../../Models/Menu";
 
 import DICTIONARY from '../../services/storageService'
 import {Ingredient} from "../../Models/Ingredient";
 import NavBar from "../../Components/NavBar";
 
-const mapStateToProps = ({menus, dishes}: IRootState) => {
-    const {menuList} = menus;
-    const {dishList} = dishes;
+const mapStateToProps = ({menuReducer, dishReducer}: IRootState) => {
+    const {menuList} = menuReducer;
+    const {dishList} = dishReducer;
     return {menuList, dishList};
 }
 
 
 const mapDispatcherToProps = (dispatch: Dispatch<ActionType<typeof actions>>) => {
-    return {}
+    return {displayToast: (type: string, message: string) => dispatch(actions.displayToast(type, message))}
 }
 
 type ReduxType = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatcherToProps>;
@@ -75,9 +64,8 @@ class ShoppingListPage extends React.Component<ReduxType> {
         })
 
 
-        let newSet = new Set(shoppingList)
-        let result =  Array.from(newSet);
-        return result;
+        let newSet = new Set(shoppingList);
+        return Array.from(newSet);
     }
 
 
@@ -87,7 +75,8 @@ class ShoppingListPage extends React.Component<ReduxType> {
         let shoppingList = this.composeShoppingList();
         return <IonPage>
             <IonHeader>
-                <NavBar title={DICTIONARY.db.shoppinglist_page.PAGE_TITLE} />
+                <NavBar title={DICTIONARY.db.shoppinglist_page.PAGE_TITLE}
+                        displayToast={this.props.displayToast}/>
             </IonHeader>
             <IonContent>
                 <IonList className="shopping-list-item">
@@ -108,4 +97,4 @@ class ShoppingListPage extends React.Component<ReduxType> {
     }
 }
 
-export default connect(mapStateToProps, {})(ShoppingListPage);
+export default connect(mapStateToProps, {displayToast})(ShoppingListPage);

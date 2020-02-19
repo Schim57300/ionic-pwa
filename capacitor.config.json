@@ -1,1 +1,6 @@
-{}
+{
+  "appId": "fr.schim.perso",
+  "appName": "MyMenuApp",
+  "webDir": "build",
+  "npmClient": "npm"
+}

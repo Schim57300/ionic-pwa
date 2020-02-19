@@ -1,12 +1,15 @@
 import React from "react";
-import {home, menu, nutrition, person, restaurant, book, cart, clipboard} from "ionicons/icons";
+import {book, cart, home, menu, nutrition, person, restaurant} from "ionicons/icons";
 import {IonButton, IonButtons, IonIcon, IonItem, IonLabel, IonList, IonModal, IonTitle, IonToolbar} from "@ionic/react";
 import DICTIONARY from "../services/storageService";
+
+import {exportData} from "../services/storageService";
 
 import './NavBar.css';
 
 class NavBar extends React.Component<NavBarProps> {
 
+    static defaultProps = { displayToast: () => console.log("Default click")};
 
     state = {
         displayModal: false
@@ -63,6 +66,10 @@ class NavBar extends React.Component<NavBarProps> {
                         <IonIcon icon={person}/>
                         <IonLabel className="nav-element">{DICTIONARY.db.config_page.ACCOUNT_BUTTON_LABEL}</IonLabel>
                     </IonItem>
+                    <IonItem onClick={() => exportData(this.props.displayToast)}>
+                        <IonIcon icon={person}/>
+                        <IonLabel className="nav-element">Export data</IonLabel>
+                    </IonItem>
                 </IonList>
             </IonModal>
         )
@@ -88,7 +95,8 @@ class NavBar extends React.Component<NavBarProps> {
 }
 
 type NavBarProps = {
-    title: string
+    title: string,
+    displayToast: any
 }
 
 

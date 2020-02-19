@@ -1,18 +1,33 @@
 import React, {Component} from 'react';
-import {
-    IonButton, IonButtons,
-    IonCardSubtitle, IonContent, IonFooter, IonHeader, IonIcon, IonImg, IonItem, IonPage, IonText, IonTitle, IonToast,
-    IonToolbar
-} from '@ionic/react';
+import {IRootState} from "../../reducers";
+import {Dispatch} from 'redux';
+import {IonButton, IonCardSubtitle, IonContent, IonFooter, IonHeader, IonImg, IonItem, IonPage} from '@ionic/react';
 
 import DICTIONARY from '../../services/storageService'
 import './Home.css';
 
 import dico_json from '../../data/dictionary.json'
-import {menu} from "ionicons/icons";
 import NavBar from "../../Components/NavBar";
+import {connect} from "react-redux";
+import * as actions from "../../actions/actions";
+import {displayToast} from "../../actions/actions";
+import {ActionType} from "typesafe-actions";
 
-class Home extends Component {
+
+const mapStateToProps = ({}: IRootState) => {
+    return {};
+}
+
+
+const mapDispatcherToProps = (dispatch: Dispatch<ActionType<typeof actions>>) => {
+    return {
+        displayToast: (type: string, message: string) => dispatch(actions.displayToast(type, message))
+    }
+}
+
+type ReduxType = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatcherToProps>;
+
+class HomePage extends React.Component<ReduxType> {
 
     iconFr = "/assets/flags/fr32.png";
     iconEn = "/assets/flags/en32.png";
@@ -36,7 +51,8 @@ class Home extends Component {
         return (
             <IonPage>
                 <IonHeader>
-                    <NavBar title={DICTIONARY.db.home_page.PAGE_TITLE} />
+                    <NavBar title={DICTIONARY.db.home_page.PAGE_TITLE}
+                    displayToast={this.props.displayToast}/>
                 </IonHeader>
                 <IonContent>
                     <br/>
@@ -64,10 +80,10 @@ class Home extends Component {
                                size="large"
                                className="home-button"
                                color="light">{DICTIONARY.db.home_page.SHOPPING_LIST_BUTTON_LABEL}</IonButton>
-                    <IonCardSubtitle color='white'>menu v0.0.8-SNAPSHOT</IonCardSubtitle>
+                    <IonCardSubtitle color='white'>menu v0.0.11-SNAPSHOT</IonCardSubtitle>
                 </IonFooter>
             </IonPage>);
     }
 }
 
-export default Home;
+export default connect(mapStateToProps, {displayToast})(HomePage);;
