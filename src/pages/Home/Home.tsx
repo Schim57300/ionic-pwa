@@ -72,6 +72,9 @@ class HomePage extends React.Component<ReduxType> {
                     </IonItem>
                 </IonContent>
                 <IonFooter>
+                    <div>
+                        <input type="file" onChange={ (e) => console.log(e.target.files) } />
+                    </div>
                     <IonButton routerLink="/menu"
                                size="large"
                                className="home-button"
@@ -80,7 +83,7 @@ class HomePage extends React.Component<ReduxType> {
                                size="large"
                                className="home-button"
                                color="light">{DICTIONARY.db.home_page.SHOPPING_LIST_BUTTON_LABEL}</IonButton>
-                    <IonCardSubtitle color='white'>menu v0.0.11-SNAPSHOT</IonCardSubtitle>
+                    <IonCardSubtitle color='white'>menu v0.0.12-SNAPSHOT</IonCardSubtitle>
                 </IonFooter>
             </IonPage>);
     }
