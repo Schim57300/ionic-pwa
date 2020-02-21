@@ -19,6 +19,7 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import DishesPage from "./pages/Config/Dishes/Dishes";
+import ImportPage from "./pages/Config/Import/Import";
 import IngredientsPage from "./pages/Config/Ingredients/Ingredients";
 import MenusPage from "./pages/Menu/Menu";
 import ShoppingList from "./pages/ShoppingList/ShoppingList";
@@ -101,6 +102,7 @@ class App extends React.Component<ReduxType> {
                         <Route path="/dishes" component={DishesPage} exact={true}/>
                         <Route path="/ingredients" component={IngredientsPage} exact={true}/>
                         <Route path="/menu" component={MenusPage} exact={true}/>
+                        <Route path="/import" component={ImportPage} exact={true}/>
                         <Route exact path="/" render={() => <Redirect to="/home"/>}/>
                     </IonRouterOutlet>
                 </IonReactRouter>

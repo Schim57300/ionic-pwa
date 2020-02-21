@@ -43,6 +43,14 @@
       "LIST_DINNER": "Diner",
       "EMPTY_LIST": "Rien de prévu pour le moment"
     },
+    "import_page": {
+      "IMPORT_BUTTON_LABEL": "IMPORTER",
+      "ALERT_TITLE": "Importer des données",
+      "ALERT_SUBTITLE": "Vos données existantes vont être écrasées et remplacées",
+      "ALERT_MESSAGE": "Voulez vous poursuivre l'opération?",
+      "ALERT_CONFIRM": "Confirmer",
+      "ALERT_DISMISS": "Annuler"
+    },
     "navbar": {
       "EXPORT_DATA": "Exporter des données",
       "IMPORT_DATA": "Importer des données"
@@ -50,7 +58,11 @@
     "ERROR_MESSAGE" : {
       "MANDATORY_VALUE": "La valeur est obligatoire",
       "VALUE_ALREADY_EXIST": "La valeur existe déjà",
-      "VALUE_ALREADY_USED": "Utilisé avec "
+      "VALUE_ALREADY_USED": "Utilisé avec ",
+      "INVALID_FILE_FORMAT": "Le format de fichier est incorrect",
+      "INVALID_INGREDIENT_LIST": "Erreur lors de la lecture de la liste d'ingrédient",
+      "INVALID_DISH_LIST": "Erreur lors de la lecture de la liste de recette",
+      "INVALID_MENU_LIST": "Erreur lors de la lecture des menus"
     },
     "INFO_MESSAGE" : {
       "ELEMENT_CREATED": "L'élément a été créé",
@@ -114,6 +126,14 @@
       "LIST_DINNER": "Dinner",
       "EMPTY_LIST": "Nothing planed yet"
     },
+    "import_page": {
+      "IMPORT_BUTTON_LABEL": "IMPORT",
+      "ALERT_TITLE": "Import data",
+      "ALERT_SUBTITLE": "Your existing data will be overwritten and replaced",
+      "ALERT_MESSAGE": "Do you want to continue the operation?",
+      "ALERT_CONFIRM": "Confirm",
+      "ALERT_DISMISS": "Cancel"
+    },
     "navbar": {
       "EXPORT_DATA": "Export data",
       "IMPORT_DATA": "Import data"
@@ -121,7 +141,11 @@
     "ERROR_MESSAGE" : {
       "MANDATORY_VALUE": "The value is mandatory",
       "VALUE_ALREADY_EXIST": "The value does already exist",
-      "VALUE_ALREADY_USED": "Use with"
+      "VALUE_ALREADY_USED": "Use with",
+      "INVALID_FILE_FORMAT": "File format is not correct",
+      "INVALID_INGREDIENT_LIST": "Error while reading ingredient list",
+      "INVALID_DISH_LIST": "Error while reading recipe list",
+      "INVALID_MENU_LIST": "Error while reading menus"
     },
     "INFO_MESSAGE" : {
       "ELEMENT_CREATED": "Element has been created",

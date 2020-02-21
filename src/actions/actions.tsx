@@ -3,6 +3,8 @@ import {Dish} from "../Models/Dish";
 import {Menu} from "../Models/Menu";
 
 
+export const IMPORT_DATA = 'IMPORT_DATA';
+
 export const INIT_INGREDIENT = 'INIT_INGREDIENT';
 export const INIT_DISH = 'INIT_DISH';
 export const INIT_MENU = 'INIT_MENU';
@@ -53,6 +55,17 @@ export function prepareMenuList(element: Menu[]) {
 
     return action;
 }
+
+export function importData(menus: Menu[], dishes: Dish[], ingredients: Ingredient[]) {
+    const action = {
+        type: IMPORT_DATA,
+        data: {menus, dishes, ingredients}
+    }
+
+    return action;
+}
+
+
 
 /**
  * DISHES

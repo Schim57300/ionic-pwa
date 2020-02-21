@@ -1,4 +1,4 @@
-import {ADD_DISH, INIT_DISH, REMOVE_DISH, UPDATE_DISH} from "../actions/actions";
+import {ADD_DISH, IMPORT_DATA, INIT_DISH, REMOVE_DISH, UPDATE_DISH} from "../actions/actions";
 import {InitialState, initialStateImpl} from "./index";
 import {setDishes} from "../services/storageService";
 
@@ -7,6 +7,9 @@ export function dishesReducer(state: InitialState = initialStateImpl, action: an
     switch (action.type) {
         case INIT_DISH:
             return Object.assign({}, state, {dishList: action.data});
+        case IMPORT_DATA:
+            setDishes(action.data.dishes);
+            return Object.assign({}, state, {dishList: action.data.dishes });
         case ADD_DISH:
             state.dishList.push(action.data)
             setDishes(state.dishList);

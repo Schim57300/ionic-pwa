@@ -19,10 +19,11 @@ import {Dispatch} from 'redux';
 import './Dishes.css';
 
 import * as actions from "../../../actions/actions";
-import {addDish, displayToast, removeDish, updateDish} from "../../../actions/actions";
 import {IRootState} from "../../../reducers";
 import {ActionType} from "typesafe-actions";
 import {Dish} from "../../../Models/Dish";
+
+import {addDish, displayToast, removeDish, updateDish} from "../../../actions/actions";
 
 import {closeCircleOutline, create, save, trash} from 'ionicons/icons';
 

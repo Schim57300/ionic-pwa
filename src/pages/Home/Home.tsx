@@ -72,9 +72,6 @@ class HomePage extends React.Component<ReduxType> {
                     </IonItem>
                 </IonContent>
                 <IonFooter>
-                    <div>
-                        <input type="file" onChange={ (e) => console.log(e.target.files) } />
-                    </div>
                     <IonButton routerLink="/menu"
                                size="large"
                                className="home-button"

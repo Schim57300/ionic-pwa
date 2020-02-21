@@ -1,4 +1,5 @@
 import {Dish} from "./Dish";
+import {Ingredient} from "./Ingredient";
 
 
 export const MONDAY: string = "monday";
@@ -10,6 +11,14 @@ export const SATURDAY: string = "monday";
 export const SUNDAY: string = "monday";
 
 export class Menu {
+
+    static checkMenuJsonFormat(obj: any) : boolean  {
+        return (Array.isArray(obj) &&
+            !obj.some((element: any) => (!element.id || !element.name ||
+                (element.lunchMeal && !Dish.checkDishJsonFormat(element.lunchMeal)) ||
+                (element.dinnerMeal && !Dish.checkDishJsonFormat(element.dinnerMeal)) )))
+    }
+
 
     id: number = 0;
     name: string = '';

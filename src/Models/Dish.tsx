@@ -2,6 +2,12 @@ import {Ingredient} from "./Ingredient";
 
 export class Dish {
 
+    static checkDishJsonFormat(obj: any) : boolean  {
+        return (Array.isArray(obj) &&
+            !obj.some((element: any) => (!element.id || !element.name ||
+                (element.recipe && !Ingredient.checkIngredientJsonFormat(element.recipe)))))
+    }
+
     id: number = 0;
     name: string = '';
     recipe: Ingredient[] = [];
@@ -19,6 +25,7 @@ export class Dish {
     }
 
 }
+
 Dish.prototype.toString = function dishToString() {
     return '' + this.name;
-}
+};

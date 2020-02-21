@@ -1,5 +1,10 @@
 export class Ingredient {
 
+    static checkIngredientJsonFormat(obj: any) : boolean  {
+        return (Array.isArray(obj) &&
+            !obj.some((element: any) =>  !element.id || !element.name));
+    }
+
     id: number = 0;
     name: string = '';
 
@@ -8,3 +13,4 @@ export class Ingredient {
         this.name = name;
     }
 }
+

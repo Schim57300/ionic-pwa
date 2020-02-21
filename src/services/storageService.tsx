@@ -51,10 +51,6 @@ export async function getMenus(): Promise<Menu[]> {
     return JSON.parse(newVar.value);
 }
 
-export async function importData(callback: any): Promise<void> {
-
-}
-
 export async function exportData(callback: any): Promise<void> {
 
     let date = new Date(),
@@ -70,6 +66,7 @@ export async function exportData(callback: any): Promise<void> {
     Promise.all([Storage.get({key: "menuList"}), Storage.get({key: "dishList"}), Storage.get({key: "ingredientList"})])
         .then(([menus, dishes, ingredients]) => {
             let jsonFile = "{\"version\": \"1.0.0\", " +
+                "\"export\": " + new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString() + ", " +
                 "\"menus\": " + menus.value + ", " +
                 "\"ingredients\": " + ingredients.value + ", " +
                 "\"dishes\": " + dishes.value + "}";

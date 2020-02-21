@@ -1,9 +1,7 @@
 import React from "react";
-import {book, cart, home, menu, nutrition, person, restaurant, cloudUpload, cloudDownload} from "ionicons/icons";
+import {book, cart, cloudDownload, cloudUpload, home, menu, nutrition, person, restaurant} from "ionicons/icons";
 import {IonButton, IonButtons, IonIcon, IonItem, IonLabel, IonList, IonModal, IonTitle, IonToolbar} from "@ionic/react";
-import DICTIONARY from "../services/storageService";
-
-import {exportData, importData} from "../services/storageService";
+import DICTIONARY, {exportData} from "../services/storageService";
 
 import './NavBar.css';
 
@@ -27,38 +25,23 @@ class NavBar extends React.Component<NavBarProps> {
                 }}>
 
                 <IonList>
-                    <IonItem
-                        onClick={() => this.setState({displayModal: false})}
-                        routerLink="/home"
-                    >
+                    <IonItem onClick={() => this.setState({displayModal: false})} routerLink="/home">
                         <IonIcon icon={home}/>
                         <IonLabel className="nav-element">{DICTIONARY.db.config_page.HOME_PAGE_BUTTON_LABEL}</IonLabel>
                     </IonItem>
-                    <IonItem
-                        onClick={() => this.setState({displayModal: false})}
-                        routerLink="/menu"
-                    >
+                    <IonItem onClick={() => this.setState({displayModal: false})} routerLink="/menu">
                         <IonIcon icon={book}/>
                         <IonLabel className="nav-element">{DICTIONARY.db.home_page.MENU_BUTTON_LABEL}</IonLabel>
                     </IonItem>
-                    <IonItem
-                        onClick={() => this.setState({displayModal: false})}
-                        routerLink="/list"
-                    >
+                    <IonItem onClick={() => this.setState({displayModal: false})} routerLink="/list">
                         <IonIcon icon={cart}/>
                         <IonLabel className="nav-element">{DICTIONARY.db.home_page.SHOPPING_LIST_BUTTON_LABEL}</IonLabel>
                     </IonItem>
-                    <IonItem
-                        onClick={() => this.setState({displayModal: false})}
-                        routerLink="/ingredients"
-                    >
+                    <IonItem onClick={() => this.setState({displayModal: false})} routerLink="/ingredients">
                         <IonIcon icon={nutrition}/>
                         <IonLabel className="nav-element">{DICTIONARY.db.config_page.INGREDIENT_BUTTON_LABEL}</IonLabel>
                     </IonItem>
-                    <IonItem
-                        routerLink="/dishes"
-                        onClick={() => this.setState({displayModal: false})}
-                    >
+                    <IonItem routerLink="/dishes"  onClick={() => this.setState({displayModal: false})}>
                         <IonIcon icon={restaurant}/>
                         <IonLabel className="nav-element">{DICTIONARY.db.config_page.DISH_BUTTON_LABEL}</IonLabel>
                     </IonItem>
@@ -66,13 +49,12 @@ class NavBar extends React.Component<NavBarProps> {
                         <IonIcon icon={person}/>
                         <IonLabel className="nav-element">{DICTIONARY.db.config_page.ACCOUNT_BUTTON_LABEL}</IonLabel>
                     </IonItem>
-                    <IonItem onClick={() => exportData(this.props.displayToast)}>
+                    <IonItem onClick={() => this.setState({displayModal: false}, () => exportData(this.props.displayToast))}>
                         <IonIcon icon={cloudUpload}/>
                         <IonLabel className="nav-element">{DICTIONARY.db.navbar.EXPORT_DATA}</IonLabel>
                     </IonItem>
-                    <IonItem onClick={() => importData(this.props.displayToast)}>
-                        <IonIcon icon={cloudDownload}
-                        />
+                    <IonItem  routerLink="/import" onClick={() => this.setState({displayModal: false})}>
+                        <IonIcon icon={cloudDownload}/>
                         <IonLabel className="nav-element">{DICTIONARY.db.navbar.IMPORT_DATA}</IonLabel>
                     </IonItem>
                 </IonList>

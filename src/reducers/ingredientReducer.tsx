@@ -1,12 +1,15 @@
-import {ADD_INGREDIENT, INIT_INGREDIENT, REMOVE_INGREDIENT, UPDATE_INGREDIENT} from "../actions/actions";
+import {ADD_INGREDIENT, IMPORT_DATA, INIT_INGREDIENT, REMOVE_INGREDIENT, UPDATE_INGREDIENT} from "../actions/actions";
 import {InitialState, initialStateImpl} from "./index";
 
-import { setIngredients} from "../services/storageService";
+import {setIngredients} from "../services/storageService";
 
 export function ingredientsReducer(state: InitialState = initialStateImpl, action: any): InitialState {
     switch(action.type) {
         case INIT_INGREDIENT:
             return Object.assign({}, state, {ingredientList: action.data});
+        case IMPORT_DATA:
+            setIngredients(action.data.ingredients);
+            return Object.assign({}, state, {ingredientList: action.data.ingredients });
         case ADD_INGREDIENT:
             state.ingredientList.push(action.data)
             setIngredients(state.ingredientList);

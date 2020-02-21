@@ -1,4 +1,4 @@
-import {ADD_MENU, INIT_MENU, REMOVE_MENU, UPDATE_MENU} from "../actions/actions";
+import {ADD_MENU, IMPORT_DATA, INIT_MENU, REMOVE_MENU, UPDATE_MENU} from "../actions/actions";
 import {InitialState, initialStateImpl} from "./index";
 import {setMenus} from '../services/storageService';
 
@@ -7,6 +7,9 @@ export function menuReducer(state: InitialState = initialStateImpl, action: any)
     switch (action.type) {
         case INIT_MENU:
             return Object.assign({}, state, {menuList: action.data});
+        case IMPORT_DATA:
+            setMenus(action.data.menus);
+            return Object.assign({}, state, {menuList: action.data.menus });
         case ADD_MENU:
             setMenus(state.menuList);
             return state;
