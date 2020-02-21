@@ -10,16 +10,14 @@ export function menuReducer(state: InitialState = initialStateImpl, action: any)
         case IMPORT_DATA:
             setMenus(action.data.menus);
             return Object.assign({}, state, {menuList: action.data.menus });
-        case ADD_MENU:
-            setMenus(state.menuList);
-            return state;
         case UPDATE_MENU:
             let foundElement = state.menuList.findIndex(element => element.id === action.data.id);
             let newList = Object.assign([], state.menuList, {[foundElement]: action.data});
             setMenus(newList);
             return Object.assign({}, state, {menuList: newList });
+        case ADD_MENU:
+            return state;
         case REMOVE_MENU:
-            setMenus(state.menuList);
             return state;
         default:
             return state;

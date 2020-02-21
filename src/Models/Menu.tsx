@@ -1,5 +1,5 @@
 import {Dish} from "./Dish";
-import {Ingredient} from "./Ingredient";
+import {MenuItem} from "./MenuItem";
 
 
 export const MONDAY: string = "monday";
@@ -9,6 +9,7 @@ export const THURSDAY: string = "monday";
 export const FRIDAY: string = "monday";
 export const SATURDAY: string = "monday";
 export const SUNDAY: string = "monday";
+
 
 export class Menu {
 
@@ -23,10 +24,10 @@ export class Menu {
     id: number = 0;
     name: string = '';
     color: string = "";
-    lunchMeal: Dish[] = [];
-    dinnerMeal: Dish[] = [];
+    lunchMeal: MenuItem[] = [];
+    dinnerMeal: MenuItem[] = [];
 
-    constructor(name: string = "", id: number = 0, color: string = "", lunchMeal: Dish[] = [], dinnerMeal: Dish[] = []) {
+    constructor(name: string = "", id: number = 0, color: string = "", lunchMeal: MenuItem[] = [], dinnerMeal: MenuItem[] = []) {
         this.name = name;
         this.id = id;
         this.color = color;

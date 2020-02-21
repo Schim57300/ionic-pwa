@@ -13,6 +13,7 @@ import {ActionType} from "typesafe-actions";
 import DICTIONARY from '../../services/storageService'
 import {Ingredient} from "../../Models/Ingredient";
 import NavBar from "../../Components/NavBar";
+import {Dish} from "../../Models/Dish";
 
 const mapStateToProps = ({menuReducer, dishReducer}: IRootState) => {
     const {menuList} = menuReducer;
@@ -28,13 +29,9 @@ const mapDispatcherToProps = (dispatch: Dispatch<ActionType<typeof actions>>) =>
 type ReduxType = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatcherToProps>;
 
 class ShoppingListPage extends React.Component<ReduxType> {
-    ERROR: string = "danger";
-    INFO: string = "success";
-
-
 
     composeShoppingList = () : Ingredient[] => {
-        let shoppingList: Ingredient[] =[]
+        let shoppingList: Ingredient[] =[];
         /*
         this.props.menuList.forEach(menu => {
             menu.lunchMeal.forEach(recipe => {
@@ -47,19 +44,31 @@ class ShoppingListPage extends React.Component<ReduxType> {
         */
         //Quick fix until data is correctly stored in memory
         this.props.menuList.forEach(menu => {
-            menu.lunchMeal.forEach(recipe => {
-                recipe.recipe.forEach(elt => {
-                    if (!shoppingList.some(item => item.id === elt.id)) {
-                        shoppingList.push(elt)
+            menu.lunchMeal.forEach(element => {
+                if((element as Dish).recipe){
+                    (element as Dish).recipe.forEach(recipe => {
+                        if (!shoppingList.some(item => item.id === recipe.id)) {
+                            shoppingList.push(recipe)
+                        }
+                    });
+                } else {
+                    if (!shoppingList.some(item => item.id === (element as Ingredient).id)) {
+                        shoppingList.push((element as Ingredient))
                     }
-                });
-            })
-            menu.dinnerMeal.forEach(recipe => {
-                recipe.recipe.forEach(elt => {
-                    if (!shoppingList.some(item => item.id === elt.id)) {
-                        shoppingList.push(elt)
+                }
+            });
+            menu.dinnerMeal.forEach(element => {
+                if ((element as Dish).recipe){
+                    (element as Dish).recipe.forEach(recipe => {
+                        if (!shoppingList.some(item => item.id === recipe.id)) {
+                            shoppingList.push(recipe)
+                        }
+                    });
+                } else  {
+                    if (!shoppingList.some(item => item.id === (element as Ingredient).id)) {
+                        shoppingList.push((element as Ingredient))
                     }
-                });
+                }
             })
         })
 

@@ -27,11 +27,13 @@ import {Dish} from "../../Models/Dish";
 
 import DICTIONARY, {DINNER, INFO, LUNCH} from '../../services/storageService'
 import NavBar from "../../Components/NavBar";
+import {MenuItem} from "../../Models/MenuItem";
 
-const mapStateToProps = ({menuReducer, dishReducer}: IRootState) => {
+const mapStateToProps = ({menuReducer, dishReducer, ingredientReducer}: IRootState) => {
     const {menuList} = menuReducer;
     const {dishList} = dishReducer;
-    return {menuList, dishList};
+    const {ingredientList} = ingredientReducer;
+    return {menuList, dishList, ingredientList};
 }
 
 
@@ -48,7 +50,7 @@ class MenusPage extends React.Component<ReduxType> {
 
 
     state = {
-        currentMeal: [] as Dish[],
+        currentMeal: [] as MenuItem[],
         currentMenu: new Menu(),
         currentMenuDetail: "",
         displayModal: false,
@@ -65,7 +67,7 @@ class MenusPage extends React.Component<ReduxType> {
         })
     }
 
-    getSelectedMeal = (): Dish[] => {
+    getSelectedMeal = (): MenuItem[] => {
         if (this.state.currentMenuDetail === LUNCH) {
             return this.state.currentMenu.lunchMeal;
         } else {
@@ -77,13 +79,13 @@ class MenusPage extends React.Component<ReduxType> {
         this.setState({filter: str});
     }
 
-    handleCheckBoxChange(event: any) {
-        let selectedDish = this.props.dishList.find(dish => dish.id.toString() === event.target.value);
+    handleCheckBoxChange(event: any, selectedElement: MenuItem) {
+
         if (!event.target.checked) {
-            let elementToRemove = this.state.currentMeal.findIndex(element => element === selectedDish);
+            let elementToRemove = this.state.currentMeal.findIndex(element => element === selectedElement);
             this.state.currentMeal.splice(elementToRemove, 1);
-        } else if (selectedDish !== undefined) {
-            this.state.currentMeal.push(selectedDish);
+        } else {
+            this.state.currentMeal.push(selectedElement);
         }
     }
 
@@ -181,6 +183,10 @@ class MenusPage extends React.Component<ReduxType> {
         let icon = "/assets/icon/app/ic_plat.png";
         let clickAction = () => this.handleUpdatMenu();
 
+        let menuElements: MenuItem[] = [];
+        this.props.dishList.forEach(dish => menuElements.push(dish))
+        this.props.ingredientList.forEach(ingredient => menuElements.push(ingredient))
+
         return (
             <IonModal
                 isOpen={this.state.displayModal}
@@ -192,17 +198,24 @@ class MenusPage extends React.Component<ReduxType> {
                     <div className="title">{DICTIONARY.db.menu_page.MODAL_CHOOSE}</div>
                 </div>
                 <IonList className="list-checkable-ingredient">
-                    {this.props.dishList
+                    {menuElements
                         .sort((a, b) => a.name.localeCompare(b.name))
                         .map(item => {
+                            let key = "";
+                            if((item as Dish).recipe){
+                                key = "dish"+item.id;
+                            } else {
+                                key = "ing"+item.id;
+                            }
+
                             return (
-                                <IonItem key={item.id}>
+                                <IonItem key={key}>
                                     <IonLabel>{item.name}</IonLabel>
                                     <IonCheckbox
                                         checked={
                                             this.getSelectedMeal().some(element => item.id === element.id)
                                         }
-                                        onClick={(e) => this.handleCheckBoxChange(e)}
+                                        onClick={(e) => this.handleCheckBoxChange(e, item)}
                                         value={item.id.toString()}/>
                                 </IonItem>
                             )
