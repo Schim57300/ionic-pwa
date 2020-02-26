@@ -1,4 +1,4 @@
-import {ADD_DISH, IMPORT_DATA, INIT_DISH, REMOVE_DISH, UPDATE_DISH} from "../actions/actions";
+import {ADD_DISH, IMPORT_DATA, INIT_DISH, REMOVE_DISH, UPDATE_DISH, UPDATE_INGREDIENT} from "../actions/actions";
 import {InitialState, initialStateImpl} from "./index";
 import {setDishes} from "../services/storageService";
 
@@ -21,8 +21,8 @@ export function dishesReducer(state: InitialState = initialStateImpl, action: an
             return Object.assign({}, state, {dishList: newList});
         case REMOVE_DISH:
             let elementToRemove = state.dishList.findIndex(element => element.id === action.data.id);
-            setDishes(state.dishList);
             state.dishList.splice(elementToRemove, 1);
+            setDishes(state.dishList);
             return state;
         default:
             return state;

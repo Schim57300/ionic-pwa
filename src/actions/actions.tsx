@@ -1,6 +1,7 @@
 import {Ingredient} from "../Models/Ingredient";
 import {Dish} from "../Models/Dish";
 import {Menu} from "../Models/Menu";
+import {Section} from "../Models/Section";
 
 
 export const IMPORT_DATA = 'IMPORT_DATA';
@@ -8,6 +9,7 @@ export const IMPORT_DATA = 'IMPORT_DATA';
 export const INIT_INGREDIENT = 'INIT_INGREDIENT';
 export const INIT_DISH = 'INIT_DISH';
 export const INIT_MENU = 'INIT_MENU';
+export const INIT_SECTION = 'INIT_SECTION';
 
 export const ADD_DISH = 'ADD_DISH';
 export const UPDATE_DISH = 'UPDATE_DISH';
@@ -20,6 +22,8 @@ export const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT';
 export const ADD_MENU = 'ADD_MENU';
 export const UPDATE_MENU = 'UPDATE_MENU';
 export const REMOVE_MENU = 'REMOVE_MENU';
+
+export const UPDATE_SECTIONS = 'UPDATE_SECTIONS';
 
 export const DISPLAY_TOAST = 'DISPLAY_TOAST';
 export const HIDE_TOAST = 'HIDE_TOAST';
@@ -47,6 +51,15 @@ export function prepareDishList(element: Dish[]) {
     return action;
 }
 
+export function prepareSectionList(element: Section[]) {
+    const action = {
+        type: INIT_SECTION,
+        data: element
+    }
+
+    return action;
+}
+
 export function prepareMenuList(element: Menu[]) {
     const action = {
         type: INIT_MENU,
@@ -56,10 +69,10 @@ export function prepareMenuList(element: Menu[]) {
     return action;
 }
 
-export function importData(menus: Menu[], dishes: Dish[], ingredients: Ingredient[]) {
+export function importData(menus: Menu[], dishes: Dish[], ingredients: Ingredient[], sections: Section[]) {
     const action = {
         type: IMPORT_DATA,
-        data: {menus, dishes, ingredients}
+        data: {menus, dishes, ingredients, sections}
     }
 
     return action;
@@ -134,6 +147,20 @@ export function updateMenu(element: Menu) {
     }
     return action;
 }
+
+
+/**
+ * SECTION
+ */
+export function updateSections(element: Section[]) {
+    const action = {
+        type: UPDATE_SECTIONS,
+        data: element
+    }
+    return action;
+}
+
+
 /**
  * TOAST
  */

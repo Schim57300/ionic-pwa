@@ -5,17 +5,10 @@
       "MENU_BUTTON_LABEL": "Composer vos menus",
       "SHOPPING_LIST_BUTTON_LABEL": "Consulter la liste de course",
       "CONFIG_BUTTON_LABEL": "Configuration",
-      "DESCRIPTION": "Composez votre liste de menu de la semaine et générez automatiquement votre liste de course</br></br><b>1.</b> Dans la partie <b>CONFIGURATION</b>:</br> -  Ajoutez les ingrédients (pâtes, poissons, riz, légumes…) nécessaires à la composition de vos plats.</br></b> - Créez vos recettes.</br></br><b>2.</b> Lorsque la liste de recettes est bien garnie, <b>COMPOSER VOS MENUS</b>.</br></br>La liste de course se remplira automatiquement"
+      "DESCRIPTION": "<b>1.</b> Enregistrez vos ingrédients et créez vos recettes.</br></br><b>2.</b> Lorsque la liste de recettes est bien garnie, <b>COMPOSEZ VOS MENUS</b>.</br></br>La liste de courses se remplira automatiquement.</br></br>Les options <b>EXPORT / IMPORT</b> vous permettent de partager vos données avec un autre téléphone."
     },
     "shoppinglist_page": {
       "PAGE_TITLE": "Liste de course"
-    },
-    "config_page": {
-      "PAGE_TITLE": "Configuration",
-      "HOME_PAGE_BUTTON_LABEL": "Page principale",
-      "ACCOUNT_BUTTON_LABEL": "Mon compte (bientôt)",
-      "DISH_BUTTON_LABEL": "Recettes",
-      "INGREDIENT_BUTTON_LABEL": "Ingrédients"
     },
     "ingredient_page": {
       "PAGE_TITLE": "Ingrédients",
@@ -51,15 +44,25 @@
       "ALERT_CONFIRM": "Confirmer",
       "ALERT_DISMISS": "Annuler"
     },
+    "section_page": {
+      "PAGE_TITLE": "Rayons"
+    },
     "navbar": {
+      "HOME_PAGE_BUTTON_LABEL": "Page principale",
+      "ACCOUNT_BUTTON_LABEL": "Mon compte (bientôt)",
+      "DISH_BUTTON_LABEL": "Recettes",
+      "INGREDIENT_BUTTON_LABEL": "Ingrédients",
+      "SECTION_BUTTON_LABEL": "Gestion des rayons",
       "EXPORT_DATA": "Exporter des données",
       "IMPORT_DATA": "Importer des données"
     },
     "ERROR_MESSAGE" : {
       "MANDATORY_VALUE": "La valeur est obligatoire",
       "VALUE_ALREADY_EXIST": "La valeur existe déjà",
-      "VALUE_ALREADY_USED": "Utilisé avec ",
+      "VALUE_ALREADY_USED": "L'élément est utilisé avec",
+      "VALUE_ALREADY_PLANNED": "L'élément est prévu",
       "INVALID_FILE_FORMAT": "Le format de fichier est incorrect",
+      "INVALID_SECTION_LIST": "Erreur lors de la lecture de la liste des rayons",
       "INVALID_INGREDIENT_LIST": "Erreur lors de la lecture de la liste d'ingrédient",
       "INVALID_DISH_LIST": "Erreur lors de la lecture de la liste de recette",
       "INVALID_MENU_LIST": "Erreur lors de la lecture des menus"
@@ -88,17 +91,10 @@
       "MENU_BUTTON_LABEL": "Compose your menus",
       "SHOPPING_LIST_BUTTON_LABEL": "Check your shopping list",
       "CONFIG_BUTTON_LABEL": "Settings",
-      "DESCRIPTION": "Compose your weekly menu list and automatically generate your shopping list</br></br><b>1.</b> In the <b>SETTINGS</b> part:<br/> - Add ingredients (pasta, fish, rice, vegetables…) necessary for the composition of your recipies.</br> - Create your recipies.</br></br><b>2.</b> When you got enough elements in your list of recipies, <b>COMPOSE YOUR MENUS</b>.</br></br>Your shopping list will be automatically generated."
+      "DESCRIPTION": "<b>1.</b> Add your ingredients and create your recipes.</br></br><b>2.</b> When you got enough elements in your list of recipes, <b>COMPOSE YOUR MENUS</b>.</br></br>Your shopping list will be automatically generated..</br></br>The <b>EXPORT / IMPORT</b> features allow you to share your data with another device."
     },
     "shoppinglist_page": {
       "PAGE_TITLE": "Shopping list"
-    },
-    "config_page": {
-      "PAGE_TITLE": "Settings",
-      "HOME_PAGE_BUTTON_LABEL": "Home page",
-      "ACCOUNT_BUTTON_LABEL": "My account (coming soon)",
-      "DISH_BUTTON_LABEL": "Dishes",
-      "INGREDIENT_BUTTON_LABEL": "Ingredients"
     },
     "ingredient_page": {
       "PAGE_TITLE": "Ingredients",
@@ -134,15 +130,25 @@
       "ALERT_CONFIRM": "Confirm",
       "ALERT_DISMISS": "Cancel"
     },
+    "section_page": {
+      "PAGE_TITLE": "Sections"
+    },
     "navbar": {
+      "HOME_PAGE_BUTTON_LABEL": "Home page",
+      "ACCOUNT_BUTTON_LABEL": "My account (coming soon)",
+      "DISH_BUTTON_LABEL": "Dishes",
+      "INGREDIENT_BUTTON_LABEL": "Ingredients",
+      "SECTION_BUTTON_LABEL": "Sections",
       "EXPORT_DATA": "Export data",
       "IMPORT_DATA": "Import data"
     },
     "ERROR_MESSAGE" : {
       "MANDATORY_VALUE": "The value is mandatory",
       "VALUE_ALREADY_EXIST": "The value does already exist",
-      "VALUE_ALREADY_USED": "Use with",
+      "VALUE_ALREADY_USED": "Element is used with",
+      "VALUE_ALREADY_PLANNED": "Element is planned",
       "INVALID_FILE_FORMAT": "File format is not correct",
+      "INVALID_SECTION_LIST": "Error while reading section list",
       "INVALID_INGREDIENT_LIST": "Error while reading ingredient list",
       "INVALID_DISH_LIST": "Error while reading recipe list",
       "INVALID_MENU_LIST": "Error while reading menus"

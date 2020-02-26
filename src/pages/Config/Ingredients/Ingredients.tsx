@@ -14,8 +14,8 @@ import {
     IonList,
     IonModal,
     IonPage,
-    IonSearchbar,
-    IonTextarea
+    IonSearchbar, IonSegment, IonSegmentButton,
+    IonTextarea, IonToolbar
 } from '@ionic/react';
 //Style
 import './Ingredients.css';
@@ -30,11 +30,14 @@ import {Dish} from "../../../Models/Dish";
 
 import DICTIONARY, {ERROR, INFO} from '../../../services/storageService';
 import NavBar from "../../../Components/NavBar";
+import {Menu} from "../../../Models/Menu";
 
-const mapStateToProps = ({ingredientReducer, dishReducer}: IRootState) => {
+const mapStateToProps = ({ingredientReducer, dishReducer, sectionReducer, menuReducer}: IRootState) => {
     const {ingredientList} = ingredientReducer;
     const {dishList} = dishReducer;
-    return {ingredientList, dishList};
+    const {sectionList} = sectionReducer;
+    const {menuList} = menuReducer;
+    return {ingredientList, dishList, sectionList, menuList};
 }
 
 
@@ -91,7 +94,7 @@ class IngredientsPage extends React.Component<ReduxType> {
 
     handleUpdateIngredient = (newLabel: string) => {
         let newElement = new Ingredient(newLabel,
-            this.state.currentIngredient.id)
+            this.state.currentIngredient.id, this.state.currentIngredient.section)
         this.props.updateIngredient(newElement);
         this.props.displayToast(INFO, DICTIONARY.db.INFO_MESSAGE.CHANGE_APPLIED)
         this.resetState()
@@ -99,13 +102,24 @@ class IngredientsPage extends React.Component<ReduxType> {
 
     handleDeleteIngredient = () => {
         let listLinkDish = this.checkIngredientIsNotUsed()
+        let listLinkMenu = this.checkIngredientIsNotPlanned();
         if (listLinkDish.length > 0) {
             this.props.displayToast(ERROR, DICTIONARY.db.ERROR_MESSAGE.VALUE_ALREADY_USED + listLinkDish.toString());
+        } else if (listLinkMenu.length > 0) {
+            this.props.displayToast(ERROR, DICTIONARY.db.ERROR_MESSAGE.VALUE_ALREADY_PLANNED + listLinkMenu.toString());
         } else {
             this.props.removeIngredient(this.state.currentIngredient);
-            this.props.displayToast(INFO,DICTIONARY.db.INFO_MESSAGE.ELEMENT_DELETED)
+            this.props.displayToast(INFO, DICTIONARY.db.INFO_MESSAGE.ELEMENT_DELETED)
             this.resetState()
         }
+    }
+
+    handleSegmentSelect = (e: any)  => {
+        let newIngredient = Object.assign({}, this.state.currentIngredient);
+        newIngredient.section =  this.props.sectionList.filter(elt => elt.id.toString() === e.detail.value)[0];
+        this.setState({
+            currentIngredient: newIngredient
+        })
     }
 
     checkIngredientIsNotUsed = (): Dish[] => {
@@ -117,6 +131,22 @@ class IngredientsPage extends React.Component<ReduxType> {
             }
         })
         return linkedDish;
+    }
+
+    checkIngredientIsNotPlanned = (): Menu[] => {
+        let linkedMenu: Menu[] = [];
+        this.props.menuList.forEach(menu => {
+            let plannedForLunch = menu.lunchMeal.some(menuItem => !(menuItem as Dish).recipe &&
+                menuItem.id === this.state.currentIngredient.id &&
+                menuItem.name === this.state.currentIngredient.name);
+            let plannedForDinner = menu.dinnerMeal.some(menuItem => !(menuItem as Dish).recipe &&
+                menuItem.id === this.state.currentIngredient.id &&
+                menuItem.name === this.state.currentIngredient.name);
+            if (plannedForLunch || plannedForDinner) {
+                linkedMenu.push(menu);
+            }
+        })
+        return linkedMenu;
     }
 
     renderIngredients = () => {
@@ -133,6 +163,7 @@ class IngredientsPage extends React.Component<ReduxType> {
                                 <IonItem onClick={() => this.setState({displayModal: true, currentIngredient: item})}
                                          key={item.id} className="list-ingredient">
                                     <IonLabel className="list-ingredient">{item.name}</IonLabel>
+                                    <IonLabel className="list-ingredient">{item.section?.name}</IonLabel>
                                 </IonItem>
                             )
                         })}
@@ -167,10 +198,10 @@ class IngredientsPage extends React.Component<ReduxType> {
         }
         return (
             <IonModal
-                      isOpen={this.state.displayModal}
-                      onDidDismiss={() => {
-                          this.resetState();
-                      }}>
+                isOpen={this.state.displayModal}
+                onDidDismiss={() => {
+                    this.resetState();
+                }}>
                 <IonItem className="flex-container">
                     <img src={icon} height="40px"/>
                     <div className="title">{modalTitle}</div>
@@ -180,11 +211,21 @@ class IngredientsPage extends React.Component<ReduxType> {
                                  readonly={this.state.deleteMode}
                                  disabled={this.state.deleteMode}
                                  value={textValue}
-
                                  onIonChange={e => textValue = (e.target as HTMLInputElement).value}>
 
                     </IonTextarea>
                 </IonItem>
+                <IonToolbar>
+                    <IonSegment scrollable color="secondary"
+                                value={this.state.currentIngredient.section?.id.toString()}
+                                onIonChange={e => this.handleSegmentSelect(e)}>
+                        {this.props.sectionList.map(section =>
+                            <IonSegmentButton key={section.id} value={section.id.toString()}>
+                                {section.name}
+                            </IonSegmentButton>
+                        )}
+                    </IonSegment>
+                </IonToolbar>
                 <IonItem className="flex-container">
                     <IonButton slot="end"
                                expand='block'
@@ -225,7 +266,7 @@ class IngredientsPage extends React.Component<ReduxType> {
             <IonPage>
                 <IonHeader>
                     <NavBar title={DICTIONARY.db.ingredient_page.PAGE_TITLE}
-                    displayToast={this.props.displayToast}/>
+                            displayToast={this.props.displayToast}/>
                 </IonHeader>
 
                 <IonContent forceOverscroll={false}>
@@ -242,7 +283,9 @@ class IngredientsPage extends React.Component<ReduxType> {
     }
 }
 
-export default connect(mapStateToProps, {removeIngredient,
+export default connect(mapStateToProps, {
+    removeIngredient,
     addIngredient,
     updateIngredient,
-    displayToast})(IngredientsPage);
+    displayToast
+})(IngredientsPage);

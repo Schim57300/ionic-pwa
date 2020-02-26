@@ -29,11 +29,13 @@ import {closeCircleOutline, create, save, trash} from 'ionicons/icons';
 
 import DICTIONARY, {ERROR, INFO} from '../../../services/storageService';
 import NavBar from "../../../Components/NavBar";
+import {Menu} from "../../../Models/Menu";
 
-const mapStateToProps = ({ingredientReducer, dishReducer}: IRootState) => {
+const mapStateToProps = ({ingredientReducer, dishReducer, menuReducer}: IRootState) => {
     const {ingredientList} = ingredientReducer;
     const {dishList} = dishReducer;
-    return {ingredientList, dishList};
+    const {menuList} = menuReducer;
+    return {ingredientList, dishList, menuList};
 }
 
 
@@ -108,15 +110,30 @@ class DishesPage extends React.Component<ReduxType> {
     }
 
     handleDeleteDish = () => {
-        //TODO EKA: Later: check  if dish is not used in menu
-        //let listLinkDish = this.checkIngredientIsNotUsed()
-        //if (listLinkDish.length > 0) {
-        //    this.props.displayToast(ERROR, "Used in " + listLinkDish.toString());
-        //} else {
+        let listLinkMenu = this.checkDishIsNotPlanned()
+        if (listLinkMenu.length > 0) {
+            this.props.displayToast(ERROR, DICTIONARY.db.ERROR_MESSAGE.VALUE_ALREADY_PLANNED + listLinkMenu.toString());
+        } else {
             this.props.removeDish(this.state.currentDish);
             this.props.displayToast(INFO, DICTIONARY.db.INFO_MESSAGE.ELEMENT_DELETED);
             this.resetState();
-        //}
+        }
+    }
+
+    checkDishIsNotPlanned = (): Menu[] => {
+        let linkedMenu: Menu[] = [];
+        this.props.menuList.forEach(menu => {
+            let plannedForLunch = menu.lunchMeal.some(menuItem => !!(menuItem as Dish).recipe &&
+                menuItem.id === this.state.currentDish.id &&
+                menuItem.name === this.state.currentDish.name);
+            let plannedForDinner = menu.dinnerMeal.some(menuItem => !!(menuItem as Dish).recipe &&
+                menuItem.id === this.state.currentDish.id &&
+                menuItem.name === this.state.currentDish.name);
+            if (plannedForLunch || plannedForDinner) {
+                linkedMenu.push(menu);
+            }
+        })
+        return linkedMenu;
     }
 
     renderDishes = () => {

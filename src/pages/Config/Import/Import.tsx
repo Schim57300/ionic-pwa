@@ -14,6 +14,7 @@ import {Dish} from "../../../Models/Dish";
 import {Menu} from "../../../Models/Menu";
 
 import DICTIONARY from "../../../services/storageService";
+import {Section} from "../../../Models/Section";
 
 const mapStateToProps = ({}: IRootState) => {
     return { };
@@ -23,7 +24,10 @@ const mapStateToProps = ({}: IRootState) => {
 const mapDispatcherToProps = (dispatch: Dispatch<ActionType<typeof actions>>) => {
     return {
         displayToast: (type: string, message: string) => dispatch(actions.displayToast(type, message)),
-        importData: (menus: Menu[], dishes: Dish[], ingredients: Ingredient[]) => dispatch(actions.importData(menus, dishes, ingredients))
+        importData: (menus: Menu[],
+                     dishes: Dish[],
+                     ingredients: Ingredient[],
+                     sections: Section[]) => dispatch(actions.importData(menus, dishes, ingredients, sections))
     }
 }
 
@@ -38,7 +42,8 @@ class ImportPage extends React.Component<ReduxType> {
         lastEditionDate: "",
         ingredientList: [],
         dishesList: [],
-        menuList: []
+        menuList: [],
+        sectionList: []
     }
 
     resetState = () => {
@@ -48,7 +53,8 @@ class ImportPage extends React.Component<ReduxType> {
             lastEditionDate: "",
             ingredientList: [],
             dishesList: [],
-            menuList: []
+            menuList: [],
+            sectionList: []
         });
     }
 
@@ -66,7 +72,10 @@ class ImportPage extends React.Component<ReduxType> {
                 try {
                     obj = JSON.parse(text);
 
-                    if (!obj.ingredients || !Ingredient.checkIngredientJsonFormat(obj.ingredients)) {
+                    if (!obj.sections || Section.checkSectionJsonFormat(obj.sections)) {
+                        this.resetState();
+                        this.props.displayToast(ERROR, DICTIONARY.db.ERROR_MESSAGE.INVALID_SECTION_LIST);
+                    } else if (!obj.ingredients || !Ingredient.checkIngredientJsonFormat(obj.ingredients)) {
                         this.resetState();
                         this.props.displayToast(ERROR, DICTIONARY.db.ERROR_MESSAGE.INVALID_INGREDIENT_LIST);
                     } else if  (!obj.dishes || !Dish.checkDishJsonFormat(obj.dishes)) {
@@ -97,9 +106,6 @@ class ImportPage extends React.Component<ReduxType> {
         };
         reader.readAsText(currentFile)
 
-
-    }
-    handleClick = () =>  {
 
     }
 
@@ -146,7 +152,10 @@ class ImportPage extends React.Component<ReduxType> {
                     {
                         text: DICTIONARY.db.import_page.ALERT_CONFIRM,
                         handler: () => {
-                            this.props.importData(this.state.menuList, this.state.dishesList, this.state.ingredientList);
+                            this.props.importData(this.state.menuList,
+                                this.state.dishesList,
+                                this.state.ingredientList,
+                                this.state.sectionList);
                             this.props.displayToast(INFO, DICTIONARY.db.INFO_MESSAGE.CHANGE_APPLIED);
                             this.resetState();
                         }

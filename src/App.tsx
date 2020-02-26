@@ -21,28 +21,30 @@ import './theme/variables.css';
 import DishesPage from "./pages/Config/Dishes/Dishes";
 import ImportPage from "./pages/Config/Import/Import";
 import IngredientsPage from "./pages/Config/Ingredients/Ingredients";
+import SectionPage from "./pages/Config/Section/Section";
 import MenusPage from "./pages/Menu/Menu";
 import ShoppingList from "./pages/ShoppingList/ShoppingList";
 
-import {getDishes, getIngredients, getMenus} from "./services/storageService";
+import {getDishes, getIngredients, getMenus, getSections} from "./services/storageService";
 import {Dish} from "./Models/Dish";
 import {IRootState} from "./reducers";
 import {ActionType} from "typesafe-actions";
 import * as actions from "./actions/actions";
-import {hideToast, prepareDishList, prepareIngredientList, prepareMenuList} from "./actions/actions";
+import {
+    hideToast, prepareDishList, prepareIngredientList, prepareMenuList,
+    prepareSectionList
+} from "./actions/actions";
 import {connect} from "react-redux";
 import {Dispatch} from 'redux';
 import {Ingredient} from "./Models/Ingredient";
 import {FRIDAY, Menu, MONDAY, SATURDAY, SUNDAY, THURSDAY, TUESDAY, WEDNESDAY} from "./Models/Menu";
 import DICTIONARY from "./services/storageService";
+import {Section} from "./Models/Section";
 
 
-const mapStateToProps = ({ingredientReducer, dishReducer, menuReducer, notificationReducer}: IRootState) => {
-    const {ingredientList} = ingredientReducer;
-    const {dishList} = dishReducer;
-    const {menuList} = menuReducer;
+const mapStateToProps = ({notificationReducer}: IRootState) => {
     const {displayToast, toastMessage, toastType} = notificationReducer;
-    return {ingredientList, dishList, menuList, displayToast, toastMessage, toastType};
+    return {displayToast, toastMessage, toastType};
 }
 
 
@@ -50,6 +52,7 @@ const mapDispatcherToProps = (dispatch: Dispatch<ActionType<typeof actions>>) =>
     return {
         prepareIngredientList: (element: Ingredient[]) => dispatch(actions.prepareIngredientList(element)),
         prepareDishList: (element: Dish[]) => dispatch(actions.prepareDishList(element)),
+        prepareSectionList: (element: Section[]) => dispatch(actions.prepareSectionList(element)),
         prepareMenuList: (element: Menu[]) => dispatch(actions.prepareMenuList(element)),
         hideToast: () => dispatch(actions.hideToast())
     }
@@ -66,14 +69,29 @@ class App extends React.Component<ReduxType> {
                 }
                 this.props.prepareIngredientList(value)
             }
-        )
+        );
         getDishes().then(value => {
                 if (value === null) {
                     value = [];
                 }
                 this.props.prepareDishList(value)
             }
-        )
+        );
+        getSections().then(value => {
+                if (value === null) {
+                    value = [
+                        new Section("Conserves", 0, 1),
+                        new Section("Pâtes et riz", 1, 2),
+                        new Section("Fruits et Légumes", 2, 3),
+                        new Section("Petit déjeuner", 3, 4),
+                        new Section("Surgelés", 4, 5),
+                        new Section("Rayon frais", 5, 6),
+                        new Section("Liquides", 6, 7)
+                    ];
+                }
+                this.props.prepareSectionList(value);
+            }
+        );
         getMenus().then(value => {
                 if (value === null) {
                     value = [
@@ -88,7 +106,7 @@ class App extends React.Component<ReduxType> {
                 }
                 this.props.prepareMenuList(value)
             }
-        )
+        );
     }
 
 
@@ -98,10 +116,11 @@ class App extends React.Component<ReduxType> {
                 <IonReactRouter>
                     <IonRouterOutlet>
                         <Route path="/home" component={Home} exact={true}/>
-                        <Route path="/list" component={ShoppingList} exact={true}/>
-                        <Route path="/dishes" component={DishesPage} exact={true}/>
                         <Route path="/ingredients" component={IngredientsPage} exact={true}/>
+                        <Route path="/dishes" component={DishesPage} exact={true}/>
+                        <Route path="/section" component={SectionPage} exact={true}/>
                         <Route path="/menu" component={MenusPage} exact={true}/>
+                        <Route path="/list" component={ShoppingList} exact={true}/>
                         <Route path="/import" component={ImportPage} exact={true}/>
                         <Route exact path="/" render={() => <Redirect to="/home"/>}/>
                     </IonRouterOutlet>
@@ -120,14 +139,9 @@ class App extends React.Component<ReduxType> {
 
 }
 
-type AppProps = {
-    displayToast: boolean,
-    toastMessage: string;
-    toastType: string
-}
-
-
-export default connect(mapStateToProps, {prepareIngredientList,
+export default connect(mapStateToProps, {
+    prepareIngredientList,
     prepareDishList,
+    prepareSectionList,
     prepareMenuList,
     hideToast})(App);

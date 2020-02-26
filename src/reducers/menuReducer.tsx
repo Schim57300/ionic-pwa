@@ -1,4 +1,4 @@
-import {ADD_MENU, IMPORT_DATA, INIT_MENU, REMOVE_MENU, UPDATE_MENU} from "../actions/actions";
+import {ADD_MENU, IMPORT_DATA, INIT_MENU, REMOVE_MENU, UPDATE_INGREDIENT, UPDATE_MENU} from "../actions/actions";
 import {InitialState, initialStateImpl} from "./index";
 import {setMenus} from '../services/storageService';
 

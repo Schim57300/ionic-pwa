@@ -9,11 +9,20 @@ import {Menu} from "../Models/Menu";
 import {Storage} from '@capacitor/core';
 
 import {FileSharer} from '@byteowls/capacitor-filesharer';
+import {Section} from "../Models/Section";
 
 export const ERROR: string = "danger";
 export const INFO: string = "success";
 export const LUNCH: string = "lunch";
 export const DINNER: string = "dinner";
+
+export enum Unit {
+    GRAM = "GRAM",
+    KILOGRAM = "KILOGRAM",
+    PIECE = "PIECE",
+    LITER = "LITER",
+    CAN = "LITER"
+}
 
 export async function setIngredients(value: Ingredient[]): Promise<void> {
     await Storage.set({
@@ -36,6 +45,18 @@ export async function setDishes(value: Dish[]): Promise<void> {
 
 export async function getDishes(): Promise<Dish[]> {
     let newVar = await Storage.get({key: "dishList"}) as any;
+    return JSON.parse(newVar.value);
+}
+
+export async function setSections(value: Section[]): Promise<void> {
+    await Storage.set({
+        key: "sectionList",
+        value: JSON.stringify(value)
+    });
+}
+
+export async function getSections(): Promise<Section[]> {
+    let newVar = await Storage.get({key: "sectionList"}) as any;
     return JSON.parse(newVar.value);
 }
 
@@ -63,12 +84,16 @@ export async function exportData(callback: any): Promise<void> {
             .substring(0,13),
         fileName = "MyExport_" + truncatedDate + ".json";
 
-    Promise.all([Storage.get({key: "menuList"}), Storage.get({key: "dishList"}), Storage.get({key: "ingredientList"})])
-        .then(([menus, dishes, ingredients]) => {
+    Promise.all([Storage.get({key: "menuList"}),
+        Storage.get({key: "dishList"}),
+        Storage.get({key: "ingredientList"}),
+        Storage.get({key: "sectionList"})])
+        .then(([menus, dishes, ingredients, sections]) => {
             let jsonFile = "{\"version\": \"1.0.0\", " +
-                "\"export\": " + new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString() + ", " +
+                "\"export\": \"" + new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString() + "\", " +
                 "\"menus\": " + menus.value + ", " +
                 "\"ingredients\": " + ingredients.value + ", " +
+                "\"sections\": " + sections.value + ", " +
                 "\"dishes\": " + dishes.value + "}";
             let objJsonB64 = Buffer.from(jsonFile).toString("base64");
             FileSharer.share({

@@ -213,7 +213,8 @@ class MenusPage extends React.Component<ReduxType> {
                                     <IonLabel>{item.name}</IonLabel>
                                     <IonCheckbox
                                         checked={
-                                            this.getSelectedMeal().some(element => item.id === element.id)
+                                            this.getSelectedMeal().some(element => item.id === element.id &&
+                                                                                             item.name === element.name)
                                         }
                                         onClick={(e) => this.handleCheckBoxChange(e, item)}
                                         value={item.id.toString()}/>
