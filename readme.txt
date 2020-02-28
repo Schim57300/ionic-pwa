@@ -2,9 +2,9 @@ Change Ingredient page:
 - handle sections and Unit
 
 Create Section page with drag and drop elements
-- export
-- import
-- checkJson format
+- export DONE
+- import DONE
+- checkJson format DONE
 
 Change Menu page:
 - Collapsable menu
@@ -13,6 +13,6 @@ Change Menu page:
 - delete menu
 
 TODO:
-In cas of any change in Section, Ingredient or Dish.... change in all reducers
+In cas of any change in Section, Ingredient or Dish.... change in all reducers DONE
 
-Checker fichier export
+Checker fichier export  DONE

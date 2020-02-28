@@ -27,7 +27,7 @@ import NavBar from "../../../Components/NavBar";
 import {Section} from "../../../Models/Section";
 import {swap, arrowBack, arrowForward} from "ionicons/icons";
 //Style
-import './Section.css';
+import './Sections.css';
 
 const mapStateToProps = ({sectionReducer}: IRootState) => {
     const {sectionList} = sectionReducer;

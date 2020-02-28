@@ -15,14 +15,14 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
 
-import './Menu.css';
+import './Menus.css';
 
 import * as actions from "../../actions/actions";
 import {displayToast, updateMenu} from "../../actions/actions";
 import {IRootState} from "../../reducers";
 import {ActionType} from "typesafe-actions";
 import {Menu} from "../../Models/Menu";
-import {closeCircleOutline, save} from "ionicons/icons";
+import {closeCircleOutline, menu, save} from "ionicons/icons";
 import {Dish} from "../../Models/Dish";
 
 import DICTIONARY, {DINNER, INFO, LUNCH} from '../../services/storageService'
@@ -116,9 +116,9 @@ class MenusPage extends React.Component<ReduxType> {
                 <IonLabel>
                     <h4>{DICTIONARY.db.menu_page.LIST_LUNCH}</h4>
                     {item.lunchMeal.length <= 0 ? <IonLabel> </IonLabel> :
-                        item.lunchMeal.map(dish => {
+                        item.lunchMeal.map(menuItem => {
                             return (
-                                <IonLabel key={"lunch" + item.id + dish.id}>{dish.name}</IonLabel>
+                                <IonLabel key={"lunch" + item.id + menuItem.id}>{this.getMenuItemName(menuItem)}</IonLabel>
                             )
                         })}
                 </IonLabel>
@@ -141,14 +141,22 @@ class MenusPage extends React.Component<ReduxType> {
                 <IonLabel className="list-menu">
                     <h4>{DICTIONARY.db.menu_page.LIST_DINNER}</h4>
                     {item.dinnerMeal.length <= 0 ? <IonLabel> </IonLabel> :
-                        item.dinnerMeal.map(dish => {
+                        item.dinnerMeal.map(menuItem => {
                             return (
-                                <IonLabel key={"dinner" + item.id + dish.id}>{dish.name}</IonLabel>
+                                <IonLabel key={"dinner" + item.id + menuItem.id}>{this.getMenuItemName(menuItem)}</IonLabel>
                             )
                         })}
                 </IonLabel>
             </IonItem>
         )
+    }
+
+    getMenuItemName = (menuItem: MenuItem) => {
+        if((menuItem as Dish).recipe){
+            return this.props.dishList.filter(item => item.id === menuItem.id)[0].name;
+        } else {
+            return this.props.ingredientList.filter(item => item.id === menuItem.id)[0].name;
+        }
     }
 
     renderMenu = () => {
@@ -214,7 +222,7 @@ class MenusPage extends React.Component<ReduxType> {
                                     <IonCheckbox
                                         checked={
                                             this.getSelectedMeal().some(element => item.id === element.id &&
-                                                                                             item.name === element.name)
+                                                         this.getMenuItemName(item) === this.getMenuItemName(element))
                                         }
                                         onClick={(e) => this.handleCheckBoxChange(e, item)}
                                         value={item.id.toString()}/>

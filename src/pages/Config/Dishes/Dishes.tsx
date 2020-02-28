@@ -124,11 +124,9 @@ class DishesPage extends React.Component<ReduxType> {
         let linkedMenu: Menu[] = [];
         this.props.menuList.forEach(menu => {
             let plannedForLunch = menu.lunchMeal.some(menuItem => !!(menuItem as Dish).recipe &&
-                menuItem.id === this.state.currentDish.id &&
-                menuItem.name === this.state.currentDish.name);
+                menuItem.id === this.state.currentDish.id);
             let plannedForDinner = menu.dinnerMeal.some(menuItem => !!(menuItem as Dish).recipe &&
-                menuItem.id === this.state.currentDish.id &&
-                menuItem.name === this.state.currentDish.name);
+                menuItem.id === this.state.currentDish.id);
             if (plannedForLunch || plannedForDinner) {
                 linkedMenu.push(menu);
             }
@@ -182,8 +180,9 @@ class DishesPage extends React.Component<ReduxType> {
         } else {
             return (
                 <IonList>
-                    {this.state.currentDish.recipe
+                    {this.props.ingredientList
                         .sort((a, b) => a.name.localeCompare(b.name))
+                        .filter(ing => this.state.currentDish.recipe.some(element => ing.id === element.id))
                         .map(item => {
                             return (
                                 <IonItem key={item.id}>

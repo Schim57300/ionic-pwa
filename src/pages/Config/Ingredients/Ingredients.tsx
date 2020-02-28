@@ -14,8 +14,11 @@ import {
     IonList,
     IonModal,
     IonPage,
-    IonSearchbar, IonSegment, IonSegmentButton,
-    IonTextarea, IonToolbar
+    IonSearchbar,
+    IonSegment,
+    IonSegmentButton,
+    IonTextarea,
+    IonToolbar
 } from '@ionic/react';
 //Style
 import './Ingredients.css';
@@ -31,6 +34,7 @@ import {Dish} from "../../../Models/Dish";
 import DICTIONARY, {ERROR, INFO} from '../../../services/storageService';
 import NavBar from "../../../Components/NavBar";
 import {Menu} from "../../../Models/Menu";
+import {Section} from "../../../Models/Section";
 
 const mapStateToProps = ({ingredientReducer, dishReducer, sectionReducer, menuReducer}: IRootState) => {
     const {ingredientList} = ingredientReducer;
@@ -114,9 +118,9 @@ class IngredientsPage extends React.Component<ReduxType> {
         }
     }
 
-    handleSegmentSelect = (e: any)  => {
+    handleSegmentSelect = (e: any) => {
         let newIngredient = Object.assign({}, this.state.currentIngredient);
-        newIngredient.section =  this.props.sectionList.filter(elt => elt.id.toString() === e.detail.value)[0];
+        newIngredient.section = this.props.sectionList.filter(elt => elt.id.toString() === e.detail.value)[0];
         this.setState({
             currentIngredient: newIngredient
         })
@@ -137,16 +141,23 @@ class IngredientsPage extends React.Component<ReduxType> {
         let linkedMenu: Menu[] = [];
         this.props.menuList.forEach(menu => {
             let plannedForLunch = menu.lunchMeal.some(menuItem => !(menuItem as Dish).recipe &&
-                menuItem.id === this.state.currentIngredient.id &&
-                menuItem.name === this.state.currentIngredient.name);
+                menuItem.id === this.state.currentIngredient.id);
             let plannedForDinner = menu.dinnerMeal.some(menuItem => !(menuItem as Dish).recipe &&
-                menuItem.id === this.state.currentIngredient.id &&
-                menuItem.name === this.state.currentIngredient.name);
+                menuItem.id === this.state.currentIngredient.id);
             if (plannedForLunch || plannedForDinner) {
                 linkedMenu.push(menu);
             }
         })
         return linkedMenu;
+    }
+
+
+    getSectionName = (section: Section) => {
+        if (!!!section) {
+            return "";
+        } else {
+            return this.props.sectionList.filter(item => item.id === section.id)[0].name;
+        }
     }
 
     renderIngredients = () => {
@@ -163,7 +174,7 @@ class IngredientsPage extends React.Component<ReduxType> {
                                 <IonItem onClick={() => this.setState({displayModal: true, currentIngredient: item})}
                                          key={item.id} className="list-ingredient">
                                     <IonLabel className="list-ingredient">{item.name}</IonLabel>
-                                    <IonLabel className="list-ingredient">{item.section?.name}</IonLabel>
+                                    <IonLabel className="list-ingredient">{this.getSectionName(item.section)}</IonLabel>
                                 </IonItem>
                             )
                         })}

@@ -21,8 +21,8 @@ import './theme/variables.css';
 import DishesPage from "./pages/Config/Dishes/Dishes";
 import ImportPage from "./pages/Config/Import/Import";
 import IngredientsPage from "./pages/Config/Ingredients/Ingredients";
-import SectionPage from "./pages/Config/Section/Section";
-import MenusPage from "./pages/Menu/Menu";
+import SectionPage from "./pages/Config/Sections/Sections";
+import MenusPage from "./pages/Menus/Menus";
 import ShoppingList from "./pages/ShoppingList/ShoppingList";
 
 import {getDishes, getIngredients, getMenus, getSections} from "./services/storageService";
