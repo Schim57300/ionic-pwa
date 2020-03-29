@@ -2,7 +2,7 @@ export class Section {
 
     static checkSectionJsonFormat(obj: any) : boolean  {
         return (Array.isArray(obj) &&
-            !obj.some((element: any) => (!element.id || !element.name || !element.order)));
+            !obj.some((element: any) => (element.id == null || element.name == null || element.order == null)));
     }
 
     id: number = 0;

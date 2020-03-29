@@ -80,7 +80,7 @@ class HomePage extends React.Component<ReduxType> {
                                size="large"
                                className="home-button"
                                color="light">{DICTIONARY.db.home_page.SHOPPING_LIST_BUTTON_LABEL}</IonButton>
-                    <IonCardSubtitle color='white'>menu v0.0.15-SNAPSHOT</IonCardSubtitle>
+                    <IonCardSubtitle color='white'>menu v0.0.17-SNAPSHOT</IonCardSubtitle>
                 </IonFooter>
             </IonPage>);
     }

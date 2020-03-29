@@ -16,7 +16,7 @@ import {
     IonPage,
     IonSearchbar,
     IonSegment,
-    IonSegmentButton,
+    IonSegmentButton, IonSlide, IonSlides,
     IonTextarea,
     IonToolbar
 } from '@ionic/react';
@@ -98,7 +98,7 @@ class IngredientsPage extends React.Component<ReduxType> {
 
     handleUpdateIngredient = (newLabel: string) => {
         let newElement = new Ingredient(newLabel,
-            this.state.currentIngredient.id, this.state.currentIngredient.section)
+            this.state.currentIngredient.id, this.state.currentIngredient.sectionId)
         this.props.updateIngredient(newElement);
         this.props.displayToast(INFO, DICTIONARY.db.INFO_MESSAGE.CHANGE_APPLIED)
         this.resetState()
@@ -120,7 +120,7 @@ class IngredientsPage extends React.Component<ReduxType> {
 
     handleSegmentSelect = (e: any) => {
         let newIngredient = Object.assign({}, this.state.currentIngredient);
-        newIngredient.section = this.props.sectionList.filter(elt => elt.id.toString() === e.detail.value)[0];
+        newIngredient.sectionId = this.props.sectionList.filter(elt => elt.id.toString() === e.detail.value)[0]?.id;
         this.setState({
             currentIngredient: newIngredient
         })
@@ -129,7 +129,7 @@ class IngredientsPage extends React.Component<ReduxType> {
     checkIngredientIsNotUsed = (): Dish[] => {
         let linkedDish: Dish[] = [];
         this.props.dishList.forEach(dish => {
-            let b = dish.recipe.some(ing => ing.id === this.state.currentIngredient.id);
+            let b = dish.recipe.some(ing => ing === this.state.currentIngredient.id);
             if (b) {
                 linkedDish.push(dish)
             }
@@ -152,11 +152,11 @@ class IngredientsPage extends React.Component<ReduxType> {
     }
 
 
-    getSectionName = (section: Section) => {
-        if (!!!section) {
-            return "";
+    getSectionName = (sectionId: number) => {
+        if (sectionId > 0) {
+            return this.props.sectionList.filter(item => item.id === sectionId)[0]?.name;
         } else {
-            return this.props.sectionList.filter(item => item.id === section.id)[0].name;
+            return "";
         }
     }
 
@@ -174,7 +174,8 @@ class IngredientsPage extends React.Component<ReduxType> {
                                 <IonItem onClick={() => this.setState({displayModal: true, currentIngredient: item})}
                                          key={item.id} className="list-ingredient">
                                     <IonLabel className="list-ingredient">{item.name}</IonLabel>
-                                    <IonLabel className="list-ingredient">{this.getSectionName(item.section)}</IonLabel>
+                                    <IonLabel
+                                        className="list-ingredient">{this.getSectionName(item.sectionId)}</IonLabel>
                                 </IonItem>
                             )
                         })}
@@ -207,6 +208,10 @@ class IngredientsPage extends React.Component<ReduxType> {
             displayDeleteButton = true;
             clickAction = () => this.handleUpdateIngredient(textValue)
         }
+        const slideOpts = {
+            initialSlide: 1,
+            speed: 400
+        };
         return (
             <IonModal
                 isOpen={this.state.displayModal}
@@ -228,15 +233,48 @@ class IngredientsPage extends React.Component<ReduxType> {
                 </IonItem>
                 <IonToolbar>
                     <IonSegment scrollable color="secondary"
-                                value={this.state.currentIngredient.section?.id.toString()}
+                                value={"" + this.state.currentIngredient?.sectionId}
                                 onIonChange={e => this.handleSegmentSelect(e)}>
                         {this.props.sectionList.map(section =>
-                            <IonSegmentButton key={section.id} value={section.id.toString()}>
+                            <IonSegmentButton key={section.id} value={section.id.toString()} layout="icon-start">
                                 {section.name}
                             </IonSegmentButton>
                         )}
                     </IonSegment>
                 </IonToolbar>
+                <IonSlides options={slideOpts}>
+                    {
+                        this.props.sectionList.map(section =>
+                            <IonSlide key={section.id}>
+                                <h1>{this.props.sectionList[1]?.name}</h1>
+                            </IonSlide>
+                        )
+                    }
+                    <IonSlide>
+                        <h1>{this.props.sectionList[1]?.name}</h1>
+                    </IonSlide>
+                    <IonSlide>
+                        <h1>{this.props.sectionList[2]?.name}</h1>
+                    </IonSlide>
+                    <IonSlide>
+                        <h1>{this.props.sectionList[3]?.name}</h1>
+                    </IonSlide>
+                    <IonSlide>
+                        <h1>{this.props.sectionList[4]?.name}</h1>
+                    </IonSlide>
+                    <IonSlide>
+                        <h1>{this.props.sectionList[5]?.name}</h1>
+                    </IonSlide>
+                    <IonSlide>
+                        <h1>{this.props.sectionList[6]?.name}</h1>
+                    </IonSlide>
+                    <IonSlide>
+                        <h1>{this.props.sectionList[7]?.name}</h1>
+                    </IonSlide>
+                    <IonSlide>
+                        <h1>{this.props.sectionList[8]?.name}</h1>
+                    </IonSlide>
+                </IonSlides>
                 <IonItem className="flex-container">
                     <IonButton slot="end"
                                expand='block'

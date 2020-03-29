@@ -86,7 +86,9 @@ class App extends React.Component<ReduxType> {
                         new Section("Petit déjeuner", 3, 4),
                         new Section("Surgelés", 4, 5),
                         new Section("Rayon frais", 5, 6),
-                        new Section("Liquides", 6, 7)
+                        new Section("Liquides", 6, 7),
+                        new Section("Viandes et poissons", 7, 8),
+                        new Section("Epice", 8, 9)
                     ];
                 }
                 this.props.prepareSectionList(value);

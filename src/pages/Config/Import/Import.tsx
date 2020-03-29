@@ -72,7 +72,7 @@ class ImportPage extends React.Component<ReduxType> {
                 try {
                     obj = JSON.parse(text);
 
-                    if (!obj.sections || Section.checkSectionJsonFormat(obj.sections)) {
+                    if (!obj.sections || !Section.checkSectionJsonFormat(obj.sections)) {
                         this.resetState();
                         this.props.displayToast(ERROR, DICTIONARY.db.ERROR_MESSAGE.INVALID_SECTION_LIST);
                     } else if (!obj.ingredients || !Ingredient.checkIngredientJsonFormat(obj.ingredients)) {
@@ -91,7 +91,8 @@ class ImportPage extends React.Component<ReduxType> {
                             lastEditionDate: new Date(currentFile?.lastModified).toLocaleDateString() + " " +new Date(currentFile?.lastModified).toLocaleTimeString(),
                             ingredientList: obj.ingredients,
                             dishesList: obj.dishes,
-                            menuList: obj.menus
+                            menuList: obj.menus,
+                            sectionList: obj.sections
                         });
                     }
                 } catch (e) {

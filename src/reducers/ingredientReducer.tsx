@@ -17,7 +17,7 @@ export function ingredientsReducer(state: InitialState = initialStateImpl, actio
         case UPDATE_INGREDIENT:
             let foundElement = state.ingredientList.findIndex(element => element.id === action.data.id);
             let newList = Object.assign([], state.ingredientList, {[foundElement]: action.data});
-            setIngredients(state.ingredientList);
+            setIngredients(newList);
             return Object.assign({}, state, {ingredientList: newList});
         case REMOVE_INGREDIENT:
             let elementToRemove = state.ingredientList.findIndex(element => element.id === action.data.id);

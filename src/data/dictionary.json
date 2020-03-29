@@ -8,7 +8,8 @@
       "DESCRIPTION": "<b>1.</b> Enregistrez vos ingrédients et créez vos recettes.</br></br><b>2.</b> Lorsque la liste de recettes est bien garnie, <b>COMPOSEZ VOS MENUS</b>.</br></br>La liste de courses se remplira automatiquement.</br></br>Les options <b>EXPORT / IMPORT</b> vous permettent de partager vos données avec un autre téléphone."
     },
     "shoppinglist_page": {
-      "PAGE_TITLE": "Liste de course"
+      "PAGE_TITLE": "Liste de course",
+      "UNCATEGORIZED": "Sans catégorie"
     },
     "ingredient_page": {
       "PAGE_TITLE": "Ingrédients",
@@ -94,7 +95,8 @@
       "DESCRIPTION": "<b>1.</b> Add your ingredients and create your recipes.</br></br><b>2.</b> When you got enough elements in your list of recipes, <b>COMPOSE YOUR MENUS</b>.</br></br>Your shopping list will be automatically generated..</br></br>The <b>EXPORT / IMPORT</b> features allow you to share your data with another device."
     },
     "shoppinglist_page": {
-      "PAGE_TITLE": "Shopping list"
+      "PAGE_TITLE": "Shopping list",
+      "UNCATEGORIZED": "Uncategorised"
     },
     "ingredient_page": {
       "PAGE_TITLE": "Ingredients",

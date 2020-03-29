@@ -77,9 +77,9 @@ class DishesPage extends React.Component<ReduxType> {
     handleCheckBoxChange(event: any) {
         let selectedIngredient = this.props.ingredientList.find(ing => ing.id.toString() === event.target.value)!;
         if (event.target.checked) {
-            this.state.currentDish.recipe.push(selectedIngredient);
+            this.state.currentDish.recipe.push(selectedIngredient.id);
         } else {
-            let elementToRemove = this.state.currentDish.recipe.findIndex(element => element === selectedIngredient);
+            let elementToRemove = this.state.currentDish.recipe.findIndex(element => element === selectedIngredient.id);
             this.state.currentDish.recipe.splice(elementToRemove, 1);
         }
     }
@@ -169,7 +169,7 @@ class DishesPage extends React.Component<ReduxType> {
                                 <IonItem key={item.id}>
                                     <IonLabel>{item.name}</IonLabel>
                                     <IonCheckbox
-                                        checked={this.state.currentDish.recipe.some(element => item.id === element.id)}
+                                        checked={this.state.currentDish.recipe.some(element => item.id === element)}
                                         onClick={(e) => this.handleCheckBoxChange(e)}
                                         value={item.id.toString()}/>
                                 </IonItem>
@@ -178,11 +178,12 @@ class DishesPage extends React.Component<ReduxType> {
                 </IonList>
             )
         } else {
+            console.log("currentDish==", this.state.currentDish);
             return (
                 <IonList>
                     {this.props.ingredientList
                         .sort((a, b) => a.name.localeCompare(b.name))
-                        .filter(ing => this.state.currentDish.recipe.some(element => ing.id === element.id))
+                        .filter(ing => this.state.currentDish.recipe.some(element => ing.id === element))
                         .map(item => {
                             return (
                                 <IonItem key={item.id}>
