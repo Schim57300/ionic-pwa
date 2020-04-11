@@ -31,6 +31,7 @@ class HomePage extends React.Component<ReduxType> {
 
     iconFr = "/assets/flags/fr32.png";
     iconEn = "/assets/flags/en32.png";
+    iconLu = "/assets/flags/lu32.png";
 
     // Used to force refresh on click
     state = {
@@ -40,8 +41,10 @@ class HomePage extends React.Component<ReduxType> {
     handleChangeLangage = (lang: String) => {
         if (lang === "fr") {
             DICTIONARY.db = dico_json.fr;
-        } else {
+        } else  if (lang === "en") {
             DICTIONARY.db = dico_json.en;
+        } else {
+            DICTIONARY.db = dico_json.lu;
         }
         this.setState({test: !this.state.test});
     }
@@ -63,6 +66,9 @@ class HomePage extends React.Component<ReduxType> {
                         </IonButton>
                         <IonButton color="light" onClick={() => this.handleChangeLangage("en")}>
                             <IonImg src={this.iconEn}/>
+                        </IonButton>
+                        <IonButton color="light" onClick={() => this.handleChangeLangage("lu")}>
+                            <IonImg src={this.iconLu}/>
                         </IonButton>
                     </div>
                     <br/>

@@ -16,7 +16,7 @@ import {
     IonPage,
     IonSearchbar,
     IonSegment,
-    IonSegmentButton, IonSlide, IonSlides,
+    IonSegmentButton, IonSelect, IonSelectOption, IonSlide, IonSlides,
     IonTextarea,
     IonToolbar
 } from '@ionic/react';
@@ -35,6 +35,7 @@ import DICTIONARY, {ERROR, INFO} from '../../../services/storageService';
 import NavBar from "../../../Components/NavBar";
 import {Menu} from "../../../Models/Menu";
 import {Section} from "../../../Models/Section";
+import {number, string} from "prop-types";
 
 const mapStateToProps = ({ingredientReducer, dishReducer, sectionReducer, menuReducer}: IRootState) => {
     const {ingredientList} = ingredientReducer;
@@ -79,16 +80,16 @@ class IngredientsPage extends React.Component<ReduxType> {
         this.setState({filter: str});
     }
 
-    handleAddIngredient = (newLabel: string) => {
+    handleAddIngredient = (newLabel: string, ingredientSectionTmp: number) => {
         if (newLabel.trim() === "") {
             this.props.displayToast(ERROR, DICTIONARY.db.ERROR_MESSAGE.MANDATORY_VALUE)
         } else {
-            let elementFound: boolean = this.props.ingredientList.some(elt => String(elt.name.trim().toUpperCase() === newLabel.toUpperCase()));
+            let elementFound: boolean = this.props.ingredientList.some(elt => elt.name.trim().toUpperCase() === newLabel.toUpperCase());
             if (elementFound) {
                 this.props.displayToast(ERROR, DICTIONARY.db.ERROR_MESSAGE.VALUE_ALREADY_EXIST);
             } else {
                 let newElement = new Ingredient(newLabel,
-                    this.props.ingredientList.length + 1)
+                    this.props.ingredientList.length + 1, ingredientSectionTmp)
                 this.props.addIngredient(newElement);
                 this.props.displayToast(INFO, DICTIONARY.db.INFO_MESSAGE.ELEMENT_CREATED)
                 this.resetState();
@@ -96,9 +97,10 @@ class IngredientsPage extends React.Component<ReduxType> {
         }
     }
 
-    handleUpdateIngredient = (newLabel: string) => {
+    handleUpdateIngredient = (newLabel: string, ingredientSectionTmp: number) => {
+        console.log("ingredientSectionTmp", ingredientSectionTmp);
         let newElement = new Ingredient(newLabel,
-            this.state.currentIngredient.id, this.state.currentIngredient.sectionId)
+            this.state.currentIngredient.id, ingredientSectionTmp)
         this.props.updateIngredient(newElement);
         this.props.displayToast(INFO, DICTIONARY.db.INFO_MESSAGE.CHANGE_APPLIED)
         this.resetState()
@@ -187,12 +189,13 @@ class IngredientsPage extends React.Component<ReduxType> {
 
     renderModal() {
 
-        let textValue = this.state.currentIngredient.name.trim();
+        let ingredientNameTmp = this.state.currentIngredient.name.trim();
+        let ingredientSectionTmp = this.state.currentIngredient?.sectionId
         let icon = "/assets/icon/app/ic_ing_ajout.png";
         let modalTitle = DICTIONARY.db.ingredient_page.MODAL_ADD;
         let mainButtonLabel = save;
         let displayDeleteButton = false;
-        let clickAction = () => this.handleAddIngredient(textValue)
+        let clickAction = () => this.handleAddIngredient(ingredientNameTmp, ingredientSectionTmp)
         if (this.state.deleteMode) {
             icon = "/assets/icon/app/ic_ing_suppr.png";
             modalTitle = DICTIONARY.db.ingredient_page.MODAL_DELETE;
@@ -201,17 +204,13 @@ class IngredientsPage extends React.Component<ReduxType> {
             //is handled by the main button
             displayDeleteButton = false;
             clickAction = () => this.handleDeleteIngredient()
-        } else if (textValue.length > 0) {
+        } else if (ingredientNameTmp.length > 0) {
             icon = "/assets/icon/app/ic_ing_modif.png";
             modalTitle = DICTIONARY.db.ingredient_page.MODAL_UPDATE;
             mainButtonLabel = save;
             displayDeleteButton = true;
-            clickAction = () => this.handleUpdateIngredient(textValue)
+            clickAction = () => this.handleUpdateIngredient(ingredientNameTmp, ingredientSectionTmp)
         }
-        const slideOpts = {
-            initialSlide: 1,
-            speed: 400
-        };
         return (
             <IonModal
                 isOpen={this.state.displayModal}
@@ -226,55 +225,23 @@ class IngredientsPage extends React.Component<ReduxType> {
                     <IonTextarea placeholder={DICTIONARY.db.ingredient_page.NAME_PLACEHOLDER}
                                  readonly={this.state.deleteMode}
                                  disabled={this.state.deleteMode}
-                                 value={textValue}
-                                 onIonChange={e => textValue = (e.target as HTMLInputElement).value}>
+                                 value={ingredientNameTmp}
+                                 onIonChange={e => ingredientNameTmp = (e.target as HTMLInputElement).value}>
 
                     </IonTextarea>
                 </IonItem>
-                <IonToolbar>
-                    <IonSegment scrollable color="secondary"
-                                value={"" + this.state.currentIngredient?.sectionId}
-                                onIonChange={e => this.handleSegmentSelect(e)}>
-                        {this.props.sectionList.map(section =>
-                            <IonSegmentButton key={section.id} value={section.id.toString()} layout="icon-start">
-                                {section.name}
-                            </IonSegmentButton>
-                        )}
-                    </IonSegment>
-                </IonToolbar>
-                <IonSlides options={slideOpts}>
-                    {
-                        this.props.sectionList.map(section =>
-                            <IonSlide key={section.id}>
-                                <h1>{this.props.sectionList[1]?.name}</h1>
-                            </IonSlide>
-                        )
-                    }
-                    <IonSlide>
-                        <h1>{this.props.sectionList[1]?.name}</h1>
-                    </IonSlide>
-                    <IonSlide>
-                        <h1>{this.props.sectionList[2]?.name}</h1>
-                    </IonSlide>
-                    <IonSlide>
-                        <h1>{this.props.sectionList[3]?.name}</h1>
-                    </IonSlide>
-                    <IonSlide>
-                        <h1>{this.props.sectionList[4]?.name}</h1>
-                    </IonSlide>
-                    <IonSlide>
-                        <h1>{this.props.sectionList[5]?.name}</h1>
-                    </IonSlide>
-                    <IonSlide>
-                        <h1>{this.props.sectionList[6]?.name}</h1>
-                    </IonSlide>
-                    <IonSlide>
-                        <h1>{this.props.sectionList[7]?.name}</h1>
-                    </IonSlide>
-                    <IonSlide>
-                        <h1>{this.props.sectionList[8]?.name}</h1>
-                    </IonSlide>
-                </IonSlides>
+
+                <IonItem>
+                    <IonLabel>Section</IonLabel>
+                    <IonSelect value={ingredientSectionTmp}>
+                        <IonSelectOption key={0} value="0" onChange={val => ingredientSectionTmp = Number((val.target as HTMLInputElement).value)}>Undefined</IonSelectOption>
+                        {
+                            this.props.sectionList.map(section =>
+                                <IonSelectOption key={section.id} value={""+section.id}>{section.name}</IonSelectOption>
+                            )
+                        }
+                    </IonSelect>
+                </IonItem>
                 <IonItem className="flex-container">
                     <IonButton slot="end"
                                expand='block'

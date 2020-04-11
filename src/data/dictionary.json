@@ -172,5 +172,92 @@
     "FRIDAY": "Friday",
     "SATURDAY": "Saturday",
     "SUNDAY": "Sunday"
+  },
+  "lu": {
+    "home_page": {
+      "PAGE_TITLE": "Menu App",
+      "MENU_BUTTON_LABEL": "Menüen opstellen",
+      "SHOPPING_LIST_BUTTON_LABEL": "D'Akaafslëcht ukucken",
+      "CONFIG_BUTTON_LABEL": "Settings",
+      "DESCRIPTION": "<b>1.</b> Späichert är Produkter a Kréeiert är Rezepter.</br></br><b>2.</b> Wann är Lëscht vun Rezepter fäerdeg ass, <b>STELLT ÄR MENÜEN OP</b>.</br></br>D'Lëscht fëllt sech automatesch aus</br></br>D'Optiounen <b>EXPORT / IMPORT</b> erlauben Iech är Donnéeën mat engem aneren Händy ze deelen"
+    },
+    "shoppinglist_page": {
+      "PAGE_TITLE": "D'Akaafslëcht",
+      "UNCATEGORIZED": "Uncategorised"
+    },
+    "ingredient_page": {
+      "PAGE_TITLE": "Produkter",
+      "ADD_BUTTON_LABEL": "ADD",
+      "FILTER_PLACEHOLDER": "Search",
+      "NAME_PLACEHOLDER": "Ingredient name",
+      "MODAL_ADD": "Add an ingredient",
+      "MODAL_UPDATE": "Edit an ingredient",
+      "MODAL_DELETE": "Delete an ingredient"
+    },
+    "dish_page": {
+      "PAGE_TITLE": "Rezepter",
+      "ADD_BUTTON_LABEL": "ADD",
+      "FILTER_PLACEHOLDER": "Search",
+      "NAME_PLACEHOLDER": "Recipe name",
+      "MODAL_DETAIL": "Recipe detail",
+      "MODAL_ADD": "Add a recipe",
+      "MODAL_UPDATE": "Edit a recipe",
+      "MODAL_DELETE": "Delete a recipe"
+    },
+    "menu_page": {
+      "PAGE_TITLE": "Menus",
+      "MODAL_CHOOSE": "Compose your menu",
+      "LIST_LUNCH": "Lunch",
+      "LIST_DINNER": "Dinner",
+      "EMPTY_LIST": "Nothing planed yet"
+    },
+    "import_page": {
+      "IMPORT_BUTTON_LABEL": "IMPORT",
+      "ALERT_TITLE": "Import data",
+      "ALERT_SUBTITLE": "Your existing data will be overwritten and replaced",
+      "ALERT_MESSAGE": "Do you want to continue the operation?",
+      "ALERT_CONFIRM": "Confirm",
+      "ALERT_DISMISS": "Cancel"
+    },
+    "section_page": {
+      "PAGE_TITLE": "Rayonen geréieren"
+    },
+    "navbar": {
+      "HOME_PAGE_BUTTON_LABEL": "Haapt Saït",
+      "ACCOUNT_BUTTON_LABEL": "Mäi Konto (geschwënn)",
+      "DISH_BUTTON_LABEL": "Rezepter",
+      "INGREDIENT_BUTTON_LABEL": "Produkter",
+      "SECTION_BUTTON_LABEL": "Rayonen geréieren",
+      "EXPORT_DATA": "Donnéeen exportéieren",
+      "IMPORT_DATA": "Donnéeen importéieren"
+    },
+    "ERROR_MESSAGE" : {
+      "MANDATORY_VALUE": "The value is mandatory",
+      "VALUE_ALREADY_EXIST": "The value does already exist",
+      "VALUE_ALREADY_USED": "Element is used with",
+      "VALUE_ALREADY_PLANNED": "Element is planned",
+      "INVALID_FILE_FORMAT": "File format is not correct",
+      "INVALID_SECTION_LIST": "Error while reading section list",
+      "INVALID_INGREDIENT_LIST": "Error while reading ingredient list",
+      "INVALID_DISH_LIST": "Error while reading recipe list",
+      "INVALID_MENU_LIST": "Error while reading menus"
+    },
+    "INFO_MESSAGE" : {
+      "ELEMENT_CREATED": "Element has been created",
+      "CHANGE_APPLIED": "Your change has been applied",
+      "ELEMENT_DELETED": "Element has been removed",
+      "NO_ELEMENT": "Oops, it seems like your list is empty",
+      "EXPORT_DONE": "Export successful"
+    },
+    "WARNING_MESSAGE": {
+      "DEMO_VERSION" : "DEMO: Your menus won't be saved!"
+    },
+    "MONDAY": "Monday",
+    "TUESDAY": "Tuesday",
+    "WEDNESDAY": "Wednesday",
+    "THURSDAY": "Thursday",
+    "FRIDAY": "Friday",
+    "SATURDAY": "Saturday",
+    "SUNDAY": "Sunday"
   }
 }
