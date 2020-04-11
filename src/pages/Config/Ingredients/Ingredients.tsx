@@ -190,7 +190,7 @@ class IngredientsPage extends React.Component<ReduxType> {
     renderModal() {
 
         let ingredientNameTmp = this.state.currentIngredient.name.trim();
-        let ingredientSectionTmp = this.state.currentIngredient?.sectionId
+        let ingredientSectionTmp: number = this.state.currentIngredient?.sectionId;
         let icon = "/assets/icon/app/ic_ing_ajout.png";
         let modalTitle = DICTIONARY.db.ingredient_page.MODAL_ADD;
         let mainButtonLabel = save;
@@ -233,8 +233,8 @@ class IngredientsPage extends React.Component<ReduxType> {
 
                 <IonItem>
                     <IonLabel>Section</IonLabel>
-                    <IonSelect value={ingredientSectionTmp}>
-                        <IonSelectOption key={0} value="0" onChange={val => ingredientSectionTmp = Number((val.target as HTMLInputElement).value)}>Undefined</IonSelectOption>
+                    <IonSelect  value={ingredientSectionTmp?.toString()} onIonChange={val => ingredientSectionTmp = Number((val.target as HTMLInputElement).value)}>
+                        <IonSelectOption key={0} value="0">Undefined</IonSelectOption>
                         {
                             this.props.sectionList.map(section =>
                                 <IonSelectOption key={section.id} value={""+section.id}>{section.name}</IonSelectOption>
